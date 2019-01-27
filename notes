@@ -1,13 +1,13 @@
-background-colr
-color
+background-colr				-/
+color 						-/
 font-icon
-border-radious
-border-color
-position - location
+border-radious				-/
+border-color				-/
+position - location			-/
 animation speed
-button size
-appear in Xpx scroll
-opacity
+button size					-/
+appear in Xpx scroll		-/
+opacity		-/
 fade
 font awesome class
 fa online cdn
