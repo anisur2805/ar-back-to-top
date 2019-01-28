@@ -10,6 +10,7 @@
  * Text Domain: arbtt
 */
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
+
 function arbtt_admin_page() {
 	add_menu_page( __('AR Back 2 top', 'arbtt'), __( 'AR Back To Top', 'arbtt' ), "manage_options", "arbtt", "arbtt_mp_cb", "dashicons-arrow-up-alt", 100 );
 }
@@ -178,9 +179,9 @@ $arbtt_fi = (get_option('arbtt_fi')) ? get_option('arbtt_fi') : 'arrow-up';
 $arbtt_bdrd = (get_option('arbtt_bdrd')) ? get_option('arbtt_bdrd') : '0';
 $arbtt_btndmw = (get_option($arbtt_btndm['w'])) ? get_option($arbtt_btndm['w']) : '40';
 $arbtt_btndmh = (get_option($arbtt_btndm['h'])) ? get_option($arbtt_btndm['h']) : '40'; 
-
 ?>
-<div class="arbtt-container" id="arbtt-container"> <a href="#" class="arbtt" id="arbtt"><span class="fa fa-<?php print_r($arbtt_fi);?>"></span></a> </div>
+<div class="arbtt-container" id="arbtt-container"> <a href="#" class="arbtt" id="arbtt"><span class="fa fa-<?php print_r($arbtt_fi); ?>"></span></a> </div>
+
 <style type="text/css">
 .arbtt {width:<?php echo $arbtt_btndmw; ?>px; height:<?php echo $arbtt_btndmh; ?>px;line-height:<?php echo $arbtt_btndmh; ?>;padding: 0;text-align:center;font-weight: bold;color:<?php echo $arbtt_clr; ?>!important;text-decoration: none!important;position: fixed;bottom:75px; <?php echo $arbtt_btnps; ?> :40px;display:none; background-color: <?php echo $arbtt_bgc; ?> !important;opacity: <?php echo $arbtt_btnoc; ?>;border-radius: <?php echo $arbtt_bdrd; ?>px;z-index: 9999;}
 .arbtt:hover {color: <?php //echo $arbtt_bgc; ?> !important;background-color: <?php //echo $arbtt_clr; ?>!important;opacity: 0.7;}
@@ -188,5 +189,3 @@ $arbtt_btndmh = (get_option($arbtt_btndm['h'])) ? get_option($arbtt_btndm['h']) 
 .arbtt:visited, .arbtt:focus{color: #fff;outline: 0;}
 .form-table input#arbtt_btndm.ardm {width: 72px;}
 </style>
-<?php
-
