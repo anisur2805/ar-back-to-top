@@ -1,19 +1,1 @@
 
-.arbtt {
-    width: 40px;
-    height: 40px;
-    padding: 5px 0 0;
-    text-align:center;
-    font-weight: bold;
-    color: #fff;
-    text-decoration: none;
-    position:fixed;
-    bottom:75px;
-    right:40px;
-    display:none; 
-    background: #000;
-}
-.arbtt:visited, .arbtt:focus{
-	color: #fff;
-	outline: 0;
-}
