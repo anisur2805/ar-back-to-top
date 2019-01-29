@@ -132,7 +132,7 @@ add_action( "wp_enqueue_scripts", "arbtt_enqueue_frontend");
 function arbtt_enqueue_frontend() {
 	wp_enqueue_style('arbtt_fe_admin', plugins_url('assets/css/style.css', __FILE__ ) );
 	wp_enqueue_style('arbtt_fa', plugins_url('assets/css/font-awesome.min.css', __FILE__ ) );
-	wp_enqueue_script('arbtt_js', plugins_url('assets/js/jquery.min.js', __FILE__ ), null, true);
+	wp_enqueue_script('arbtt_js', plugins_url('assets/js/jquery.min.js', __FILE__ ), true);
 
 	wp_enqueue_script('arbtt_custom_js', plugins_url('assets/js/arbtt-fe.js', __FILE__ ), array('jquery'), true);
 
