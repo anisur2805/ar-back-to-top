@@ -165,7 +165,7 @@ function arbtt_top() {
 		.arbtt:hover {opacity: 0.7;}
 		.arbtt .fa{line-height: <?php echo $arbtt_btndmh; ?>px;font-size: <?php echo $arbtt_fz; ?>px;height: <?php echo $arbtt_btndmh; ?>px;width:<?php echo $arbtt_btndmw; ?>px;display: block;}
 		.arbtt:visited, .arbtt:focus{color: #fff;outline: 0;}
-		.form-table input#arbtt_btndm.ardm {width: 72px;}
+		
 	</style>
 	<div class="arbtt-container" id="arbtt-container"> <a href="#" class="arbtt" id="arbtt"><span class="fa fa-<?php print_r($arbtt_fi); ?>"></span></a> </div>
 <?php } ?>
