@@ -143,11 +143,9 @@ function arbtt_enqueue_frontend() {
 	$arobj_array = array('a_value' => $dataToPass, 'sctoptime'=> $arbtt_fadein);
 	wp_localize_script( 'arbtt_custom_js', 'object_name', $arobj_array );
 }
-
-// require_once ( plugin_dir_path( __FILE__ ) . 'arb2t-fe.php' );
-
 add_action( 'wp_footer', 'arbtt_top' );
-function arbtt_top() { 
+function arbtt_top() {
+	global $arbtt_btndm;
 	$arbtt_bgc = (get_option('arbtt_bgc')) ? get_option('arbtt_bgc') : '#000';
 	$arbtt_fz = (get_option('arbtt_fz')) ? get_option('arbtt_fz') : '20';
 	$arbtt_clr = (get_option('arbtt_clr')) ? get_option('arbtt_clr') : '#fff';
@@ -155,15 +153,17 @@ function arbtt_top() {
 	$arbtt_btnoc = (get_option('arbtt_btnoc')) ? get_option('arbtt_btnoc') : '0.5';
 	$arbtt_fi = (get_option('arbtt_fi')) ? get_option('arbtt_fi') : 'arrow-up';
 	$arbtt_bdrd = (get_option('arbtt_bdrd')) ? get_option('arbtt_bdrd') : '0';
+
 	$arbtt_btndmw = (get_option($arbtt_btndm['w'])) ? get_option($arbtt_btndm['w']) : '40';
+	// var_dump($arbtt_btndmw);
 	$arbtt_btndmh = (get_option($arbtt_btndm['h'])) ? get_option($arbtt_btndm['h']) : '40'; 
 	$arbtt_enable = get_option('arbtt_enable');
 	$display = ($arbtt_enable) ? "block" : "none"; ?>
 	<style type="text/css">
 		#arbtt-container{ display: <?php echo $display; ?>; }
 		.arbtt {width:<?php echo $arbtt_btndmw; ?>px; height:<?php echo $arbtt_btndmh; ?>px;line-height:<?php echo $arbtt_btndmh; ?>;padding: 0;text-align:center;font-weight: bold;color:<?php echo $arbtt_clr; ?>!important;text-decoration: none!important;position: fixed;bottom:75px; <?php echo $arbtt_btnps; ?> :40px;display:none; background-color: <?php echo $arbtt_bgc; ?> !important;opacity: <?php echo $arbtt_btnoc; ?>;border-radius: <?php echo $arbtt_bdrd; ?>px;z-index: 9999;}
-		.arbtt:hover {color: <?php //echo $arbtt_bgc; ?> !important;background-color: <?php //echo $arbtt_clr; ?>!important;opacity: 0.7;}
-		.arbtt .fa{line-height: <?php echo $arbtt_btndmh; ?>px;font-size: <?php echo $arbtt_fz; ?>px;height: <?php echo $arbtt_btndmh; ?>px;width:<?php echo $arbtt_btndmw; ?>px;}
+		.arbtt:hover {opacity: 0.7;}
+		.arbtt .fa{line-height: <?php echo $arbtt_btndmh; ?>px;font-size: <?php echo $arbtt_fz; ?>px;height: <?php echo $arbtt_btndmh; ?>px;width:<?php echo $arbtt_btndmw; ?>px;display: block;}
 		.arbtt:visited, .arbtt:focus{color: #fff;outline: 0;}
 		.form-table input#arbtt_btndm.ardm {width: 72px;}
 	</style>
