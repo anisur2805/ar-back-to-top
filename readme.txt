@@ -13,7 +13,7 @@ AR Back To Top is a standard WordPress plugin for back to top.
 == Description ==
 AR Back To Top plugin will help them who don\'t wants to write code. For use this plugin simply download or add new plugin from WordPress plugin directory.
 
-Features
+## Features
 
 
 Displays a button when user scrolls down the page.
@@ -38,7 +38,7 @@ The Installation process is below
 
 Click Add New -> Plugins from the WordPress admin panel.
 
-Search for “AR Back To Top” and install.
+Search for â€œAR Back To Topâ€ and install.
 
 
 -or-
