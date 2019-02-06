@@ -25,10 +25,10 @@ AR Back To Top plugin will help them who don\'t wants to write code. For use thi
 - Go to plugins "Settings" page and enable the plugin.
 
 ### Frequently Asked Questions
-** Q. What does this do? **
+**Q. What does this do?**
 A. AR Back To Top will simply back you to top from bottom
 
-** Q. How do I customize my `AR Back To Top`, for example, to change the font? **
+**Q. How do I customize my `AR Back To Top`, for example, to change the font?**
 A. Go to `AR Back To Top` from admin dashboard and choose your desire options.
 
 For any questions, error reports and suggestions please email anisur2805@gmail.com
