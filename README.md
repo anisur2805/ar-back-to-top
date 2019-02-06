@@ -1,6 +1,6 @@
 # ar-back-to-top
 
-##AR Back To Top is a standard WordPress plugin for back to top. 
+## AR Back To Top is a standard WordPress plugin for back to top. 
 
 ### Description
 AR Back To Top plugin will help them who don\'t wants to write code. For use this plugin simply download or add new plugin from WordPress plugin directory.
