@@ -29,7 +29,7 @@ AR Back To Top plugin will help them who don\'t wants to write code. For use thi
 
 **Q. How do I customize my `AR Back To Top`, for example, to change the font?**
 
-`A. Go to **AR Back To Top** from admin dashboard and choose your desire options.`
+`A. Go to AR Back To Top from admin dashboard and choose your desire options.`
 
 
 For any questions, error reports and suggestions please email anisur2805@gmail.com
