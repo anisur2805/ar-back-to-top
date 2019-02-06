@@ -27,3 +27,7 @@ i.arw{
 select#arbtt_btnps {
 	width: 160px;
 }
+#arbtt_btnimg + img{
+	vertical-align: middle;
+	margin-top: -5px;
+}
