@@ -1,4 +1,4 @@
-# ar-back-to-top
+# AR Back To Top
 
 ## AR Back To Top is a standard WordPress plugin for back to top. 
 
