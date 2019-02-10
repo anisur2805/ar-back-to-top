@@ -1,7 +1,7 @@
 jQuery( document ).ready(function ( $ ) {
 'use strict';
 var sctop = object_name.a_value;
-var sctoptime = object_name.sctoptime;
+var sctoptime = parseInt(object_name.sctoptime);
 
     $(window).scroll(function () {
         if ($(this).scrollTop() > sctop) {
