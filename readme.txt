@@ -2,9 +2,9 @@
 Contributors: anisur8294
 Tags: ar back to top, back to top, scroll top, smooth scroll,
 Requires at least: 4.7
-Tested up to: 5.0.3
+Tested up to: 5.2
 Requires PHP: 5.2
-Stable tag: 1.0.3
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,7 @@ AR Back To Top is a standard WordPress plugin for back to top.
 == Description ==
 AR Back To Top plugin will help them who don\'t wants to write code. For use this plugin simply download or add new plugin from WordPress plugin directory.
 
-# Features
+**# Features**
 
 - Displays a button when user scrolls down the page.
 - You can set the position when button will show
@@ -24,7 +24,6 @@ AR Back To Top plugin will help them who don\'t wants to write code. For use thi
 - Set any button position you want.
 - No coding needed. Fully customizable.
 
-== Installation ==
 # The Installation process is below 
 
 - Click Add New from your WordPress admin panel,
@@ -34,14 +33,10 @@ AR Back To Top plugin will help them who don\'t wants to write code. For use thi
 - Go to plugins "Settings" page and enable the plugin.
 
 == Frequently Asked Questions ==
-Q. What does this do?
+**Q. What does this do?**
 A. AR Back To Top will simply back you to top from bottom
 
-Q. How do I customize my `AR Back To Top`, for example, to change the font?
+**Q. How do I customize my `AR Back To Top`, for example, to change the font?**
 A. Go to `AR Back To Top` from admin dashboard and choose your desire options.
 
 For any questions, error reports and suggestions please email anisur2805@gmail.com
-
-== Screenshots ==
-1. Set your setting
-2. How its look like
