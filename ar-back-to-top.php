@@ -16,7 +16,7 @@ Text Domain: arbtt
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 if( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-    require_once __DIR__ . '/vendor/autoload.php';
+	require_once __DIR__ . '/vendor/autoload.php';
 }
 
 require plugin_dir_path( __FILE__ ) . '/inc/assets.php';
