@@ -2,9 +2,9 @@
 Contributors: anisur8294
 Tags: ar back to top, back to top, scroll, scroll back to top, scroll up, scroll top, simple scroll to top, scroll to top, smooth scroll
 Requires at least: 6.2
-Tested up to: 6.2
+Tested up to: 6.3.1
 Requires PHP: 7.4
-Stable tag: 2.0.7
+Stable tag: 2.0.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,3 +60,12 @@ AR Back To Top will simply back you to top from bottom
 
 **How do I customize the plugin**
 Go to AR Back To Top Setting from admin dashboard and choose your desire options.
+
+## Privacy Policy
+AR Back To Top uses [Appsero](https://appsero.com) SDK to collect some telemetry data upon user's confirmation. This helps us to troubleshoot problems faster & make product improvements.
+
+Appsero SDK **does not gather any data by default.** The SDK only starts gathering basic telemetry data **when a user allows it via the admin notice**. We collect the data to ensure a great user experience for all our users.
+
+Integrating Appsero SDK **DOES NOT IMMEDIATELY** start gathering data, **without confirmation from users in any case.**
+
+Learn more about how [Appsero collects and uses this data](https://appsero.com/privacy-policy/).

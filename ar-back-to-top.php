@@ -1,35 +1,35 @@
 <?php
-/*
-Plugin Name: AR Back To Top
-Plugin URI: https://github.com/anisur2805/ar-back-to-top
-Description: AR Back To Top is a standard WordPress plugin for smooth back to top. AR Back To Top plugin will help those who don't want to write code. To use this plugin, simply download or add it from the WordPress plugin directory.
-Version: 2.0.7
-Author: Anisur Rahman
-Author URI: https://github.com/anisur2805
-Requires at least: 6.2
-Tested up to: 6.2
-Requires PHP: 7.4
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: arbtt
-*/
+/**
+ * Plugin Name: AR Back To Top
+ * Plugin URI: https://github.com/anisur2805/ar-back-to-top
+ * Description: AR Back To Top is a standard WordPress plugin for smooth back to top. AR Back To Top plugin will help those who don't want to write code. To use this plugin, simply download or add it from the WordPress plugin directory.
+ * Version: 2.0.9
+ * Author: Anisur Rahman
+ * Author URI: https://github.com/anisur2805
+ * Requires at least: 6.2
+ * Tested up to: 6.3.1
+ * Requires PHP: 7.4
+ * License: GPLv2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain: arbtt
+ *
+ * @package AR_Back_To_Top
+ */
+
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-if( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
 }
 
 require plugin_dir_path( __FILE__ ) . '/inc/assets.php';
 
-define( 'ARBTTOP_VERSION', '2.0.7' );
-
+define( 'ARBTTOP_VERSION', '2.0.9' );
 define( 'ARBTTOP_FILE', __FILE__ );
 define( 'ARBTTOP_PATH', __DIR__ );
 define( 'ARBTTOP_URL', plugins_url( '', __FILE__ ) );
 define( 'ARBTTOP_ASSETS', ARBTTOP_URL . '/assets' );
 define( 'ARBTTOP_INCLUDES', ARBTTOP_URL . '/inc' );
-
-
 
 /**
  * Initialize the plugin tracker
@@ -40,27 +40,34 @@ function appsero_init_tracker_ar_back_to_top() {
 
 	$client = new Appsero\Client( 'ca204cce-aa47-48b5-8f69-a5fb08fc49b3', 'AR Back To Top', __FILE__ );
 
-	// Active insights
+	// Active insights.
 	$client->insights()->init();
 
-	// Active automatic updater
+	// Active automatic updater.
 	$client->updater();
 }
 
 appsero_init_tracker_ar_back_to_top();
 
-
-
+/**
+ * Undocumented function
+ *
+ * @return void
+ */
 function arbtt_admin_page() {
-	add_menu_page( __( 'AR Back 2 top', 'arbtt' ), __( 'AR Back To Top', 'arbtt' ), 'manage_options', 'arbtt', 'arbtt_mp_cb', 'dashicons-arrow-up-alt', 100 );
+	add_menu_page( __( 'AR Back to top', 'arbtt' ), __( 'AR Back To Top', 'arbtt' ), 'manage_options', 'arbtt', 'arbtt_mp_cb', 'dashicons-arrow-up-alt', 100 );
 }
 add_action( 'admin_menu', 'arbtt_admin_page' );
 
+/**
+ * AR Back To Top Page Render
+ *
+ * @return void
+ */
 function arbtt_mp_cb() {
 	?>
 	<div class="wrap">
-		<?php // settings_errors(); ?>
-		<h1><?php echo __( 'Back to Top Options', 'arbtt' ); ?></h1>
+		<h1><?php esc_html_e( 'Back to Top Options', 'arbtt' ); ?></h1>
 		<form method="post" action="options.php" id="arbtt">
 			<?php
 			settings_fields( 'arbtt_ssection_id' );
@@ -71,70 +78,129 @@ function arbtt_mp_cb() {
 	</div>
 	<?php
 }
-function addFieldRegister( $id, $labelTxt, $slug, $idCallback, $registerId ) {
+
+/**
+ * Register Fields
+ *
+ * @param string    $id ID of the Field.
+ * @param string $text Label of Field.
+ * @param string $slug Slug of Field.
+ * @param string $callback Callback of Field.
+ * @param string $register_id Register Field ID.
+ * @return void
+ */
+function add_field_register( string $id, string $text, string $slug, string $callback, string $register_id ) {
+	$label = sprintf( '<label for="%s">%s</label>', $id, __( $text, $slug ) );
 
 	add_settings_field(
 		$id,
-		'<label for="' . $id . '">'
-		. __( $labelTxt, $slug ) .
-		'</label>',
-		$idCallback,
+		$label,
+		$callback,
 		$slug,
-		$registerId
+		$register_id
 	);
 
-	register_setting( $registerId, $id );
+	register_setting( $register_id, $id );
 }
-function callTest() {
-	addFieldRegister( 'arbtt_enable', 'Enable Back to top', 'arbtt', 'arbtt_enable_cb', 'arbtt_ssection_id' );
-	addFieldRegister( 'arbtt_bgc', 'Button Background Color', 'arbtt', 'arbtt_bgc_cb', 'arbtt_ssection_id' );
-	addFieldRegister( 'arbtt_clr', 'Button Color', 'arbtt', 'arbtt_clr_cb', 'arbtt_ssection_id' );
-	addFieldRegister( 'arbtt_bdrd', 'Button Border Radius', 'arbtt', 'arbtt_bdrd_cb', 'arbtt_ssection_id' );
-	addFieldRegister( 'arbtt_btnps', 'Button Position', 'arbtt', 'arbtt_btnps_cb', 'arbtt_ssection_id' );
-	addFieldRegister( 'arbtt_btnapr', 'Button Appear In Scroll After', 'arbtt', 'arbtt_btnapr_cb', 'arbtt_ssection_id' );
 
-	addFieldRegister( 'arbtt_btndm', 'Button Dimension', 'arbtt', 'arbtt_btndm_cb', 'arbtt_ssection_id' );
 
-	addFieldRegister( 'arbtt_btnoc', 'Button Opacity', 'arbtt', 'arbtt_btnoc_cb', 'arbtt_ssection_id' );
-	addFieldRegister( 'arbtt_fadein', 'Fade In', 'arbtt', 'arbtt_fadein_cb', 'arbtt_ssection_id' );
-	addFieldRegister( 'arbtt_fz', 'Font Size', 'arbtt', 'arbtt_fz_cb', 'arbtt_ssection_id' );
-	addFieldRegister( 'arbtt_hophone', __( 'Hide On Phone', 'arbtt' ), 'arbtt', 'arbtt_hophone_cb', 'arbtt_ssection_id' );
-	addFieldRegister( 'arbtt_pwidth', __( 'Phone Width', 'arbtt' ), 'arbtt', 'arbtt_pwidth_cb', 'arbtt_ssection_id' );
-	addFieldRegister( 'arbtt_btnst', __( 'Button Style', 'arbtt' ), 'arbtt', 'arbtt_btnst_cb', 'arbtt_ssection_id' );
+/**
+ * Callback
+ *
+ * @return void
+ */
+function call_test() {
+	add_field_register( 'arbtt_enable', 'Enable Back to top', 'arbtt', 'arbtt_enable_cb', 'arbtt_ssection_id' );
+	add_field_register( 'arbtt_bgc', 'Button Background Color', 'arbtt', 'arbtt_bgc_cb', 'arbtt_ssection_id' );
+	add_field_register( 'arbtt_clr', 'Button Color', 'arbtt', 'arbtt_clr_cb', 'arbtt_ssection_id' );
+	add_field_register( 'arbtt_bdrd', 'Button Border Radius', 'arbtt', 'arbtt_bdrd_cb', 'arbtt_ssection_id' );
+	add_field_register( 'arbtt_btnps', 'Button Position', 'arbtt', 'arbtt_btnps_cb', 'arbtt_ssection_id' );
+	add_field_register( 'arbtt_btnapr', 'Button Appear In Scroll After', 'arbtt', 'arbtt_btnapr_cb', 'arbtt_ssection_id' );
 
-	addFieldRegister( 'arbtt_fi', __( 'Font Icon', 'arbtt' ), 'arbtt', 'arbtt_fi_cb', 'arbtt_ssection_id' );
-	addFieldRegister( 'arbtt_btntx', __( 'Button Text', 'arbtt' ), 'arbtt', 'arbtt_btntx_cb', 'arbtt_ssection_id' );
-	addFieldRegister( 'arbtt_btnimg', __( 'Choose Button Image', 'arbtt' ), 'arbtt', 'arbtt_btnimg_cb', 'arbtt_ssection_id' );
-	addFieldRegister( 'arbtt_btnimg_url', __( 'External Image Url', 'arbtt' ), 'arbtt', 'arbtt_btnimg_url_cb', 'arbtt_ssection_id' );
+	add_field_register( 'arbtt_btndm', 'Button Dimension', 'arbtt', 'arbtt_btndm_cb', 'arbtt_ssection_id' );
+
+	add_field_register( 'arbtt_btnoc', 'Button Opacity', 'arbtt', 'arbtt_btnoc_cb', 'arbtt_ssection_id' );
+	add_field_register( 'arbtt_fadein', 'Fade In', 'arbtt', 'arbtt_fadein_cb', 'arbtt_ssection_id' );
+	add_field_register( 'arbtt_fz', 'Font Size', 'arbtt', 'arbtt_fz_cb', 'arbtt_ssection_id' );
+	add_field_register( 'arbtt_hophone', __( 'Hide On Phone', 'arbtt' ), 'arbtt', 'arbtt_hophone_cb', 'arbtt_ssection_id' );
+	add_field_register( 'arbtt_pwidth', __( 'Phone Width', 'arbtt' ), 'arbtt', 'arbtt_pwidth_cb', 'arbtt_ssection_id' );
+	add_field_register( 'arbtt_btnst', __( 'Button Style', 'arbtt' ), 'arbtt', 'arbtt_btnst_cb', 'arbtt_ssection_id' );
+
+	add_field_register( 'arbtt_fi', __( 'Font Icon', 'arbtt' ), 'arbtt', 'arbtt_fi_cb', 'arbtt_ssection_id' );
+	add_field_register( 'arbtt_btntx', __( 'Button Text', 'arbtt' ), 'arbtt', 'arbtt_btntx_cb', 'arbtt_ssection_id' );
+	add_field_register( 'arbtt_btnimg', __( 'Choose Button Image', 'arbtt' ), 'arbtt', 'arbtt_btnimg_cb', 'arbtt_ssection_id' );
+	add_field_register( 'arbtt_btnimg_url', __( 'External Image Url', 'arbtt' ), 'arbtt', 'arbtt_btnimg_url_cb', 'arbtt_ssection_id' );
 }
-add_action( 'admin_init', 'callTest' );
+add_action( 'admin_init', 'call_test' );
 
+/**
+ * Display Option
+ *
+ * @return void
+ */
 function arbtt_display() {
 	add_settings_section( 'arbtt_ssection_id', __( 'Choose Your Option', 'arbtt' ), 'arbtt_idss', 'arbtt' );
 }
+
+/**
+ * IDSS
+ *
+ * @return void
+ */
 function arbtt_idss() {
-	echo '';}
+	echo '';
+}
+
+/**
+ * Enable Checkbox
+ *
+ * @return void
+ */
 function arbtt_enable_cb() {
 	?>
 	<input type="checkbox" name="arbtt_enable" id="arbtt_enable" value="1"<?php checked( '1', get_option( 'arbtt_enable' ) ); ?>>
 	<?php
 }
+
+/**
+ * Background Color
+ *
+ * @return void
+ */
 function arbtt_bgc_cb() {
 	?>
 	<input type="text" name="arbtt_bgc" class="arcs" id="arbtt_bgc" placeholder="#000" value="<?php echo get_option( 'arbtt_bgc' ); ?>"/>
 	<?php
 }
+
+/**
+ * Color Callback
+ *
+ * @return void
+ */
 function arbtt_clr_cb() {
 	?>
 	<input type="text" name="arbtt_clr" class="arcs" id="arbtt_clr" class="arbtt_clr" placeholder="#f5f5f5" value="<?php echo get_option( 'arbtt_clr' ); ?>"/>
 	<?php
 }
+
+/**
+ * Border Callback
+ *
+ * @return void
+ */
 function arbtt_bdrd_cb() {
 	?>
 	<input type="number" name="arbtt_bdrd" class="aras" id="arbtt_bdrd" class="arbtt_bdrd" placeholder="1" value="<?php echo get_option( 'arbtt_bdrd' ); ?>"/>
 	<span class="description"><?php echo __( 'px', 'arbtt' ); ?></span>
 	<?php
 }
+
+/**
+ * Button Position Callback
+ *
+ * @return void
+ */
 function arbtt_btnps_cb() {
 	?>
 	<select name="arbtt_btnps" id="arbtt_btnps">
@@ -143,6 +209,12 @@ function arbtt_btnps_cb() {
 	</select>
 	<?php
 }
+
+/**
+ * Button Callback
+ *
+ * @return void
+ */
 function arbtt_btnapr_cb() {
 	?>
 	<input type="number" name="arbtt_btnapr" class="aras arbtt_btnapr" id="arbtt_btnapr" placeholder="100" value="<?php echo get_option( 'arbtt_btnapr' ); ?>"/>
@@ -150,6 +222,11 @@ function arbtt_btnapr_cb() {
 	<?php
 }
 
+/**
+ * Button Width
+ *
+ * @return void
+ */
 function arbtt_btndm_cb() {
 	$arbtt_btndm = get_option( 'arbtt_btndm' );
 	?>
@@ -157,6 +234,12 @@ function arbtt_btndm_cb() {
 	<span class="description"><?php echo __( 'Width & Height (px)', 'arbtt' ); ?></span>
 	<?php
 }
+
+/**
+ * Undocumented function
+ *
+ * @return void
+ */
 function arbtt_btnoc_cb() {
 	?>
 	<input type="text" min="0.0" max="1.0" name="arbtt_btnoc" class="aras arbtt_btnoc" id="arbtt_btnoc" placeholder="0.6" value="<?php echo get_option( 'arbtt_btnoc' ); ?>"/>
@@ -164,7 +247,11 @@ function arbtt_btnoc_cb() {
 	<?php
 }
 
-
+/**
+ * Button Icon
+ *
+ * @return void
+ */
 function arbtt_fi_cb() {
 	?>
 	<label for="arbtt_fi_0">
@@ -186,21 +273,36 @@ function arbtt_fi_cb() {
 	<?php
 }
 
+/**
+ * Button label
+ *
+ * @return void
+ */
 function arbtt_btntx_cb() {
 	echo '<input type="text" name="arbtt_btntx" class="aras arbtt_btntx" id="arbtt_btntx" placeholder="Top" value="' . get_option( 'arbtt_btntx' ) . '"/>
 	<span class="description"> ' . __( 'Button Text', 'arbtt' ) . ' </span>';
 }
 
+/**
+ * Button URL
+ *
+ * @return void
+ */
 function arbtt_btnimg_url_cb() {
 	?>
 	<?php $external_img_url = ( get_option( 'arbtt_btnimg_url' ) ) ? ( get_option( 'arbtt_btnimg_url' ) ) : ARBTTOP_ASSETS . '/images/Back-to-Top.png'; ?>
 	<input type="text" name="arbtt_btnimg_url" class="aras arbtt_btnimg_url" id="arbtt_btnimg_url" placeholder="Enter external image url here" value="<?php echo get_option( 'arbtt_btnimg_url' ); ?>"/>
 
-	<img src="<?php echo $external_img_url; ?>" width="25" height="25"/><br/>
-	<span class="description"><?php echo __( 'External Image URL', 'arbtt' ); ?></span>
+	<img src="<?php echo esc_url( $external_img_url ); ?>" width="25" height="25"/><br/>
+	<span class="description"><?php esc_html_e( 'External Image URL', 'arbtt' ); ?></span>
 	<?php
 }
 
+/**
+ * Button Images
+ *
+ * @return void
+ */
 function arbtt_btnimg_cb() {
 	$images = array(
 		'0' => 'arbtt.png',
@@ -222,23 +324,46 @@ function arbtt_btnimg_cb() {
 	}
 }
 
+/**
+ * Button Animation
+ *
+ * @return void
+ */
 function arbtt_fadein_cb() {
 	?>
 	<input type="number" name="arbtt_fadein" class="aras arbtt_fadein" id="arbtt_fadein" placeholder="950" value="<?php echo get_option( 'arbtt_fadein' ); ?>"/>
 	<span class="description"><?php echo __( 'Mili-second', 'arbtt' ); ?></span>
 	<?php
 }
+
+/**
+ * Button Font size
+ *
+ * @return void
+ */
 function arbtt_fz_cb() {
 	?>
 	<input type="number" min="14" name="arbtt_fz" class="aras arbtt_fz" id="arbtt_fz" placeholder="24px" value="<?php echo get_option( 'arbtt_fz' ); ?>"/>
 	<span class="description"><?php echo __( 'px', 'arbtt' ); ?></span>
 	<?php
 }
+
+/**
+ * Button hide on phone
+ *
+ * @return void
+ */
 function arbtt_hophone_cb() {
 	?>
 	<input type="checkbox" name="arbtt_hophone" id="arbtt_hophone" value="1"<?php checked( '1', get_option( 'arbtt_hophone' ) ); ?>><span class="description"><?php echo __( 'Checked for hide icon on phone' ); ?> </span> 
-																								<?php
+	<?php
 }
+
+/**
+ * Button hide on phone at
+ *
+ * @return void
+ */
 function arbtt_pwidth_cb() {
 	global $arbtt_pwidth;
 	$arbtt_pwidth = get_option( 'arbtt_pwidth' );
@@ -247,6 +372,12 @@ function arbtt_pwidth_cb() {
 	<span class="description"><?php echo __( 'px', 'arbtt' ); ?></span>
 	<?php
 }
+
+/**
+ * Button Type
+ *
+ * @return void
+ */
 function arbtt_btnst_cb() {
 	?>
 	<select name="arbtt_btnst" id="arbtt_btnst">
@@ -263,6 +394,11 @@ add_action( 'admin_init', 'arbtt_display' );
 
 
 add_action( 'wp_footer', 'arbtt_top' );
+/**
+ * Load style in Footer
+ *
+ * @return void
+ */
 function arbtt_top() {
 	$arbtt_btndm = ( get_option( 'arbtt_btndm' )['w'] ) ? get_option( 'arbtt_btndm' )['w'] : 40;
 
@@ -318,52 +454,74 @@ function arbtt_top() {
 	<?php
 	if ( $arbtt_hophone == '1' ) {
 		?>
-		@media(max-width: <?php echo $abc; ?>px){ #arbtt-container{display:none; }} <?php } ?>
+		@media(max-width: <?php echo $abc; ?>px){ #arbtt-container{display:none; }} 
+	<?php } ?>
 </style>
 <div class="arbtt-container" id="arbtt-container"> 
 	<a class="arbtt" id="arbtt">
-		<?php if ( $arbtt_btnst == 'fa' ) : ?>
-			<span class="fa fa-<?php echo $arbtt_fi; ?>"></span>
-			<?php elseif ( $arbtt_btnst == 'txt' ) : ?>
-				<?php echo $arbtt_btntx; ?>
-				<?php elseif ( $arbtt_btnst == 'img' ) : ?>
-					<img src='<?php echo esc_url( ARBTTOP_ASSETS . "/images/$arbtt_btnimg" ); ?>'/>
-				<?php endif; ?>
+		<?php if ( 'fa' == $arbtt_btnst ) : ?>
+		<span class="fa fa-<?php echo $arbtt_fi; ?>"></span>
+		<?php elseif ( $arbtt_btnst == 'txt' ) : ?>
+			<?php echo $arbtt_btntx; ?>
+			<?php elseif ( $arbtt_btnst == 'img' ) : ?>
+				<img src='<?php echo esc_url( ARBTTOP_ASSETS . "/images/$arbtt_btnimg" ); ?>'/>
+			<?php endif; ?>
 
-			</a>
-		</div>
+		</a>
+	</div>
 	<?php
 }
 
-	register_activation_hook( __FILE__, 'arbtt_activation' );
-
+/**
+ * Plugin Activation Action
+ *
+ * @return void
+ */
 function arbtt_activation() {
 	$arbtt_option = get_option( 'arbtt_option' );
 	add_option( 'arbtt_do_activation_redirect', true );
 }
-	add_action( 'admin_init', 'arbtt_redirect' );
+register_activation_hook( __FILE__, 'arbtt_activation' );
 
+/**
+ * Redirect After active plugin
+ *
+ * @return void
+ */
 function arbtt_redirect() {
 	if ( get_option( 'arbtt_do_activation_redirect', false ) ) {
 		delete_option( 'arbtt_do_activation_redirect' );
-
-		// wp_safe_redirect( 'options-general.php?page=arbtt' );
-
 	}
 }
+add_action( 'admin_init', 'arbtt_redirect' );
 
-// remove option on uninstall
+/**
+ * Remove option on uninstall
+ *
+ * @return void
+ */
 function arbtt_uninstall_hook() {
 	if ( ! current_user_can( 'manage_options' ) ) {
 		return;
 	}
 	delete_option( 'arbtt' );
 }
-	register_uninstall_hook( __FILE__, 'arbtt_uninstall_hook' );
+register_uninstall_hook( __FILE__, 'arbtt_uninstall_hook' );
 
-	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'arbtt_action_links' );
+/**
+ * Action Links
+ *
+ * @param array $links Action Links.
+ * @return array
+ */
 function arbtt_action_links( $links ) {
 	$links[] = '<a href="' . esc_url( get_admin_url( null, 'options-general.php?page=arbtt' ) ) . '">Settings</a>';
 	$links[] = '<a href="https://github.com/anisur2805/ar-back-to-top" target="_blank">Support</a>';
 	return $links;
 }
+add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'arbtt_action_links' );
+
+
+
+require_once __DIR__ . '/inc/Settings.php';
+require_once __DIR__ . '/inc/Frontend.php';
