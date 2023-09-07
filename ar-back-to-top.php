@@ -350,7 +350,7 @@ function arbtt_redirect() {
 	}
 }
 
-	// remove option on uninstall
+// remove option on uninstall
 function arbtt_uninstall_hook() {
 	if ( ! current_user_can( 'manage_options' ) ) {
 		return;
