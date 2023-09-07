@@ -4,7 +4,7 @@ Tags: ar back to top, back to top, scroll, scroll back to top, scroll up, scroll
 Requires at least: 6.2
 Tested up to: 6.3.1
 Requires PHP: 7.4
-Stable tag: 2.0.9
+Stable tag: 2.10.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 

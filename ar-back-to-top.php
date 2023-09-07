@@ -3,7 +3,7 @@
  * Plugin Name: AR Back To Top
  * Plugin URI: https://github.com/anisur2805/ar-back-to-top
  * Description: AR Back To Top is a standard WordPress plugin for smooth back to top. AR Back To Top plugin will help those who don't want to write code. To use this plugin, simply download or add it from the WordPress plugin directory.
- * Version: 2.0.9
+ * Version: 2.10.0
  * Author: Anisur Rahman
  * Author URI: https://github.com/anisur2805
  * Requires at least: 6.2
@@ -24,7 +24,7 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 
 require plugin_dir_path( __FILE__ ) . '/inc/assets.php';
 
-define( 'ARBTTOP_VERSION', '2.0.9' );
+define( 'ARBTTOP_VERSION', '2.10.0' );
 define( 'ARBTTOP_FILE', __FILE__ );
 define( 'ARBTTOP_PATH', __DIR__ );
 define( 'ARBTTOP_URL', plugins_url( '', __FILE__ ) );

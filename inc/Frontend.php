@@ -3,7 +3,7 @@
  * Frontend File
  *
  * @package AR_Back_To_Top
- * @since 2.0.9
+ * @since 2.10.0
  */
 
 /**
