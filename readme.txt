@@ -39,6 +39,16 @@ AR Back To Top plugin will help them who don't wants to write code. For use this
 
 == Upgrade Notice ==
 
+= 2.10.0 =
+
++ Added Missing Readme.
+
+= 2.0.9 =
+
++ Added Single Post View Page Word(s), Character(s), View(s) Count.
++ Added Meta Info View Position Like: Top/Bottom/Both of Content.
++ Code Structure Improve.
+
 = 2.0.4 =
 
 Update WordPress and PHP compatible version.

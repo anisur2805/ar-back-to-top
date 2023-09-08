@@ -5,6 +5,9 @@ AR Back To Top plugin will help them who don\'t wants to write code. For use thi
 
 ### Features
 
+- Added Single Post View Page Word(s), Character(s), View(s) Count.
+- Added Meta Info View Position Like: Top/Bottom/Both of Content.
+- Code Structure Improve.
 - Displays a button when user scrolls down the page.
 - You can set the position when button will show
 - Scrolls the page back to top with smooth animation.
