@@ -1,1 +1,57 @@
 #arbtt .form-table th{padding:12px 10px 8px 0;vertical-align:middle}#arbtt .form-table td{padding:8px 10px 8px 0}#arbtt input.arcs{height:28px;width:160px;padding-left:26px}#arbtt input.aras{height:28px;width:160px;padding-left:5px}i.arw{font-size:16px;line-height:16px;vertical-align:top;margin:0 10px 0 0}.form-table input#arbtt_btndm.ardm{width:72px!important}select#arbtt_btnps{width:160px} .arbtt-image {display: inline-flex; align-items: center;} .arbtt-image label {display: inline-flex; align-items: center;margin-right: 10px;}  .arbtt-image label input {margin: 0 8px 0 0 !important;}
+
+
+.ar-btt-wrap .ar-btt-toggle {
+    cursor: pointer;
+}
+
+.ar-btt-wrap .ar-btt-toggle-switch {
+    display: inline-block;
+    background: #ccc;
+    border-radius: 16px;
+    width: 44px;
+    height: 22px;
+    position: relative;
+    vertical-align: middle;
+    transition: background 0.25s;
+}
+
+.ar-btt-wrap .ar-btt-toggle-switch:before {
+    content: "";
+    display: block;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: none;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 3px;
+    left: 4px;
+    transition: left 0.25s;
+}
+
+.ar-btt-wrap .ar-btt-toggle-checkbox:checked + .ar-btt-toggle-switch {
+    background-color: #2271b1;
+}
+
+.ar-btt-wrap .ar-btt-toggle-checkbox:checked + .ar-btt-toggle-switch:before {
+    left: 24px;
+}
+
+.ar-btt-wrap .ar-btt-toggle-checkbox {
+    position: absolute;
+    visibility: hidden;
+}
+
+.ar-btt-wrap .ar-btt-tooltip-container {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+    background: black;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+}
