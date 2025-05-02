@@ -22,8 +22,6 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
 }
 
-require plugin_dir_path( __FILE__ ) . '/inc/assets.php';
-
 define( 'ARBTTOP_VERSION', '2.10.0' );
 define( 'ARBTTOP_FILE', __FILE__ );
 define( 'ARBTTOP_PATH', __DIR__ );
@@ -529,7 +527,6 @@ function arbtt_action_links( $links ) {
 }
 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'arbtt_action_links' );
 
-
-
 require_once __DIR__ . '/inc/Settings.php';
 require_once __DIR__ . '/inc/Frontend.php';
+require_once __DIR__ . '/inc/assets.php';
