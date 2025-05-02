@@ -4,7 +4,7 @@
  * Main Assets class for enqueue admin and frontend assets
  */
 
-class AR_Back_To_Top_Assets {
+class AR_Assets {
 	public function __construct() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'frontend_enqueue' ) );
@@ -43,4 +43,4 @@ class AR_Back_To_Top_Assets {
 	}
 }
 
-new AR_Back_To_Top_Assets();
+new AR_Assets();

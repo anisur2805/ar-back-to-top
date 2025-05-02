@@ -111,9 +111,9 @@ class AR_Back_To_Top {
 
 	public function load_class_files() {
 		$class_files = array(
-			'inc/Settings.php',
-			'inc/Frontend.php',
-			'inc/class-assets.php',
+			'inc/class-ar-settings-menu.php',
+			'inc/class-ar-frontend.php',
+			'inc/class-ar-assets.php',
 		);
 
 		foreach ( $class_files as $class_file ) {
@@ -175,7 +175,7 @@ class AR_Back_To_Top {
 	public function render_admin_page() {
 		?>
 		<div class="wrap ar-btt-wrap">
-			<h1><?php esc_html_e( 'Back To Top Options', 'arbtt' ); ?></h1>
+			<h1><?php esc_html_e( 'Back To Top', 'arbtt' ); ?></h1>
 			<form method="post" action="options.php" id="arbtt">
 				<?php
 				settings_fields( 'arbtt_ssection_id' );
@@ -245,7 +245,7 @@ class AR_Back_To_Top {
 	public function add_settings_section() {
 		add_settings_section(
 			'arbtt_ssection_id',
-			__( 'Choose Your Option', 'arbtt' ),
+			__( 'Back To Top Settings', 'arbtt' ),
 			array( $this, 'render_section_description' ),
 			'arbtt'
 		);
@@ -570,20 +570,9 @@ class AR_Back_To_Top {
 			return;
 		}
 
+		require_once ARBTTOP_PATH . '/inc/dynamic-style.css.php';
+
 		?>
-		<style type="text/css">
-		#arbtt-container{ display: <?php echo esc_attr( $display ); ?>; }
-		.arbtt {width:<?php echo esc_attr( $btnwidth ); ?>px; height:<?php echo esc_attr( $btnheight ); ?>px;line-height:<?php echo esc_attr( $btnheight ); ?>px;padding: <?php echo esc_attr( $btnpadding ); ?>px;text-align:center;font-weight: bold;color:<?php echo esc_attr( $arbtt_clr ); ?>!important;text-decoration: none!important;position: fixed;bottom:75px; <?php echo esc_attr( $arbtt_btnps ); ?> :40px;display:none; background-color: <?php echo esc_attr( $arbtt_bgc ); ?> !important;opacity: <?php echo esc_attr( $arbtt_btnoc ); ?>;border-radius: <?php echo esc_attr( $arbtt_bdrd ); ?>px;z-index: 9999;}
-		.arbtt:hover {opacity: 0.7;cursor: pointer;}
-		.arbtt .fa{line-height: <?php echo esc_attr( $btnheight ); ?>px;font-size: <?php echo esc_attr( $arbtt_fz ); ?>px;height: <?php echo esc_attr( $btnheight ); ?>px;width:<?php echo esc_attr( $btnwidth ); ?>px;display: block;}
-		.arbtt:visited, .arbtt:focus{color: #fff;outline: 0;}
-		.arbtt img {height: calc(<?php echo esc_attr( $btnheight ); ?>px - 10px);width:  calc(<?php echo esc_attr( $btnwidth ); ?>px - 10px);margin: -4px 0 0;padding: 0;vertical-align: middle;}
-		<?php
-		if ( '1' === $arbtt_hophone ) {
-			?>
-			@media(max-width: <?php echo esc_attr( $arbtt_pwidth ); ?>px){ #arbtt-container{display:none; }} 
-		<?php } ?>
-		</style>
 		<div class="arbtt-container" id="arbtt-container"> 
 			<a class="arbtt" id="arbtt">
 				<?php if ( 'fa' === $arbtt_btnst ) : ?>
