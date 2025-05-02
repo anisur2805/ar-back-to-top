@@ -55,7 +55,8 @@ appsero_init_tracker_ar_back_to_top();
  * @return void
  */
 function arbtt_admin_page() {
-	add_menu_page( __( 'AR Back to top', 'arbtt' ), __( 'AR Back To Top', 'arbtt' ), 'manage_options', 'arbtt', 'arbtt_mp_cb', 'dashicons-arrow-up-alt', 100 );
+	add_menu_page( __( 'AR Back to top', 'arbtt' ), __( 'Back To Top', 'arbtt' ), 'manage_options', 'arbtt', 'arbtt_mp_cb', 'dashicons-arrow-up-alt', 100 );
+	add_submenu_page( 'arbtt', __( 'AR Back To Top', 'arbtt' ), __( 'Dashboard', 'arbtt' ), 'manage_options', 'arbtt', 'arbtt_mp_cb' );
 }
 add_action( 'admin_menu', 'arbtt_admin_page' );
 
