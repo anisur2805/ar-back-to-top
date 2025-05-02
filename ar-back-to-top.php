@@ -209,8 +209,8 @@ class AR_Back_To_Top {
 		$this->register_field( 'arbtt_btnoc', 'Button Opacity', 'arbtt', array( $this, 'render_btnoc_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_fadein', 'Fade In', 'arbtt', array( $this, 'render_fadein_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_fz', 'Font Size', 'arbtt', array( $this, 'render_fz_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_hophone', __( 'Hide On Phone', 'arbtt' ), 'arbtt', array( $this, 'render_hophone_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_pwidth', __( 'Phone Width', 'arbtt' ), 'arbtt', array( $this, 'render_pwidth_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_hophone', __( 'Hide Button on Mobile Devices', 'arbtt' ), 'arbtt', array( $this, 'render_hophone_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_pwidth', __( 'Mobile Breakpoint Width', 'arbtt' ), 'arbtt', array( $this, 'render_pwidth_field' ), 'arbtt_ssection_id' );
 	}
 
 	/**
@@ -359,7 +359,7 @@ class AR_Back_To_Top {
 		$btn_padding       = isset( $arbtt_btn_padding['p'] ) && ! empty( $arbtt_btn_padding['p'] ) ? $arbtt_btn_padding['p'] : 10;
 		?>
 		<input type="number" name="arbtt_btn_padding[p]" class="aras arbtt_btn_padding ardm" id="arbtt_btn_padding" placeholder="10" value="<?php echo esc_attr( $btn_padding ); ?>"/>
-		<span class="description"><?php echo __( 'Padding (px)', 'arbtt' ); ?></span>
+		<span class="description"><?php echo __( '(px)', 'arbtt' ); ?></span>
 		<?php
 	}
 
@@ -485,7 +485,7 @@ class AR_Back_To_Top {
 		<label class="ar-btt-toggle" for="arbtt_hophone">
 			<input type="checkbox" name="arbtt_hophone" id="arbtt_hophone" value="1"<?php checked( '1', esc_attr( get_option( 'arbtt_hophone' ) ) ); ?> class="ar-btt-toggle-checkbox">
 			<div class="ar-btt-toggle-switch"></div>
-			<span class="description"><?php echo __( 'Checked for hide icon on phone' ); ?> </span>
+			<span class="description"><?php echo __( 'Checked for hide icon on mobile' ); ?> </span>
 		</label>
 		<?php
 	}
@@ -499,6 +499,7 @@ class AR_Back_To_Top {
 		?>
 		<input type="number" name="arbtt_pwidth" class="aras arbtt_pwidth" id="arbtt_pwidth" placeholder="767" value="<?php echo esc_attr( get_option( 'arbtt_pwidth' ) ); ?>"/>
 		<span class="description"><?php echo __( 'px', 'arbtt' ); ?></span>
+		<p><?php echo __( 'Enter the width of the screen at which the button should be hidden on mobile devices.', 'arbtt' ); ?></p>
 		<?php
 	}
 
@@ -525,18 +526,19 @@ class AR_Back_To_Top {
 	 */
 	public function render_back_to_top() {
 		$defaults = array(
-			'bgc'    => '#000',
-			'fz'     => '20',
-			'clr'    => '#fff',
-			'btnps'  => 'right',
-			'btnoc'  => '0.5',
-			'bdrd'   => '5',
-			'btntx'  => 'Top',
-			'fi'     => 'arrow-up',
-			'btnst'  => 'txt',
-			'btnimg' => 'arbtt6.png',
-			'pwidth' => '767',
-			'enable' => '0',
+			'bgc'     => '#000',
+			'fz'      => '20',
+			'clr'     => '#fff',
+			'btnps'   => 'right',
+			'btnoc'   => '0.5',
+			'bdrd'    => '5',
+			'btntx'   => 'Top',
+			'fi'      => 'arrow-up',
+			'btnst'   => 'txt',
+			'btnimg'  => 'arbtt6.png',
+			'pwidth'  => '767',
+			'enable'  => '0',
+			'hophone' => '0',
 		);
 
 		// Get scalar options with fallback
@@ -552,7 +554,7 @@ class AR_Back_To_Top {
 		$arbtt_btnst   = get_option( 'arbtt_btnst' ) ? get_option( 'arbtt_btnst' ) : $defaults['btnst'];
 		$arbtt_btnimg  = get_option( 'arbtt_btnimg' ) ? get_option( 'arbtt_btnimg' ) : $defaults['btnimg'];
 		$arbtt_pwidth  = get_option( 'arbtt_pwidth' ) ? get_option( 'arbtt_pwidth' ) : $defaults['pwidth'];
-		$arbtt_hophone = get_option( 'arbtt_hophone' );
+		$arbtt_hophone = get_option( 'arbtt_hophone' ) ? get_option( 'arbtt_hophone' ) : $defaults['hophone'];
 
 		// Handle button dimensions
 		$arbtt_btndm = get_option( 'arbtt_btndm', array() );
