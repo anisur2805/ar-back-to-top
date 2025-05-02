@@ -11,8 +11,11 @@ class AR_Assets {
 	}
 
 	public function admin_enqueue( $hook ) {
-		if ( 'toplevel_page_arbtt' === $hook ) {
+		if ( 'toplevel_page_arbtt' === $hook || 'back-to-top_page_arbtt-settings' === $hook ) {
 			wp_enqueue_style( 'arbtt_admin', ARBTTOP_ASSETS . '/css/admin-style.css', array(), ARBTTOP_VERSION, 'all' );
+		}
+
+		if ( 'toplevel_page_arbtt' === $hook ) {
 			wp_enqueue_style( 'jquery_minicolors', ARBTTOP_ASSETS . '/minicolors/jquery.minicolors.css', array(), '1.0', 'all' );
 			wp_enqueue_style( 'arbtt_fa', ARBTTOP_ASSETS . '/css/font-awesome.min.css', array(), '1.0', 'all' );
 			wp_enqueue_script( 'arbtt_minucolor_js', ARBTTOP_ASSETS . '/minicolors/jquery.minicolors.min.js', array( 'jquery' ), '1.0', true );
