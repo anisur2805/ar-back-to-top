@@ -1,1 +1,19 @@
-jQuery(document).ready(function(t){"use strict";var e=object_name.a_value,a=parseInt(object_name.sctoptime);t(window).scroll(function(){t(this).scrollTop()>e?t(".arbtt").fadeIn():t(".arbtt").fadeOut()}),t(".arbtt").click(function(){return t("html , body").animate({scrollTop:0},a),!1})});
+;(function ($) {
+	"use strict";
+
+	var visibleAfter = parseInt(arbtt_obj.btn_visible_after),
+		fadeDuration = parseInt(arbtt_obj.fade_in);
+
+	$(window).on("scroll", function () {
+		if ($(this).scrollTop() > visibleAfter) {
+			$(".arbtt").fadeIn();
+		} else {
+			$(".arbtt").fadeOut();
+		}
+	});
+
+	$(".arbtt").on("click", function (e) {
+		e.preventDefault();
+		$("html, body").animate({ scrollTop: 0 }, fadeDuration);
+	});
+})(jQuery);
