@@ -66,7 +66,7 @@ add_action( 'admin_menu', 'arbtt_admin_page' );
  */
 function arbtt_mp_cb() {
 	?>
-	<div class="wrap">
+	<div class="wrap ar-btt-wrap">
 		<h1><?php esc_html_e( 'Back to Top Options', 'arbtt' ); ?></h1>
 		<form method="post" action="options.php" id="arbtt">
 			<?php
@@ -158,7 +158,10 @@ function arbtt_idss() {
  */
 function arbtt_enable_cb() {
 	?>
-	<input type="checkbox" name="arbtt_enable" id="arbtt_enable" value="1"<?php checked( '1', get_option( 'arbtt_enable' ) ); ?>>
+	<label class="ar-btt-toggle" for="arbtt_enable">
+		<input type="checkbox" name="arbtt_enable" id="arbtt_enable" value="1"<?php checked( '1', get_option( 'arbtt_enable' ) ); ?> class="ar-btt-toggle-checkbox">
+		<div class="ar-btt-toggle-switch"></div>
+	</label>
 	<?php
 }
 
@@ -355,7 +358,11 @@ function arbtt_fz_cb() {
  */
 function arbtt_hophone_cb() {
 	?>
-	<input type="checkbox" name="arbtt_hophone" id="arbtt_hophone" value="1"<?php checked( '1', get_option( 'arbtt_hophone' ) ); ?>><span class="description"><?php echo __( 'Checked for hide icon on phone' ); ?> </span> 
+	<label class="ar-btt-toggle" for="arbtt_hophone">
+		<input type="checkbox" name="arbtt_hophone" id="arbtt_hophone" value="1"<?php checked( '1', get_option( 'arbtt_hophone' ) ); ?> class="ar-btt-toggle-checkbox">
+		<div class="ar-btt-toggle-switch"></div>
+		<span class="description"><?php echo __( 'Checked for hide icon on phone' ); ?> </span>
+	</label>
 	<?php
 }
 
