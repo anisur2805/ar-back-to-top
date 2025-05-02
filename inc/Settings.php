@@ -59,7 +59,7 @@ class Settings_Menu_Page {
 		add_submenu_page(
 			'arbtt',
 			__( 'Single Post Settings', 'arbtt' ),
-			__( 'Settings', 'arbtt' ),
+			__( 'Single Post', 'arbtt' ),
 			'manage_options',
 			'arbtt-settings',
 			array( $this, 'settings_render' ),
