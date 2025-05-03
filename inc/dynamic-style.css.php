@@ -4,8 +4,8 @@
 	}
 
 	.arbtt {
-		width: <?php echo esc_attr( $btnwidth ); ?>px;
-		height: <?php echo esc_attr( $btnheight ); ?>px;
+		/*width: <?php echo esc_attr( $btnwidth ); ?>px;
+		height: <?php echo esc_attr( $btnheight ); ?>px;*/
 		line-height: <?php echo esc_attr( $btnheight ); ?>px;
 		padding: <?php echo esc_attr( $btnpadding ); ?>px;
 		text-align: center;
@@ -13,25 +13,29 @@
 		color: <?php echo esc_attr( $arbtt_clr ); ?> !important;
 		text-decoration: none !important;
 		position: fixed;
-		bottom: 75px;
-		<?php echo esc_attr( $arbtt_btnps ); ?>: 40px;
+		bottom: <?php echo esc_attr( $arbtt_btn_offset_bottom ); ?>px;
+		<?php echo esc_attr( $arbtt_btnps ); ?>: <?php echo esc_attr( 'left' === $arbtt_btnps ? $arbtt_btn_offset_left : $arbtt_btn_offset_right ); ?>px;
 		display: none;
 		background-color: <?php echo esc_attr( $arbtt_bgc ); ?> !important;
 		opacity: <?php echo esc_attr( $arbtt_btnoc ); ?>;
 		border-radius: <?php echo esc_attr( $arbtt_bdrd ); ?>px;
 		z-index: 9999;
+		border: <?php echo esc_attr( $arbtt_bdr ); ?>px solid <?php echo esc_attr( $arbtt_bdr_color ); ?>;
 	}
 
 	.arbtt:hover {
 		opacity: 0.7;
 		cursor: pointer;
+		background-color: <?php echo esc_attr( $arbtt_bgc_hover ); ?> !important;
+		color: <?php echo esc_attr( $arbtt_clr_hover ); ?> !important;
+		border-color: <?php echo esc_attr( $arbtt_bdr_color_hover ); ?> !important;
 	}
 
 	.arbtt .fa {
 		line-height: <?php echo esc_attr( $btnheight ); ?>px;
 		font-size: <?php echo esc_attr( $arbtt_fz ); ?>px;
-		height: <?php echo esc_attr( $btnheight ); ?>px;
-		width: <?php echo esc_attr( $btnwidth ); ?>px;
+		/*height: <?php echo esc_attr( $btnheight ); ?>px;
+		width: <?php echo esc_attr( $btnwidth ); ?>px;*/
 		display: block;
 	}
 
@@ -49,11 +53,53 @@
 		vertical-align: middle;
 	}
 
-	<?php if ( '1' === $arbtt_hophone ) : ?>
-		@media (max-width: <?php echo esc_attr( $arbtt_pwidth ); ?>px) {
-			#arbtt-container {
-				display: none;
+	<?php
+	// Convert boolean flags and integer values
+	$hide_on_tablet = $arbtt_hide_on_tablet === '1';
+	$hide_on_phone  = $arbtt_hide_on_phone === '1';
+	$phone_width    = (int) $arbtt_pwidth; // Custom mobile width from settings
+	$tablet_width   = (int) $arbtt_twidth; // Standard tablet breakpoint
+
+	// Only output styles if at least one device type is selected for hiding
+	if ( $hide_on_tablet || $hide_on_phone ) :
+		// Create appropriate media queries based on selections
+		if ( $hide_on_tablet && $hide_on_phone ) {
+			// Both device types are selected - create two separate media queries
+			?>
+			/* Hide on mobile devices up to the specified width */
+			@media (max-width: <?php echo esc_attr( $phone_width ); ?>px) {
+				#arbtt-container {
+					display: none !important;
+				}
 			}
+			
+			/* Hide on tablet devices up to 768px */
+			@media (min-width: <?php echo esc_attr( $phone_width + 1 ); ?>px) and (max-width: <?php echo esc_attr( $tablet_width ); ?>px) {
+				#arbtt-container {
+					display: none !important;
+				}
+			}
+			<?php
+		} elseif ( $hide_on_phone ) {
+			// Only hide on mobile devices
+			?>
+			@media (max-width: <?php echo esc_attr( $phone_width ); ?>px) {
+				#arbtt-container {
+					display: none !important;
+				}
+			}
+			<?php
+		} elseif ( $hide_on_tablet ) {
+			// Only hide on tablet devices
+			?>
+			@media (max-width: <?php echo esc_attr( $tablet_width ); ?>px) and (min-width: <?php echo esc_attr( $phone_width + 1 ); ?>px) {
+				#arbtt-container {
+					display: none !important;
+				}
+			}
+			<?php
 		}
-	<?php endif; ?>
+endif;
+	?>
+
 </style>

@@ -194,22 +194,34 @@ class AR_Back_To_Top {
 	 */
 	public function register_settings() {
 		$this->register_field( 'arbtt_enable', 'Enable Back To Top', 'arbtt', array( $this, 'render_enable_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_enable_scroll_progress', 'Enable Scroll Progress', 'arbtt', array( $this, 'render_enable_scroll_progress_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_btnst', __( 'Button Style', 'arbtt' ), 'arbtt', array( $this, 'render_btnst_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_fi', __( 'Font Icon', 'arbtt' ), 'arbtt', array( $this, 'render_fi_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_btntx', __( 'Button Text', 'arbtt' ), 'arbtt', array( $this, 'render_btntx_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_btnimg', __( 'Choose Button Image', 'arbtt' ), 'arbtt', array( $this, 'render_btnimg_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_btnimg_url', __( 'External Image Url', 'arbtt' ), 'arbtt', array( $this, 'render_btnimg_url_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_btn_img', __( 'Choose Button Image', 'arbtt' ), 'arbtt', array( $this, 'render_btnimg_field' ), 'arbtt_ssection_id' );
+		// $this->register_field( 'arbtt_btn_custom_icon', __( 'Custom Icon URL', 'arbtt' ), 'arbtt', array( $this, 'render_btn_custom_icon_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_btn_img_url', __( 'External Image Url', 'arbtt' ), 'arbtt', array( $this, 'render_btnimg_url_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_bgc', 'Button Background Color', 'arbtt', array( $this, 'render_bgc_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_bgc_hover', 'Button Background Hover Color', 'arbtt', array( $this, 'render_bgc_hover_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_clr', 'Button Color', 'arbtt', array( $this, 'render_clr_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_clr_hover', 'Button Color Hover', 'arbtt', array( $this, 'render_clr_hover_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_bdrd', 'Button Border Radius', 'arbtt', array( $this, 'render_bdrd_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_bdr', 'Button Border', 'arbtt', array( $this, 'render_bdr_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_bdr_color', 'Button Border Color', 'arbtt', array( $this, 'render_bdr_color_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_bdr_color_hover', 'Button Hover Border Color', 'arbtt', array( $this, 'render_bdr_color_hover_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_btnps', 'Button Position', 'arbtt', array( $this, 'render_btnps_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_btn_offset_bottom', 'Button Offset Bottom', 'arbtt', array( $this, 'render_btn_offset_bottom_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_btn_offset_right', 'Button Offset Right', 'arbtt', array( $this, 'render_btn_offset_right_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_btn_offset_left', 'Button Offset Left', 'arbtt', array( $this, 'render_btn_offset_left_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_btnapr', 'Button Appear In Scroll After', 'arbtt', array( $this, 'render_btnapr_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_btndm', 'Button Dimension', 'arbtt', array( $this, 'render_btndm_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_btn_padding', 'Button Padding', 'arbtt', array( $this, 'render_btn_padding_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_btnoc', 'Button Opacity', 'arbtt', array( $this, 'render_btnoc_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_fadein', 'Fade In', 'arbtt', array( $this, 'render_fadein_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_fadein', 'Button Scroll Duration', 'arbtt', array( $this, 'render_fadein_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_fz', 'Font Size', 'arbtt', array( $this, 'render_fz_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_hophone', __( 'Hide Button on Mobile Devices', 'arbtt' ), 'arbtt', array( $this, 'render_hophone_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_hide_on_tablet', __( 'Hide Button on Tablet Devices', 'arbtt' ), 'arbtt', array( $this, 'render_hotablet_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_twidth', __( 'Tablet Breakpoint Width', 'arbtt' ), 'arbtt', array( $this, 'render_twidth_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_hide_on_phone', __( 'Hide Button on Mobile Devices', 'arbtt' ), 'arbtt', array( $this, 'render_hophone_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_pwidth', __( 'Mobile Breakpoint Width', 'arbtt' ), 'arbtt', array( $this, 'render_pwidth_field' ), 'arbtt_ssection_id' );
 	}
 
@@ -275,13 +287,38 @@ class AR_Back_To_Top {
 	}
 
 	/**
+	 * Render enable scroll progress field
+	 *
+	 * @return void
+	 */
+	public function render_enable_scroll_progress_field() {
+		?>
+		<label class="ar-btt-toggle" for="arbtt_enable_scroll_progress">
+			<input type="checkbox" name="arbtt_enable_scroll_progress" id="arbtt_enable_scroll_progress" value="1"<?php checked( '1', esc_attr( get_option( 'arbtt_enable_scroll_progress' ) ) ); ?> class="ar-btt-toggle-checkbox">
+			<div class="ar-btt-toggle-switch"></div>
+		</label>
+		<?php
+	}
+
+	/**
 	 * Render background color field
 	 *
 	 * @return void
 	 */
 	public function render_bgc_field() {
 		?>
-		<input type="text" name="arbtt_bgc" class="arcs" id="arbtt_bgc" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bgc' ) ); ?>"/>
+		<input type="text" name="arbtt_bgc" class="arcs ar-btt-color" id="arbtt_bgc" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bgc' ) ); ?>"/>
+		<?php
+	}
+
+	/**
+	 * Render background hover color field
+	 *
+	 * @return void
+	 */
+	public function render_bgc_hover_field() {
+		?>
+		<input type="text" name="arbtt_bgc_hover" class="arcs ar-btt-color" id="arbtt_bgc_hover" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bgc_hover' ) ); ?>"/>
 		<?php
 	}
 
@@ -292,7 +329,52 @@ class AR_Back_To_Top {
 	 */
 	public function render_clr_field() {
 		?>
-		<input type="text" name="arbtt_clr" class="arcs" id="arbtt_clr" placeholder="#f5f5f5" value="<?php echo esc_attr( get_option( 'arbtt_clr' ) ); ?>"/>
+		<input type="text" name="arbtt_clr" class="arcs ar-btt-color" id="arbtt_clr" placeholder="#f5f5f5" value="<?php echo esc_attr( get_option( 'arbtt_clr' ) ); ?>"/>
+		<?php
+	}
+
+	/**
+	 * Render color hover field
+	 *
+	 * @return void
+	 */
+	public function render_clr_hover_field() {
+		?>
+		<input type="text" name="arbtt_clr_hover" class="arcs ar-btt-color" id="arbtt_clr_hover" placeholder="#f5f5f5" value="<?php echo esc_attr( get_option( 'arbtt_clr_hover' ) ); ?>"/>
+		<?php
+	}
+
+	/**
+	 * Render border field
+	 *
+	 * @return void
+	 */
+	public function render_bdr_field() {
+		?>
+		<input type="number" name="arbtt_bdr" class="aras" id="arbtt_bdr" placeholder="2" value="<?php echo esc_attr( get_option( 'arbtt_bdr' ) ); ?>"/>
+		<span class="description"><?php echo __( 'px', 'arbtt' ); ?></span>
+		<?php
+	}
+
+	/**
+	 * Render border color field
+	 *
+	 * @return void
+	 */
+	public function render_bdr_color_field() {
+		?>
+		<input type="text" name="arbtt_bdr_color" class="arcs ar-btt-color" id="arbtt_bdr_color" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bdr_color' ) ); ?>"/>
+		<?php
+	}
+
+	/**
+	 * Render border color hover field
+	 *
+	 * @return void
+	 */
+	public function render_bdr_color_hover_field() {
+		?>
+		<input type="text" name="arbtt_bdr_color_hover" class="arcs ar-btt-color" id="arbtt_bdr_color_hover" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bdr_color_hover' ) ); ?>"/>
 		<?php
 	}
 
@@ -319,6 +401,27 @@ class AR_Back_To_Top {
 			<option value="left"<?php selected( 'left', esc_attr( get_option( 'arbtt_btnps' ) ) ); ?>><?php echo __( 'Left Side', 'arbtt' ); ?></option>
 			<option value="right"<?php selected( 'right', esc_attr( get_option( 'arbtt_btnps' ) ) ); ?>><?php echo __( 'Right Side', 'arbtt' ); ?></option>
 		</select>
+		<?php
+	}
+
+	public function render_btn_offset_bottom_field() {
+		?>
+		<input type="number" name="arbtt_btn_offset_bottom" class="aras arbtt_btn_offset_bottom" id="arbtt_btn_offset_bottom" placeholder="100" value="<?php echo esc_attr( get_option( 'arbtt_btn_offset_bottom' ) ); ?>"/>
+		<span class="description"><?php echo __( 'px', 'arbtt' ); ?></span>
+		<?php
+	}
+
+	public function render_btn_offset_right_field() {
+		?>
+		<input type="number" name="arbtt_btn_offset_right" class="aras arbtt_btn_offset_right" id="arbtt_btn_offset_right" placeholder="100" value="<?php echo esc_attr( get_option( 'arbtt_btn_offset_right' ) ); ?>"/>
+		<span class="description"><?php echo __( 'px', 'arbtt' ); ?></span>
+		<?php
+	}
+
+	public function render_btn_offset_left_field() {
+		?>
+		<input type="number" name="arbtt_btn_offset_left" class="aras arbtt_btn_offset_left" id="arbtt_btn_offset_left" placeholder="100" value="<?php echo esc_attr( get_option( 'arbtt_btn_offset_left' ) ); ?>"/>
+		<span class="description"><?php echo __( 'px', 'arbtt' ); ?></span>
 		<?php
 	}
 
@@ -382,22 +485,24 @@ class AR_Back_To_Top {
 	 */
 	public function render_fi_field() {
 		?>
-		<label for="arbtt_fi_0">
-			<input type="radio" name="arbtt_fi" class="arbtt_fi" id="arbtt_fi_0" value="angle-up"<?php checked( 'angle-up', esc_attr( get_option( 'arbtt_fi' ) ) ); ?>"/>
-			<i class="fa fa-angle-up arw"></i>
-		</label>
-		<label for="arbtt_fi_1">
-			<input type="radio" name="arbtt_fi" class="arbtt_fi" id="arbtt_fi_1" value="arrow-circle-o-up"<?php checked( 'arrow-circle-o-up', esc_attr( get_option( 'arbtt_fi' ) ) ); ?>"/>
-			<i class="fa fa-arrow-circle-o-up arw"></i>
-		</label>
-		<label for="arbtt_fi_2">
-			<input type="radio" name="arbtt_fi" class="arbtt_fi" id="arbtt_fi_2" value="arrow-circle-up"<?php checked( 'arrow-circle-up', esc_attr( get_option( 'arbtt_fi' ) ) ); ?>"/>
-			<i class="fa fa-arrow-circle-up arw"></i>
-		</label>
-		<label for="arbtt_fi_3">
-			<input type="radio" name="arbtt_fi" class="arbtt_fi" id="arbtt_fi_3" value="arrow-up"<?php checked( 'arrow-up', esc_attr( get_option( 'arbtt_fi' ) ) ); ?>"/>
-			<i class="fa fa-arrow-up arw"></i>
-		</label>
+		<?php $selected_icon = esc_attr( get_option( 'arbtt_fi', 'fa-angle-up' ) ); ?>
+		<div class="arbtt-fa-picker-wrap">
+			<input type="text" id="arbtt_fi_picker" name="arbtt_fi" value="<?php echo $selected_icon; ?>" class="regular-text" readonly />
+			<i class="fa <?php echo $selected_icon; ?> arbtt-preview-icon"></i>
+			<button type="button" class="button arbtt-open-icon-picker">Select Icon</button>
+		</div>
+
+		<div id="arbtt-fa-icon-modal" style="display:none;">
+			<div class="arbtt-fa-modal-content">
+				<div class="arbtt-fa-modal-header">
+					<h2>Font Awesome Icons</h2>
+					<button type="button" class="arbtt-close-icon-picker">Close</button>
+				</div>
+				<input type="text" id="arbtt-fa-search" placeholder="Search icon..." class="regular-text" />
+				<div class="arbtt-fa-icon-list"><!-- Icon list will be appended by JS --></div>
+			</div>
+		</div>
+
 		<?php
 	}
 
@@ -417,9 +522,9 @@ class AR_Back_To_Top {
 	 * @return void
 	 */
 	public function render_btnimg_url_field() {
-		$external_img_url = ( get_option( 'arbtt_btnimg_url' ) ) ? ( get_option( 'arbtt_btnimg_url' ) ) : ARBTTOP_ASSETS . '/images/Back-to-Top.png';
+		$external_img_url = ( get_option( 'arbtt_btn_img_url' ) ) ? ( get_option( 'arbtt_btn_img_url' ) ) : ARBTTOP_ASSETS . '/images/Back-to-Top.png';
 		?>
-		<input type="text" name="arbtt_btnimg_url" class="aras arbtt_btnimg_url" id="arbtt_btnimg_url" placeholder="Enter external image url here" value="<?php echo esc_attr( get_option( 'arbtt_btnimg_url' ) ); ?>"/>
+		<input type="text" name="arbtt_btn_img_url" class="aras arbtt_btn_img_url" id="arbtt_btn_img_url" placeholder="Enter external image url here" value="<?php echo esc_attr( get_option( 'arbtt_btn_img_url' ) ); ?>"/>
 		<img src="<?php echo esc_url( $external_img_url ); ?>" width="25" height="25"/><br/>
 		<span class="description"><?php esc_html_e( 'External Image URL', 'arbtt' ); ?></span>
 		<?php
@@ -442,8 +547,8 @@ class AR_Back_To_Top {
 		foreach ( $images as $key => $image ) {
 			?>
 			<div class="arbtt-image">
-				<label for="arbtt_btnimg_<?php echo $key; ?>">
-					<input type="radio" name="arbtt_btnimg" id="arbtt_btnimg_<?php echo $key; ?>" class="arbtt_btnimg" value="<?php echo $image; ?>"<?php checked( $image, esc_attr( get_option( 'arbtt_btnimg' ) ) ); ?>/>
+				<label for="arbtt_btn_img_<?php echo $key; ?>">
+					<input type="radio" name="arbtt_btn_img" id="arbtt_btn_img_<?php echo $key; ?>" class="arbtt_btn_img" value="<?php echo $image; ?>"<?php checked( $image, esc_attr( get_option( 'arbtt_btn_img' ) ) ); ?>/>
 					<img width="25" height="25" src="<?php echo esc_url( ARBTTOP_ASSETS . '/images/' . $image ); ?>">
 				</label>
 			</div>
@@ -459,7 +564,7 @@ class AR_Back_To_Top {
 	public function render_fadein_field() {
 		?>
 		<input type="number" name="arbtt_fadein" class="aras arbtt_fadein" id="arbtt_fadein" placeholder="950" value="<?php echo esc_attr( get_option( 'arbtt_fadein' ) ); ?>"/>
-		<span class="description"><?php echo __( 'Mili-second', 'arbtt' ); ?></span>
+		<span class="description"><?php echo __( 'ms', 'arbtt' ); ?></span>
 		<?php
 	}
 
@@ -482,10 +587,25 @@ class AR_Back_To_Top {
 	 */
 	public function render_hophone_field() {
 		?>
-		<label class="ar-btt-toggle" for="arbtt_hophone">
-			<input type="checkbox" name="arbtt_hophone" id="arbtt_hophone" value="1"<?php checked( '1', esc_attr( get_option( 'arbtt_hophone' ) ) ); ?> class="ar-btt-toggle-checkbox">
+		<label class="ar-btt-toggle" for="arbtt_hide_on_phone">
+			<input type="checkbox" name="arbtt_hide_on_phone" id="arbtt_hide_on_phone" value="1"<?php checked( '1', esc_attr( get_option( 'arbtt_hide_on_phone' ) ) ); ?> class="ar-btt-toggle-checkbox arbtt-toggle-next" data-toggle-next="1">
 			<div class="ar-btt-toggle-switch"></div>
 			<span class="description"><?php echo __( 'Checked for hide icon on mobile' ); ?> </span>
+		</label>
+		<?php
+	}
+
+	/**
+	 * Render hide on tablet field
+	 *
+	 * @return void
+	 */
+	public function render_hotablet_field() {
+		?>
+		<label class="ar-btt-toggle" for="arbtt_hide_on_tablet">
+			<input type="checkbox" name="arbtt_hide_on_tablet" id="arbtt_hide_on_tablet" value="1"<?php checked( '1', esc_attr( get_option( 'arbtt_hide_on_tablet' ) ) ); ?> class="ar-btt-toggle-checkbox arbtt-toggle-next" data-toggle-next="1">
+			<div class="ar-btt-toggle-switch"></div>
+			<span class="description"><?php echo __( 'Checked for hide icon on tablet' ); ?> </span>
 		</label>
 		<?php
 	}
@@ -504,6 +624,19 @@ class AR_Back_To_Top {
 	}
 
 	/**
+	 * Render tablet width field
+	 *
+	 * @return void
+	 */
+	public function render_twidth_field() {
+		?>
+		<input type="number" name="arbtt_twidth" class="aras arbtt_twidth" id="arbtt_twidth" placeholder="1024" value="<?php echo esc_attr( get_option( 'arbtt_twidth' ) ); ?>"/>
+		<span class="description"><?php echo __( 'px', 'arbtt' ); ?></span>
+		<p><?php echo __( 'Enter the width of the screen at which the button should be hidden on tablet devices.', 'arbtt' ); ?></p>
+		<?php
+	}
+
+	/**
 	 * Render button style field
 	 *
 	 * @return void
@@ -513,8 +646,10 @@ class AR_Back_To_Top {
 		<select name="arbtt_btnst" id="arbtt_btnst">
 			<option value="" selected="selected"><?php echo __( 'Select Option', 'arbtt' ); ?></option>
 			<option value="fa"<?php selected( 'fa', esc_attr( get_option( 'arbtt_btnst' ) ) ); ?>><?php echo __( 'Font Awesome Icon', 'arbtt' ); ?></option>
-			<option value="txt"<?php selected( 'txt', esc_attr( get_option( 'arbtt_btnst' ) ) ); ?>><?php echo __( 'Text', 'arbtt' ); ?></option>
-			<option value="img"<?php selected( 'img', esc_attr( get_option( 'arbtt_btnst' ) ) ); ?>><?php echo __( 'Image', 'arbtt' ); ?></option>
+			<option value="txt"<?php selected( 'txt', esc_attr( get_option( 'arbtt_btnst' ) ) ); ?>><?php echo __( 'Text Only', 'arbtt' ); ?></option>
+			<option value="img"<?php selected( 'img', esc_attr( get_option( 'arbtt_btnst' ) ) ); ?>><?php echo __( 'Image Only', 'arbtt' ); ?></option>
+			<option value="both"<?php selected( 'both', esc_attr( get_option( 'arbtt_btnst' ) ) ); ?>><?php echo __( 'Both', 'arbtt' ); ?></option>
+			<option value="external"<?php selected( 'external', esc_attr( get_option( 'arbtt_btnst' ) ) ); ?>><?php echo __( 'External Image URL', 'arbtt' ); ?></option>
 		</select>
 		<?php
 	}
@@ -526,35 +661,57 @@ class AR_Back_To_Top {
 	 */
 	public function render_back_to_top() {
 		$defaults = array(
-			'bgc'     => '#000',
-			'fz'      => '20',
-			'clr'     => '#fff',
-			'btnps'   => 'right',
-			'btnoc'   => '0.5',
-			'bdrd'    => '5',
-			'btntx'   => 'Top',
-			'fi'      => 'arrow-up',
-			'btnst'   => 'txt',
-			'btnimg'  => 'arbtt6.png',
-			'pwidth'  => '767',
-			'enable'  => '0',
-			'hophone' => '0',
+			'bgc'                    => '#000',
+			'fz'                     => '20',
+			'clr'                    => '#fff',
+			'btnps'                  => 'right',
+			'btnoc'                  => '0.5',
+			'bdrd'                   => '5',
+			'btntx'                  => 'Top',
+			'fi'                     => 'arrow-up',
+			'btnst'                  => 'txt',
+			'btnimg'                 => 'arbtt6.png',
+			'enable'                 => '0',
+			'hophone'                => '0',
+			'bdr'                    => '2',
+			'bdr_color'              => '#fff',
+			'bgc_hover'              => '#fff',
+			'clr_hover'              => '#fff',
+			'enable_scroll_progress' => '0',
+			'hotablet'               => '0',
+			'pwidth'                 => '767',
+			'twidth'                 => '1024',
+			'btn_offset_bottom'      => '100',
+			'btn_offset_right'       => '100',
+			'btn_offset_left'        => '100',
+			'bdr_color_hover'        => '#fff',
 		);
 
 		// Get scalar options with fallback
-		$arbtt_bgc     = get_option( 'arbtt_bgc' ) ? get_option( 'arbtt_bgc' ) : $defaults['bgc'];
-		$arbtt_enable  = get_option( 'arbtt_enable' ) ? get_option( 'arbtt_enable' ) : $defaults['enable'];
-		$arbtt_fz      = get_option( 'arbtt_fz' ) ? get_option( 'arbtt_fz' ) : $defaults['fz'];
-		$arbtt_clr     = get_option( 'arbtt_clr' ) ? get_option( 'arbtt_clr' ) : $defaults['clr'];
-		$arbtt_btnps   = get_option( 'arbtt_btnps' ) ? get_option( 'arbtt_btnps' ) : $defaults['btnps'];
-		$arbtt_btnoc   = get_option( 'arbtt_btnoc' ) ? get_option( 'arbtt_btnoc' ) : $defaults['btnoc'];
-		$arbtt_bdrd    = get_option( 'arbtt_bdrd' ) ? get_option( 'arbtt_bdrd' ) : $defaults['bdrd'];
-		$arbtt_btntx   = get_option( 'arbtt_btntx' ) ? get_option( 'arbtt_btntx' ) : $defaults['btntx'];
-		$arbtt_fi      = get_option( 'arbtt_fi' ) ? get_option( 'arbtt_fi' ) : $defaults['fi'];
-		$arbtt_btnst   = get_option( 'arbtt_btnst' ) ? get_option( 'arbtt_btnst' ) : $defaults['btnst'];
-		$arbtt_btnimg  = get_option( 'arbtt_btnimg' ) ? get_option( 'arbtt_btnimg' ) : $defaults['btnimg'];
-		$arbtt_pwidth  = get_option( 'arbtt_pwidth' ) ? get_option( 'arbtt_pwidth' ) : $defaults['pwidth'];
-		$arbtt_hophone = get_option( 'arbtt_hophone' ) ? get_option( 'arbtt_hophone' ) : $defaults['hophone'];
+		$arbtt_bgc                    = get_option( 'arbtt_bgc' ) ? get_option( 'arbtt_bgc' ) : $defaults['bgc'];
+		$arbtt_bgc_hover              = get_option( 'arbtt_bgc_hover' ) ? get_option( 'arbtt_bgc_hover' ) : $defaults['bgc_hover'];
+		$arbtt_enable                 = get_option( 'arbtt_enable' ) ? get_option( 'arbtt_enable' ) : $defaults['enable'];
+		$arbtt_enable_scroll_progress = get_option( 'arbtt_enable_scroll_progress' ) ? get_option( 'arbtt_enable_scroll_progress' ) : $defaults['enable_scroll_progress'];
+		$arbtt_fz                     = get_option( 'arbtt_fz' ) ? get_option( 'arbtt_fz' ) : $defaults['fz'];
+		$arbtt_clr                    = get_option( 'arbtt_clr' ) ? get_option( 'arbtt_clr' ) : $defaults['clr'];
+		$arbtt_clr_hover              = get_option( 'arbtt_clr_hover' ) ? get_option( 'arbtt_clr_hover' ) : $defaults['clr_hover'];
+		$arbtt_btnps                  = get_option( 'arbtt_btnps' ) ? get_option( 'arbtt_btnps' ) : $defaults['btnps'];
+		$arbtt_btn_offset_bottom      = get_option( 'arbtt_btn_offset_bottom' ) ? get_option( 'arbtt_btn_offset_bottom' ) : $defaults['btn_offset_bottom'];
+		$arbtt_btn_offset_right       = get_option( 'arbtt_btn_offset_right' ) ? get_option( 'arbtt_btn_offset_right' ) : $defaults['btn_offset_right'];
+		$arbtt_btn_offset_left        = get_option( 'arbtt_btn_offset_left' ) ? get_option( 'arbtt_btn_offset_left' ) : $defaults['btn_offset_left'];
+		$arbtt_btnoc                  = get_option( 'arbtt_btnoc' ) ? get_option( 'arbtt_btnoc' ) : $defaults['btnoc'];
+		$arbtt_bdrd                   = get_option( 'arbtt_bdrd' ) ? get_option( 'arbtt_bdrd' ) : $defaults['bdrd'];
+		$arbtt_bdr_color              = get_option( 'arbtt_bdr_color' ) ? get_option( 'arbtt_bdr_color' ) : $defaults['bdr_color'];
+		$arbtt_bdr_color_hover        = get_option( 'arbtt_bdr_color_hover' ) ? get_option( 'arbtt_bdr_color_hover' ) : $defaults['bdr_color_hover'];
+		$arbtt_bdr                    = get_option( 'arbtt_bdr' ) ? get_option( 'arbtt_bdr' ) : $defaults['bdr'];
+		$arbtt_btntx                  = get_option( 'arbtt_btntx' ) ? get_option( 'arbtt_btntx' ) : $defaults['btntx'];
+		$arbtt_fi                     = get_option( 'arbtt_fi' ) ? get_option( 'arbtt_fi' ) : $defaults['fi'];
+		$arbtt_btnst                  = get_option( 'arbtt_btnst' ) ? get_option( 'arbtt_btnst' ) : $defaults['btnst'];
+		$arbtt_btn_img                 = get_option( 'arbtt_btn_img' ) ? get_option( 'arbtt_btn_img' ) : $defaults['btnimg'];
+		$arbtt_pwidth                 = get_option( 'arbtt_pwidth' ) ? get_option( 'arbtt_pwidth' ) : $defaults['pwidth'];
+		$arbtt_twidth                 = get_option( 'arbtt_twidth' ) ? get_option( 'arbtt_twidth' ) : $defaults['twidth'];
+		$arbtt_hide_on_phone          = get_option( 'arbtt_hide_on_phone' ) ? get_option( 'arbtt_hide_on_phone' ) : $defaults['hophone'];
+		$arbtt_hide_on_tablet         = get_option( 'arbtt_hide_on_tablet' ) ? get_option( 'arbtt_hide_on_tablet' ) : $defaults['hotablet'];
 
 		// Handle button dimensions
 		$arbtt_btndm = get_option( 'arbtt_btndm', array() );
@@ -578,11 +735,11 @@ class AR_Back_To_Top {
 		<div class="arbtt-container" id="arbtt-container"> 
 			<a class="arbtt" id="arbtt">
 				<?php if ( 'fa' === $arbtt_btnst ) : ?>
-				<span class="fa fa-<?php echo esc_attr( $arbtt_fi ); ?>"></span>
+				<span class="<?php echo esc_attr( $arbtt_fi ); ?>"></span>
 				<?php elseif ( 'txt' === $arbtt_btnst ) : ?>
 					<?php echo esc_attr( $arbtt_btntx ); ?>
 				<?php elseif ( 'img' === $arbtt_btnst ) : ?>
-					<img src='<?php echo esc_url( ARBTTOP_ASSETS . "/images/$arbtt_btnimg" ); ?>'/>
+					<img src='<?php echo esc_url( ARBTTOP_ASSETS . "/images/$arbtt_btn_img" ); ?>'/>
 				<?php endif; ?>
 			</a>
 			</div>

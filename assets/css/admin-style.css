@@ -55,3 +55,109 @@
     text-align: center;
     line-height: 20px;
 }
+
+
+/* Font Awesome Popup */
+.arbtt-preview-icon {
+    margin: 0 10px;
+    font-size: 18px;
+    vertical-align: middle;
+    background: #ddd;
+    width: 40px;
+    height: 30px;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+#arbtt-fa-icon-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 80%;
+    background: #fff;
+    border: 1px solid #ccc;
+    overflow: auto;
+    z-index: 999999;
+    padding: 20px;
+    box-sizing: border-box;
+    transform: translate(-50%, -50%);
+}
+
+body.arbtt-modal-open::after {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.65);
+    z-index: 99999;
+    content: '';
+    display: block;
+}
+
+.arbtt-fa-modal-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.arbtt-fa-modal-header h2 {
+    margin: 0 0 20px;
+
+}
+
+.arbtt-fa-modal-header button {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    cursor: pointer;
+    border: 0;
+    background: #eb3a3a;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.arbtt-fa-modal-content {
+    max-height: 100%;
+}
+.arbtt-fa-icon-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.arbtt-fa-icon-list i {
+    padding: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+    width: 80px;
+    height: 60px;
+    border: 1px solid #eeeeee;
+    box-sizing: border-box;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    transition: all 0.25s;
+}
+
+.arbtt-fa-icon-list i:hover {
+    border-color: #007cba;
+    background: #f0f8ff;
+}
+
+.arbtt-fa-picker-wrap > input {
+    width: fit-content;
+}
+
+.arbtt-fa-picker-wrap {
+    display: flex;
+    align-items: center;
+}
