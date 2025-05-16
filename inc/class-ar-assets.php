@@ -8,6 +8,7 @@ class AR_Assets {
 	public function __construct() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'frontend_enqueue' ) );
+		add_filter( 'script_loader_tag', array( $this, 'script_loader_tag' ), 10, 3 );
 	}
 
 	public function admin_enqueue( $hook ) {
@@ -23,6 +24,27 @@ class AR_Assets {
 		}
 	}
 
+	/**
+	 * Script loader tag
+	 *
+	 * @param string $tag
+	 * @param string $handle
+	 * @param string $src
+	 *
+	 * @return string
+	 */
+	public function script_loader_tag( $tag, $handle, $src ) {
+		if ( 'arbtt_custom_js' === $handle && 'on' === get_option( 'arbtt_is_async' ) ) {
+			return '<script src="' . esc_url( $src ) . '" defer></script>';
+		}
+		return $tag;
+	}
+
+	/**
+	 * Enqueue frontend assets
+	 *
+	 * @return void
+	 */
 	public static function frontend_enqueue() {
 		$extension_enabled = get_option( 'arbtt_enable', false );
 

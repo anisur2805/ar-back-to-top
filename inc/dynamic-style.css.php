@@ -4,8 +4,10 @@
 	}
 
 	.arbtt {
-		/*width: <?php echo esc_attr( $btnwidth ); ?>px;
-		height: <?php echo esc_attr( $btnheight ); ?>px;*/
+		<?php if ( ! in_array( $arbtt_btnst, array( 'txt', 'both' ), true ) ) : ?>
+		width: <?php echo esc_attr( $btnwidth ); ?>px;
+		height: <?php echo esc_attr( $btnheight ); ?>px;
+		<?php endif; ?>
 		line-height: <?php echo esc_attr( $btnheight ); ?>px;
 		padding: <?php echo esc_attr( $btnpadding ); ?>px;
 		text-align: center;
@@ -21,6 +23,7 @@
 		border-radius: <?php echo esc_attr( $arbtt_bdrd ); ?>px;
 		z-index: 9999;
 		border: <?php echo esc_attr( $arbtt_bdr ); ?>px solid <?php echo esc_attr( $arbtt_bdr_color ); ?>;
+		transition: all 0.3s ease-in-out;
 	}
 
 	.arbtt:hover {
