@@ -4,7 +4,7 @@ Tags: back to top, scroll to top, scroll top, scroll up, smooth top button
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.11.0
+Stable tag: 2.10.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,7 +37,7 @@ AR Back To Top plugin will help them who don't wants to write code. For use this
 
 == Installation ==
 
-## 🔧 Install via WordPress Dashboard
+###Install via WordPress Dashboard
 
 1. Log in to your WordPress admin panel.
 2. Navigate to **Plugins → Add New**.
@@ -47,7 +47,7 @@ AR Back To Top plugin will help them who don't wants to write code. For use this
 
 ---
 
-## 📦 Manual Installation (ZIP Upload)
+###Manual Installation (ZIP Upload)
 
 1. Visit the [WordPress.org Plugins Directory](https://wordpress.org/plugins/) and search for **AR Back To Top**.
 2. Download the plugin `.zip` file to your computer.
@@ -57,7 +57,7 @@ AR Back To Top plugin will help them who don't wants to write code. For use this
 
 ---
 
-## 📁 Install via FTP or File Manager
+###Install via FTP or File Manager
 
 1. Download the plugin ZIP file from [WordPress.org](https://wordpress.org/plugins/).
 2. Extract the contents of the ZIP file to your computer.
@@ -70,7 +70,7 @@ AR Back To Top plugin will help them who don't wants to write code. For use this
 
 == Changelog ==
 
-= 2.11.0 =
+= 2.11.1 =
 
 + Added Load JS Async/Defer Option for Performance
 + Added Custom CSS
@@ -113,6 +113,8 @@ AR Back To Top will simply back you to top from bottom
 
 **How do I customize the plugin**
 Go to AR Back To Top Setting from admin dashboard and choose your desire options.
+
+For any questions, error reports and suggestions please email anisur2805@gmail.com
 
 ## Privacy Policy
 AR Back To Top uses [Appsero](https://appsero.com) SDK to collect some telemetry data upon user's confirmation. This helps us to troubleshoot problems faster & make product improvements.
