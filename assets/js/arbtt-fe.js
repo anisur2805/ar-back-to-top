@@ -1,19 +1,3 @@
-;(function ($) {
-	"use strict";
-
-	var visibleAfter = parseInt(arbtt_obj.btn_visible_after),
-		fadeDuration = parseInt(arbtt_obj.fade_in);
-
-	$(window).on("scroll", function () {
-		if ($(this).scrollTop() > visibleAfter) {
-			$(".arbtt").fadeIn();
-		} else {
-			$(".arbtt").fadeOut();
-		}
-	});
-
-	$(".arbtt").on("click", function (e) {
-		e.preventDefault();
-		$("html, body").animate({ scrollTop: 0 }, fadeDuration);
-	});
-})(jQuery);
+(function($){"use strict";var visibleAfter=parseInt(arbtt_obj.btn_visible_after),fadeDuration=parseInt(arbtt_obj.fade_in);$(window).on("scroll",function(){if($(this).scrollTop()>visibleAfter){$(".arbtt").css('display','flex')}else{$(".arbtt").fadeOut()}});$(".arbtt").on("click",function(e){e.preventDefault();$("html, body").animate({scrollTop:0},fadeDuration)})})(jQuery);jQuery(document).ready(function($){var $progressPath=$(".progress-svg path");if($progressPath.length===0||typeof $progressPath[0].getTotalLength!=="function"){return}
+var pathLength=$progressPath[0].getTotalLength();$progressPath.css({"stroke-dasharray":pathLength,"stroke-dashoffset":pathLength,});function updateProgress(){var scrollTop=$(window).scrollTop();var docHeight=$(document).height();var winHeight=$(window).height();var scrollPercent=scrollTop/(docHeight-winHeight);var drawLength=pathLength*scrollPercent;drawLength=Math.max(0,Math.min(pathLength,drawLength));$progressPath.css("stroke-dashoffset",pathLength-drawLength)}
+updateProgress();$(window).on("scroll resize",updateProgress)})

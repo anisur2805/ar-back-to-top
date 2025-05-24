@@ -82,14 +82,14 @@ class AR_Frontend {
 	
 			<?php if ( '1' === esc_attr( get_option( 'arbtt_word_count', '0' ) ) ) : ?>
 				<span class="arbtt-word-count">
-					<strong><?php esc_html_e( 'Word Count', 'arbtt' ); ?>:</strong>
+					<strong><?php esc_html_e( 'Word Count', 'ar-back-to-top' ); ?>:</strong>
 					<?php echo esc_html( str_word_count( wp_strip_all_tags( $content ) ) ); ?>
 				</span>
 			<?php endif; ?>
 	
 			<?php if ( '1' === esc_attr( get_option( 'arbtt_char_counts', '0' ) ) ) : ?>
 				<span class="arbtt-char-count">
-					<strong><?php esc_html_e( 'Character Count', 'arbtt' ); ?>:</strong>
+					<strong><?php esc_html_e( 'Character Count', 'ar-back-to-top' ); ?>:</strong>
 					<?php echo esc_html( mb_strlen( wp_strip_all_tags( $content ) ) ); ?>
 				</span>
 			<?php endif; ?>
@@ -98,17 +98,17 @@ class AR_Frontend {
 			if ( '1' === esc_attr( get_option( 'arbtt_read_time', '0' ) ) ) :
 				$words   = str_word_count( wp_strip_all_tags( $content ) );
 				$minutes = ceil( $words / 200 );
-				$unit    = ( 1 === $minutes ) ? esc_html__( 'minute', 'arbtt' ) : esc_html__( 'minutes', 'arbtt' );
+				$unit    = ( 1 === $minutes ) ? esc_html__( 'minute', 'ar-back-to-top' ) : esc_html__( 'minutes', 'ar-back-to-top' );
 				?>
 				<span class="arbtt-read-time">
-					<strong><?php esc_html_e( 'Estimated Reading Time', 'arbtt' ); ?>:</strong>
+					<strong><?php esc_html_e( 'Estimated Reading Time', 'ar-back-to-top' ); ?>:</strong>
 					<?php echo esc_html( $minutes . ' ' . $unit ); ?>
 				</span>
 			<?php endif; ?>
 	
 			<?php if ( '1' === esc_attr( get_option( 'arbtt_view_count', '0' ) ) ) : ?>
 				<span class="arbtt-view-count">
-					<strong><?php esc_html_e( 'Total Views', 'arbtt' ); ?>:</strong>
+					<strong><?php esc_html_e( 'Total Views', 'ar-back-to-top' ); ?>:</strong>
 					<?php echo esc_html( (int) get_post_meta( get_the_ID(), '_arbtt_post_views', true ) ); ?>
 				</span>
 			<?php endif; ?>

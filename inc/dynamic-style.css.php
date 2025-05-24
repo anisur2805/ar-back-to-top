@@ -18,16 +18,44 @@
 		bottom: <?php echo esc_attr( $arbtt_btn_offset_bottom ); ?>px;
 		<?php echo esc_attr( $arbtt_btnps ); ?>: <?php echo esc_attr( 'left' === $arbtt_btnps ? $arbtt_btn_offset_left : $arbtt_btn_offset_right ); ?>px;
 		display: none;
+		align-items: center;
+		justify-content: center;
 		background-color: <?php echo esc_attr( $arbtt_bgc ); ?> !important;
 		opacity: <?php echo esc_attr( $arbtt_btnoc ); ?>;
+
+		<?php if ( 'both' !== $arbtt_btnst && 'txt' !== $arbtt_btnst && $arbtt_enable_scroll_progress ) : ?>
+		border-radius: 100px;
+		<?php else : ?>
 		border-radius: <?php echo esc_attr( $arbtt_bdrd ); ?>px;
+
+		<?php endif; ?>
 		z-index: 9999;
 		border: <?php echo esc_attr( $arbtt_bdr ); ?>px solid <?php echo esc_attr( $arbtt_bdr_color ); ?>;
 		transition: all 0.3s ease-in-out;
+		box-sizing: border-box;
 	}
 
+	<?php if ( 'both' !== $arbtt_btnst && 'txt' !== $arbtt_btnst && $arbtt_enable_scroll_progress ) : ?>
+	.progress-svg {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
+		transform: rotate(-90deg);
+	}
+	.progress-svg path {
+		stroke: green;
+		stroke-width: <?php echo esc_attr( $arbtt_bdr ); ?>;
+		fill: none;
+		stroke-linejoin: round;
+		transition: stroke-dashoffset 0.3s linear;
+	}
+	<?php endif; ?>
+
 	.arbtt:hover {
-		opacity: 0.7;
+		opacity: 1;
 		cursor: pointer;
 		background-color: <?php echo esc_attr( $arbtt_bgc_hover ); ?> !important;
 		color: <?php echo esc_attr( $arbtt_clr_hover ); ?> !important;
@@ -35,10 +63,8 @@
 	}
 
 	.arbtt .fa {
-		line-height: <?php echo esc_attr( $btnheight ); ?>px;
+		line-height: <?php echo esc_attr( $btnheight ) / 2; ?>px;
 		font-size: <?php echo esc_attr( $arbtt_fz ); ?>px;
-		/*height: <?php echo esc_attr( $btnheight ); ?>px;
-		width: <?php echo esc_attr( $btnwidth ); ?>px;*/
 		display: block;
 	}
 
@@ -51,9 +77,13 @@
 	.arbtt img {
 		height: calc(<?php echo esc_attr( $btnheight ); ?>px - 10px);
 		width: calc(<?php echo esc_attr( $btnwidth ); ?>px - 10px);
-		margin: -4px 0 0;
+		/* margin: -4px 0 0; */
 		padding: 0;
 		vertical-align: middle;
+	}
+
+	.arbtt img.both-img {
+		margin-right: 10px;
 	}
 
 	<?php

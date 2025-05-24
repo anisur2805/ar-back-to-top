@@ -59,8 +59,8 @@ class AR_Settings_Menu {
 	public function settings_page() {
 		add_submenu_page(
 			'arbtt',
-			__( 'Single Post Settings', 'arbtt' ),
-			__( 'Single Post', 'arbtt' ),
+			__( 'Single Post Settings', 'ar-back-to-top' ),
+			__( 'Single Post', 'ar-back-to-top' ),
 			'manage_options',
 			'arbtt-settings',
 			array( $this, 'settings_render' )
@@ -81,7 +81,7 @@ class AR_Settings_Menu {
 				<?php
 				settings_fields( 'arbtt_settings' );
 				do_settings_sections( 'arbttp_setting_sections' );
-				submit_button( __( 'Save Settings', 'arbtt' ) );
+				submit_button( __( 'Save Settings', 'ar-back-to-top' ) );
 				?>
 			</form>
 		</div>
@@ -94,12 +94,45 @@ class AR_Settings_Menu {
 	 * @return void
 	 */
 	public function register_settings_init() {
-		// Register options.
-		register_setting( 'arbtt_settings', 'arbtt_word_count' );
-		register_setting( 'arbtt_settings', 'arbtt_char_counts' );
-		register_setting( 'arbtt_settings', 'arbtt_read_time' );
-		register_setting( 'arbtt_settings', 'arbtt_view_count' );
-		register_setting( 'arbtt_settings', 'arbtt_meta_position' );
+		register_setting(
+			'arbtt_settings',
+			'arbtt_word_count',
+			array(
+				'sanitize_callback' => 'absint',
+			)
+		);
+
+		register_setting(
+			'arbtt_settings',
+			'arbtt_char_counts',
+			array(
+				'sanitize_callback' => 'absint',
+			)
+		);
+
+		register_setting(
+			'arbtt_settings',
+			'arbtt_read_time',
+			array(
+				'sanitize_callback' => 'absint',
+			)
+		);
+
+		register_setting(
+			'arbtt_settings',
+			'arbtt_view_count',
+			array(
+				'sanitize_callback' => 'absint',
+			)
+		);
+
+		register_setting(
+			'arbtt_settings',
+			'arbtt_meta_position',
+			array(
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
 
 		// Add settings section.
 		add_settings_section(
@@ -112,7 +145,7 @@ class AR_Settings_Menu {
 		// Fields.
 		add_settings_field(
 			'word_count',
-			__( 'Enable Word Count', 'arbtt' ),
+			__( 'Enable Word Count', 'ar-back-to-top' ),
 			array( $this, 'word_count_callback' ),
 			'arbttp_setting_sections',
 			'arbttp_setting_sections'
@@ -120,7 +153,7 @@ class AR_Settings_Menu {
 
 		add_settings_field(
 			'characters_count',
-			__( 'Enable Character Count', 'arbtt' ),
+			__( 'Enable Character Count', 'ar-back-to-top' ),
 			array( $this, 'characters_count_callback' ),
 			'arbttp_setting_sections',
 			'arbttp_setting_sections'
@@ -128,7 +161,7 @@ class AR_Settings_Menu {
 
 		add_settings_field(
 			'read_time',
-			__( 'Enable Estimated Reading Time', 'arbtt' ),
+			__( 'Enable Estimated Reading Time', 'ar-back-to-top' ),
 			array( $this, 'read_time_callback' ),
 			'arbttp_setting_sections',
 			'arbttp_setting_sections'
@@ -136,7 +169,7 @@ class AR_Settings_Menu {
 
 		add_settings_field(
 			'view_count',
-			__( 'Enable Post View Counter', 'arbtt' ),
+			__( 'Enable Post View Counter', 'ar-back-to-top' ),
 			array( $this, 'view_post_callback' ),
 			'arbttp_setting_sections',
 			'arbttp_setting_sections'
@@ -144,7 +177,7 @@ class AR_Settings_Menu {
 
 		add_settings_field(
 			'meta_position',
-			__( 'Meta Display Position', 'arbtt' ),
+			__( 'Meta Display Position', 'ar-back-to-top' ),
 			array( $this, 'meta_position_callback' ),
 			'arbttp_setting_sections',
 			'arbttp_setting_sections'
@@ -204,9 +237,9 @@ class AR_Settings_Menu {
 	 */
 	public function meta_position_callback() {
 		$meta_position = array(
-			'top'    => __( 'Top', 'arbtt' ),
-			'bottom' => __( 'Bottom', 'arbtt' ),
-			'both'   => __( 'Both', 'arbtt' ),
+			'top'    => __( 'Top', 'ar-back-to-top' ),
+			'bottom' => __( 'Bottom', 'ar-back-to-top' ),
+			'both'   => __( 'Both', 'ar-back-to-top' ),
 		);
 		?>
 		<select name="arbtt_meta_position" class="regular-text">
