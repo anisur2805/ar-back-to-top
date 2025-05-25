@@ -4,10 +4,10 @@
  * Plugin URI: https://github.com/anisur2805/ar-back-to-top
  * Description: AR Back To Top is a standard WordPress plugin for smooth back to top. AR Back To Top plugin will help those who don't want to write code. To use this plugin, simply download or add it from the WordPress plugin directory.
  * Tags: back to top, scroll to top, scroll top, scroll up, smooth top button
- * Version: 2.11.1
+ * Version: 2.11.2
  * Author: Anisur Rahman
  * Author URI: https://github.com/anisur2805
- * Requires at least: 6.2
+ * Requires at least: 6.8
  * Tested up to: 6.8
  * Requires PHP: 7.4
  * License: GPLv2 or later
@@ -19,28 +19,6 @@
  */
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
-
-if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-	require_once __DIR__ . '/vendor/autoload.php';
-}
-
-/**
- * Initialize the plugin tracker
- *
- * @return void
- */
-function appsero_init_tracker_ar_back_to_top() {
-
-	$client = new Appsero\Client( 'ca204cce-aa47-48b5-8f69-a5fb08fc49b3', 'AR Back To Top', __FILE__ );
-
-	// Active insights.
-	$client->insights()->init();
-
-	// Active automatic updater.
-	$client->updater();
-}
-
-appsero_init_tracker_ar_back_to_top();
 
 /**
  * Class AR_Back_To_Top
@@ -103,7 +81,7 @@ class AR_Back_To_Top {
 	 * @return void
 	 */
 	public function define_constants() {
-		define( 'ARBTTOP_VERSION', '2.11.1' );
+		define( 'ARBTTOP_VERSION', '2.11.2' );
 		define( 'ARBTTOP_FILE', __FILE__ );
 		define( 'ARBTTOP_PATH', __DIR__ );
 		define( 'ARBTTOP_URL', plugins_url( '', __FILE__ ) );
@@ -211,7 +189,7 @@ class AR_Back_To_Top {
 					settings_fields( 'arbtt_ssection_id' );
 					do_settings_sections( 'arbtt' );
 					submit_button();
-					?>
+				?>
 			</form>
 		</div>
 		<?php
