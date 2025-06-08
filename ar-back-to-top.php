@@ -25,7 +25,7 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
  *
  * Main plugin class implementing Singleton pattern
  */
-class AR_Back_To_Top {
+final class AR_Back_To_Top {
 	/**
 	 * Singleton instance
 	 *
@@ -932,5 +932,14 @@ class AR_Back_To_Top {
 	}
 }
 
-// Initialize the plugin
-AR_Back_To_Top::get_instance();
+/**
+ * Initialize the main plugin
+ *
+ * @return \AR_Back_To_Top
+ */
+function kick_off() {
+	// Initialize the plugin
+	AR_Back_To_Top::get_instance();
+}
+
+kick_off();
