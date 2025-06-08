@@ -926,7 +926,7 @@ final class AR_Back_To_Top {
 	 * @return array
 	 */
 	public function add_action_links( $links ) {
-		$links[] = '<a href="' . esc_url( get_admin_url( null, 'options-general.php?page=arbtt' ) ) . '">Settings</a>';
+		$links[] = '<a href="' . esc_url( get_admin_url( null, 'admin.php?page=arbtt' ) ) . '">Settings</a>';
 		$links[] = '<a href="https://github.com/anisur2805/ar-back-to-top" target="_blank">Support</a>';
 		return $links;
 	}
