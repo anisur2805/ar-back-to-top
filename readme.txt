@@ -4,7 +4,7 @@ Tags: back to top, scroll to top, scroll top, scroll up, smooth top button
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.11.3
+Stable tag: 2.11.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,6 +70,10 @@ AR Back To Top plugin will help them who don't wants to write code. For use this
 
 == Changelog ==
 
+= 2.11.4 =
+
++ Added Website Status Page
+
 = 2.11.3 =
 
 + Added Progress Bar Options
@@ -83,10 +87,7 @@ AR Back To Top plugin will help them who don't wants to write code. For use this
 + Added Hide Button On Mobile & Tablet
 + Added Button Style
 + Improve Code Structure
-
-- Fixed previous error
-
-== Upgrade Notice ==
++ Fixed previous error
 
 = 2.10.0 =
 
