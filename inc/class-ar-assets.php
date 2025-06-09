@@ -27,14 +27,17 @@ class AR_Assets {
 	/**
 	 * Script loader tag
 	 *
-	 * @param string $tag
-	 * @param string $handle
-	 * @param string $src
+	 * @param string $tag    The HTML script tag.
+	 * @param string $handle The script's handle.
+	 * @param string $src    The script's source URL.
 	 *
 	 * @return string
 	 */
 	public function script_loader_tag( $tag, $handle, $src ) {
 		if ( 'arbtt_custom_js' === $handle && 'on' === get_option( 'arbtt_is_async' ) ) {
+			// WPCS: XSS ok. - This is a known false positive.
+			// The purpose of this filter is to modify the script tag.
+			// We are safely adding the 'defer' attribute.
 			return '<script src="' . esc_url( $src ) . '" defer></script>';
 		}
 		return $tag;

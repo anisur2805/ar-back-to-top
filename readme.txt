@@ -1,10 +1,10 @@
 === AR Back To Top ===
 Contributors: anisur8294
 Tags: back to top, scroll to top, scroll top, scroll up, smooth top button
-Requires at least: 6.2
+Requires at least: 6.8
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: trunk
+Stable tag: 2.11.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 

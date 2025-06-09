@@ -90,50 +90,53 @@ final class AR_Status {
 	 * @return void
 	 */
 	public function status_render() {
+		// No change needed for this global.
 		global $wp_version;
 
-		$wp_mem_limit = WP_MEMORY_LIMIT;
-		$wp_max_mem   = WP_MAX_MEMORY_LIMIT;
-
+		$wp_mem_limit   = WP_MEMORY_LIMIT;
+		$wp_max_mem     = WP_MAX_MEMORY_LIMIT;
 		$wp_cache       = defined( 'WP_CACHE' ) && WP_CACHE ? 'Yes' : 'No';
 		$debug_mode     = defined( 'WP_DEBUG' ) && WP_DEBUG ? 'Yes' : 'No';
 		$site_url       = home_url();
 		$wp_version_val = get_bloginfo( 'version' );
 		$php_version    = phpversion();
 		$mysql_version  = $GLOBALS['wpdb']->db_version();
-		$web_server     = $_SERVER['SERVER_SOFTWARE'] ?? 'Unknown';
-		$max_input_vars = ini_get( 'max_input_vars' );
-		$theme          = wp_get_theme();
-		$theme_name     = $theme->get( 'Name' );
-		$theme_version  = $theme->get( 'Version' );
-		$plugin_count   = count( get_option( 'active_plugins', array() ) );
-		$is_multisite   = is_multisite() ? 'Yes' : 'No';
+
+		// --- FIX: Unslash and Sanitize $_SERVER variable ---
+		$web_server = isset( $_SERVER['SERVER_SOFTWARE'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ) : 'Unknown';
+		// --- End of FIX ---
+
+		$theme         = wp_get_theme();
+		$theme_name    = $theme->get( 'Name' );
+		$theme_version = $theme->get( 'Version' );
+		$plugin_count  = count( get_option( 'active_plugins', array() ) );
+		$is_multisite  = is_multisite() ? 'Yes' : 'No';
 
 		$wp_required  = '6.0';
 		$php_required = '7.4';
 		$wc_required  = '8.0';
 
-		$wp_version = version_compare( $wp_version_val, $wp_required, '<' )
-			? "<td class=\"text-left red\">$wp_version_val <span style='color:#444;font-size: 12px;'>Please upgrade WordPress</span></td>"
-			: "<td class=\"text-left green\">$wp_version_val</td>";
+		$wpVersion = version_compare( $wp_version_val, $wp_required, '<' )
+			? '<td class="text-left red">' . esc_html( $wp_version_val ) . " <span style='color:#444;font-size: 12px;'>Please upgrade WordPress</span></td>"
+			: '<td class="text-left green">' . esc_html( $wp_version_val ) . '</td>';
 
-		$php_verseion = version_compare( $php_version, $php_required, '<' )
-			? "<td class=\"text-left red\">$php_version <span style='color:#444;font-size: 12px;'>Please upgrade PHP</span></td>"
-			: "<td class=\"text-left green\">$php_version</td>";
+		$phpVerseion = version_compare( $php_version, $php_required, '<' )
+			? '<td class="text-left red">' . esc_html( $php_version ) . " <span style='color:#444;font-size: 12px;'>Please upgrade PHP</span></td>"
+			: '<td class="text-left green">' . esc_html( $php_version ) . '</td>';
 
 		if ( defined( 'WC_VERSION' ) ) {
 			$wc_version_val = WC_VERSION;
-			$wc_verseion     = version_compare( $wc_version_val, $wc_required, '<' )
-				? "<td class=\"text-left red\">$wc_version_val <span style='color:#444;font-size: 12px;'>Please upgrade WooCommerce</span></td>"
-				: "<td class=\"text-left green\">$wc_version_val</td>";
+			$wcVerseion     = version_compare( $wc_version_val, $wc_required, '<' )
+				? '<td class="text-left red">' . esc_html( $wc_version_val ) . " <span style='color:#444;font-size: 12px;'>Please upgrade WooCommerce</span></td>"
+				: '<td class="text-left green">' . esc_html( $wc_version_val ) . '</td>';
 		} else {
-			$wc_verseion = "<td class=\"text-left red\">Not Installed <span style='color:#444;font-size: 12px;'>Please install WooCommerce v$wc_required+</span></td>";
+			$wcVerseion = "<td class=\"text-left red\">Not Installed <span style='color:#444;font-size: 12px;'>Please install WooCommerce v" . esc_html( $wc_required ) . '+</span></td>';
 		}
 
 		$max_input_vars_val   = (int) ini_get( 'max_input_vars' );
 		$max_input_vars_limit = $max_input_vars_val < 1200
-			? '<td class="text-left red">' . $max_input_vars_val . ' <span style="color:#444;font-size: 12px;">Please increase to at least 1200.</span></td>'
-			: '<td class="text-left green">' . $max_input_vars_val . '</td>';
+			? '<td class="text-left red">' . esc_html( $max_input_vars_val ) . ' <span style="color:#444;font-size: 12px;">Please increase to at least 1200.</span></td>'
+			: '<td class="text-left green">' . esc_html( $max_input_vars_val ) . '</td>';
 
 		?>
 		<div class="ar-btt-status-wrapper">
@@ -151,10 +154,12 @@ final class AR_Status {
 			<table class="widefat striped" style="margin-top: 30px;">
 				<thead><tr><th>Configuration</th><th>Status</th></tr></thead>
 				<tbody>
-					<tr><td>WordPress Version</td><?php echo $wp_version; ?></tr>
-					<tr><td>PHP Version</td><?php echo $php_verseion; ?></tr>
-					<tr><td>WooCommerce Version</td><?php echo $wc_verseion; ?></tr>
-					<tr><td>max_input_vars</td><?php echo $max_input_vars_limit; ?></tr>
+					<?php // --- FIX: Escape output containing HTML --- ?>
+					<tr><td>WordPress Version</td><?php echo wp_kses_post( $wpVersion ); ?></tr>
+					<tr><td>PHP Version</td><?php echo wp_kses_post( $phpVerseion ); ?></tr>
+					<tr><td>WooCommerce Version</td><?php echo wp_kses_post( $wcVerseion ); ?></tr>
+					<tr><td>max_input_vars</td><?php echo wp_kses_post( $max_input_vars_limit ); ?></tr>
+					<?php // --- End of FIX --- ?>
 					<tr><td>Available Memory</td><td class="text-left green"><?php echo esc_html( $wp_max_mem ); ?></td></tr>
 					<tr><td>Memory Limit</td><td class="text-left green"><?php echo esc_html( $wp_mem_limit ); ?></td></tr>
 				</tbody>
