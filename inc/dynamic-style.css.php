@@ -4,7 +4,7 @@
 	}
 
 	.arbtt {
-		<?php if ( ! in_array( $arbtt_btnst, array( 'txt', 'both' ), true ) ) : ?>
+		<?php if ( ! in_array( $arbtt_btnst, array( 'both' ), true ) ) : ?>
 		width: <?php echo esc_attr( $btnwidth ); ?>px;
 		height: <?php echo esc_attr( $btnheight ); ?>px;
 		<?php endif; ?>
@@ -23,7 +23,7 @@
 		background-color: <?php echo esc_attr( $arbtt_bgc ); ?> !important;
 		opacity: <?php echo esc_attr( $arbtt_btnoc ); ?>;
 
-		<?php if ( 'both' !== $arbtt_btnst && 'txt' !== $arbtt_btnst && $arbtt_enable_scroll_progress ) : ?>
+		<?php if ( 'both' !== $arbtt_btnst && $arbtt_enable_scroll_progress ) : ?>
 		border-radius: 100px;
 		<?php else : ?>
 		border-radius: <?php echo esc_attr( $arbtt_bdrd ); ?>px;
@@ -35,22 +35,33 @@
 		box-sizing: border-box;
 	}
 
-	<?php if ( 'both' !== $arbtt_btnst && 'txt' !== $arbtt_btnst && $arbtt_enable_scroll_progress ) : ?>
+	<?php if ( 'right' === $arbtt_btn_img_position ) : ?>
+	.arbtt.arbtt-icon-pos-right {
+		flex-direction: row-reverse;
+	}
+	.arbtt.arbtt-icon-pos-right img.both-img {
+		margin-right: 0px;
+		margin-left: 10px;
+	}
+	<?php endif; ?>
+
+	<?php if ( 'both' !== $arbtt_btnst && $arbtt_enable_scroll_progress ) : ?>
 	.progress-svg {
 		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
+		top: -<?php echo esc_attr( $arbtt_bdr + 1 ); ?>px;
+		left: -<?php echo esc_attr( $arbtt_bdr + 1 ); ?>px;
+		width: <?php echo esc_attr( $btnwidth + 2 ); ?>px;
+		height: <?php echo esc_attr( $btnheight + 2 ); ?>px;
 		pointer-events: none;
-		transform: rotate(-90deg);
+		/* transform: rotate(-90deg); */
+		overflow: visible;
 	}
 	.progress-svg path {
-		stroke: green;
-		stroke-width: <?php echo esc_attr( $arbtt_bdr ); ?>;
+		stroke: <?php echo esc_attr( $arbtt_progress_color ); ?>;
+		stroke-width: <?php echo esc_attr( $arbtt_enable_scroll_progress_size ); ?>;
 		fill: none;
-		stroke-linejoin: round;
-		transition: stroke-dashoffset 0.3s linear;
+		stroke-linecap: round;
+		transition: stroke-dashoffset 0.2s linear;
 	}
 	<?php endif; ?>
 
@@ -75,9 +86,11 @@
 	}
 
 	.arbtt img {
-		height: calc(<?php echo esc_attr( $btnheight ); ?>px - 10px);
-		width: calc(<?php echo esc_attr( $btnwidth ); ?>px - 10px);
-		/* margin: -4px 0 0; */
+		/* height: calc(<?php echo esc_attr( $arbtt_fz ); ?>px - 10px);
+		width: calc(<?php echo esc_attr( $arbtt_fz ); ?>px - 10px);
+		margin: -4px 0 0; */
+		height: <?php echo esc_attr( $arbtt_fz ); ?>px;
+		width: <?php echo esc_attr( $arbtt_fz ); ?>px;
 		padding: 0;
 		vertical-align: middle;
 	}
