@@ -4,11 +4,11 @@ Tags: back to top, scroll to top, scroll top, scroll up, smooth top button
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.11.2
+Stable tag: 2.11.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-AR Back To Top is a standard WordPress plugin for back to top. 
+AR Back To Top is a standard WordPress plugin for back to top.
 
 == Description ==
 
@@ -69,6 +69,12 @@ AR Back To Top plugin will help them who don't wants to write code. For use this
 7. Find **AR Back To Top** in the list and click **Activate**.
 
 == Changelog ==
+
+= 2.11.3 =
+
++ Added Progress Bar Options
++ Added Button Image Position options
++ Improve Code Structure
 
 = 2.11.2 =
 
