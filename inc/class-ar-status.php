@@ -20,14 +20,14 @@ final class AR_Status {
 	/**
 	 * Constructor (private for singleton).
 	 */
-	private function __construct() {
+	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'status_page' ) );
 	}
 
 	/**
 	 * Prevent cloning the instance.
 	 */
-	protected function __clone() {}
+	public function __clone() {}
 
 	/**
 	 * Prevent unserializing the instance.
@@ -66,69 +66,10 @@ final class AR_Status {
 		);
 	}
 
-	/**
-	 * Render the status page.
-	 *
-	 * @return void
-	 */
-	public function status_render() {
-		$site_url       = home_url();
-		$wp_cache       = defined( 'WP_CACHE' ) && WP_CACHE ? 'Yes' : 'No';
-		$debug_mode     = defined( 'WP_DEBUG' ) && WP_DEBUG ? 'Yes' : 'No';
-		$wp_version     = get_bloginfo( 'version' );
-		$php_version    = phpversion();
-		$mysql_version  = $GLOBALS['wpdb']->db_version();
-		$web_server     = $_SERVER['SERVER_SOFTWARE'] ?? 'Unknown';
-		$max_input_vars = ini_get( 'max_input_vars' );
-		$php_mem_limit  = ini_get( 'memory_limit' );
-		$memory_limit_bytes = $this->ar_convert_to_bytes( $php_mem_limit );
-		$wp_mem_limit   = size_format( WP_MEMORY_LIMIT );
-		$theme          = wp_get_theme();
-		$theme_name     = $theme->get( 'Name' );
-		$theme_version  = $theme->get( 'Version' );
-		$plugin_count   = count( get_option( 'active_plugins', array() ) );
-		$is_multisite   = is_multisite() ? 'Yes' : 'No';
-		?>
-			<div class="wrap ar-btt-wrap">
-				<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-
-				<table class="widefat striped">
-					<thead>
-						<tr>
-							<th><?php esc_html_e( 'Item', 'ar-back-to-top' ); ?></th>
-							<th><?php esc_html_e( 'Value', 'ar-back-to-top' ); ?></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr><td>Site URL</td><td><?php echo esc_url( $site_url ); ?></td></tr>
-						<tr><td>Define WP_CACHE</td><td><?php echo esc_html( $wp_cache ); ?></td></tr>
-						<tr><td>Define WP_DEBUG</td><td><?php echo esc_html( $debug_mode ); ?></td></tr>
-						<tr><td>WordPress Version</td><td><?php echo esc_html( $wp_version ); ?></td></tr>
-						<tr><td>PHP Version</td><td><?php echo esc_html( $php_version ); ?></td></tr>
-						<tr><td>MySQL Version</td><td><?php echo esc_html( $mysql_version ); ?></td></tr>
-						<tr><td>Web Server</td><td><?php echo esc_html( $web_server ); ?></td></tr>
-						<tr><td>max_input_vars</td><td><?php echo esc_html( $max_input_vars ); ?></td></tr>
-						<tr><td>PHP Memory Limit</td><td><?php echo esc_html( $php_mem_limit ); ?></td></tr>
-						<tr><td>WP Memory Limit</td><td><?php echo esc_html( $wp_mem_limit ); ?></td></tr>
-						<tr><td>Active Theme</td><td><?php echo esc_html( $theme_name . ' (v' . $theme_version . ')' ); ?></td></tr>
-						<tr><td>Active Plugins</td><td><?php echo esc_html( $plugin_count ); ?></td></tr>
-						<tr><td>Multisite</td><td><?php echo esc_html( $is_multisite ); ?></td></tr>
-						</tbody>
-					</table>
-				</div>
-		<?php
-	}
-
-	/**
-	 * Convert shorthand memory string (e.g., 256M) to bytes.
-	 *
-	 * @param string $val Shorthand byte value.
-	 * @return int
-	 */
-	public function ar_convert_to_bytes( $val ): int {
-		$val  = trim( $val );
-		$last = strtolower( substr( $val, -1 ) );
-		$num  = (int) $val;
+	public function ar_convert_to_bytes( $value ) {
+		$value = trim( $value );
+		$last  = strtolower( substr( $value, -1 ) );
+		$num   = (int) $value;
 
 		switch ( $last ) {
 			case 'g':
@@ -139,9 +80,98 @@ final class AR_Status {
 				// no break
 			case 'k':
 				$num *= 1024;
-				// no break
 		}
 		return $num;
+	}
+
+	/**
+	 * Render the status page.
+	 *
+	 * @return void
+	 */
+	public function status_render() {
+		global $wp_version;
+
+		$wp_mem_limit = WP_MEMORY_LIMIT;
+		$wp_max_mem   = WP_MAX_MEMORY_LIMIT;
+
+		$wp_cache       = defined( 'WP_CACHE' ) && WP_CACHE ? 'Yes' : 'No';
+		$debug_mode     = defined( 'WP_DEBUG' ) && WP_DEBUG ? 'Yes' : 'No';
+		$site_url       = home_url();
+		$wp_version_val = get_bloginfo( 'version' );
+		$php_version    = phpversion();
+		$mysql_version  = $GLOBALS['wpdb']->db_version();
+		$web_server     = $_SERVER['SERVER_SOFTWARE'] ?? 'Unknown';
+		$max_input_vars = ini_get( 'max_input_vars' );
+		$theme          = wp_get_theme();
+		$theme_name     = $theme->get( 'Name' );
+		$theme_version  = $theme->get( 'Version' );
+		$plugin_count   = count( get_option( 'active_plugins', array() ) );
+		$is_multisite   = is_multisite() ? 'Yes' : 'No';
+
+		$wp_required  = '6.0';
+		$php_required = '7.4';
+		$wc_required  = '8.0';
+
+		$wp_version = version_compare( $wp_version_val, $wp_required, '<' )
+			? "<td class=\"text-left red\">$wp_version_val <span style='color:#444;font-size: 12px;'>Please upgrade WordPress</span></td>"
+			: "<td class=\"text-left green\">$wp_version_val</td>";
+
+		$php_verseion = version_compare( $php_version, $php_required, '<' )
+			? "<td class=\"text-left red\">$php_version <span style='color:#444;font-size: 12px;'>Please upgrade PHP</span></td>"
+			: "<td class=\"text-left green\">$php_version</td>";
+
+		if ( defined( 'WC_VERSION' ) ) {
+			$wc_version_val = WC_VERSION;
+			$wc_verseion     = version_compare( $wc_version_val, $wc_required, '<' )
+				? "<td class=\"text-left red\">$wc_version_val <span style='color:#444;font-size: 12px;'>Please upgrade WooCommerce</span></td>"
+				: "<td class=\"text-left green\">$wc_version_val</td>";
+		} else {
+			$wc_verseion = "<td class=\"text-left red\">Not Installed <span style='color:#444;font-size: 12px;'>Please install WooCommerce v$wc_required+</span></td>";
+		}
+
+		$max_input_vars_val   = (int) ini_get( 'max_input_vars' );
+		$max_input_vars_limit = $max_input_vars_val < 1200
+			? '<td class="text-left red">' . $max_input_vars_val . ' <span style="color:#444;font-size: 12px;">Please increase to at least 1200.</span></td>'
+			: '<td class="text-left green">' . $max_input_vars_val . '</td>';
+
+		?>
+		<div class="ar-btt-status-wrapper">
+			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+
+			<table class="widefat striped" style="margin-top: 20px;">
+				<thead><tr><th>Item</th><th>Value</th></tr></thead>
+				<tbody>
+					<tr><td>Site URL</td><td class="text-left green"><?php echo esc_url( $site_url ); ?></td></tr>
+					<tr><td>Define WP_CACHE</td><td class="text-left green"><?php echo esc_html( $wp_cache ); ?></td></tr>
+					<tr><td>Define WP_DEBUG</td><td class="text-left green"><?php echo esc_html( $debug_mode ); ?></td></tr>
+				</tbody>
+			</table>
+
+			<table class="widefat striped" style="margin-top: 30px;">
+				<thead><tr><th>Configuration</th><th>Status</th></tr></thead>
+				<tbody>
+					<tr><td>WordPress Version</td><?php echo $wp_version; ?></tr>
+					<tr><td>PHP Version</td><?php echo $php_verseion; ?></tr>
+					<tr><td>WooCommerce Version</td><?php echo $wc_verseion; ?></tr>
+					<tr><td>max_input_vars</td><?php echo $max_input_vars_limit; ?></tr>
+					<tr><td>Available Memory</td><td class="text-left green"><?php echo esc_html( $wp_max_mem ); ?></td></tr>
+					<tr><td>Memory Limit</td><td class="text-left green"><?php echo esc_html( $wp_mem_limit ); ?></td></tr>
+				</tbody>
+			</table>
+
+			<table class="widefat striped" style="margin-top: 30px;">
+				<thead><tr><th>Environment</th><th>Details</th></tr></thead>
+				<tbody>
+					<tr><td>MySQL Version</td><td class="text-left green"><?php echo esc_html( $mysql_version ); ?></td></tr>
+					<tr><td>Web Server</td><td class="text-left green"><?php echo esc_html( $web_server ); ?></td></tr>
+					<tr><td>Active Theme</td><td class="text-left green"><?php echo esc_html( $theme_name . ' (v' . $theme_version . ')' ); ?></td></tr>
+					<tr><td>Active Plugins</td><td class="text-left green"><?php echo esc_html( $plugin_count ); ?></td></tr>
+					<tr><td>Multisite</td><td class="text-left green"><?php echo esc_html( $is_multisite ); ?></td></tr>
+				</tbody>
+			</table>
+		</div>
+		<?php
 	}
 }
 

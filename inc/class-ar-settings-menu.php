@@ -20,7 +20,7 @@ class AR_Settings_Menu {
 	/**
 	 * Constructor (private for singleton).
 	 */
-	private function __construct() {
+	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'settings_page' ) );
 		add_action( 'admin_init', array( $this, 'register_settings_init' ) );
 	}
@@ -28,7 +28,7 @@ class AR_Settings_Menu {
 	/**
 	 * Prevent cloning the instance.
 	 */
-	protected function __clone() {}
+	public function __clone() {}
 
 	/**
 	 * Prevent unserializing the instance.

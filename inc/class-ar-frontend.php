@@ -17,14 +17,14 @@ class AR_Frontend {
 	/**
 	 * Private constructor to enforce singleton.
 	 */
-	private function __construct() {
+	public function __construct() {
 		add_filter( 'the_content', array( $this, 'arbtt_display_post_data' ) );
 	}
 
 	/**
 	 * Prevent cloning.
 	 */
-	protected function __clone() {}
+	public function __clone() {}
 
 	/**
 	 * Prevent unserializing.

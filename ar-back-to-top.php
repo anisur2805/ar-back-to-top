@@ -55,7 +55,7 @@ final class AR_Back_To_Top {
 	/**
 	 * Private constructor to prevent direct instantiation
 	 */
-	private function __construct() {
+	public function __construct() {
 		$this->init_hooks();
 		$this->define_constants();
 		$this->load_class_files();
@@ -66,14 +66,14 @@ final class AR_Back_To_Top {
 	 *
 	 * @return void
 	 */
-	private function __clone() {}
+	public function __clone() {}
 
 	/**
 	 * Prevent unserializing of the instance
 	 *
 	 * @return void
 	 */
-	private function __wakeup() {}
+	public function __wakeup() {}
 
 	/**
 	 * Define constants
