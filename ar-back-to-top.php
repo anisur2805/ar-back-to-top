@@ -92,6 +92,7 @@ final class AR_Back_To_Top {
 	public function load_class_files() {
 		$class_files = array(
 			'inc/class-ar-settings-menu.php',
+			'inc/class-ar-status.php',
 			'inc/class-ar-frontend.php',
 			'inc/class-ar-assets.php',
 		);
