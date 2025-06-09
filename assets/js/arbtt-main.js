@@ -4,6 +4,8 @@ jQuery(document).ready(function ($) {
     const $progressBar         = $("input[name='arbtt_enable_scroll_progress']");
     const $progressBarFields   = $("input[name='arbtt_enable_scroll_progress_size']").closest("tr");
     const $progressBarColorRow = $("input[name='arbtt_progress_color']").closest("tr");
+    const $buttonStyleSelect   = $('#arbtt_btnst');
+    const $imgPositionRow      = $('#arbtt_btn_img_position').closest('tr');
 
     $(".arbtt_fi, .arbtt_btn_img, #arbtt_btntx, .arbtt_btn_ext_img_url")
         .parents("tr")
@@ -42,6 +44,7 @@ jQuery(document).ready(function ($) {
     $("#arbtt_bgc, #arbtt_clr, #arbtt_bdclr, .ar-btt-color").minicolors();
     $("#arbtt_btnst").on("change", function () {
         handleButtonStyle($(this).val());
+        toggleImagePositionRow();
 
         handleProgressBarToggle();
     });
@@ -179,4 +182,15 @@ jQuery(document).ready(function ($) {
 
     // Bind change event
     $progressBar.on("change", handleProgressBarToggle);
+
+    function toggleImagePositionRow() {
+        const selectedStyle = $buttonStyleSelect.val();
+        $imgPositionRow.toggle(selectedStyle == 'both');
+    }
+
+    // Initial check
+    toggleImagePositionRow();
+
+    // On change
+    $buttonStyleSelect.on('change', toggleImagePositionRow);
 });
