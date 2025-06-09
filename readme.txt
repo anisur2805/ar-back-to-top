@@ -4,7 +4,7 @@ Tags: back to top, scroll to top, scroll top, scroll up, smooth top button
 Requires at least: 6.8
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.11.6
+Stable tag: 2.11.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
