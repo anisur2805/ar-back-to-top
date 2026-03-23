@@ -44,6 +44,32 @@ class AR_Assets {
 	}
 
 	/**
+	 * Check if the button should display on the current page.
+	 *
+	 * @return bool
+	 */
+	private static function should_display() {
+		$display_mode  = get_option( 'arbtt_display_mode', 'all' );
+		$display_pages = get_option( 'arbtt_display_pages', array() );
+
+		if ( 'all' === $display_mode || ! is_array( $display_pages ) || empty( $display_pages ) ) {
+			return true;
+		}
+
+		$current_id = get_queried_object_id();
+
+		if ( 'include' === $display_mode ) {
+			return in_array( $current_id, array_map( 'absint', $display_pages ), true );
+		}
+
+		if ( 'exclude' === $display_mode ) {
+			return ! in_array( $current_id, array_map( 'absint', $display_pages ), true );
+		}
+
+		return true;
+	}
+
+	/**
 	 * Enqueue frontend assets
 	 *
 	 * @return void
@@ -52,6 +78,10 @@ class AR_Assets {
 		$extension_enabled = get_option( 'arbtt_enable', false );
 
 		if ( ! $extension_enabled ) {
+			return;
+		}
+
+		if ( ! self::should_display() ) {
 			return;
 		}
 
