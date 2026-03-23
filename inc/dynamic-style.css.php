@@ -23,11 +23,19 @@
 		background-color: <?php echo esc_attr( $arbtt_bgc ); ?> !important;
 		opacity: <?php echo esc_attr( $arbtt_btnoc ); ?>;
 
-		<?php if ( 'both' !== $arbtt_btnst && $arbtt_enable_scroll_progress ) : ?>
+		<?php
+		$arbtt_btn_shape = isset( $arbtt_btn_shape ) ? $arbtt_btn_shape : get_option( 'arbtt_btn_shape', 'custom' );
+		if ( 'both' !== $arbtt_btnst && $arbtt_enable_scroll_progress ) :
+			?>
 		border-radius: 100px;
+		<?php elseif ( 'circle' === $arbtt_btn_shape ) : ?>
+		border-radius: 50%;
+		<?php elseif ( 'square' === $arbtt_btn_shape ) : ?>
+		border-radius: 0;
+		<?php elseif ( 'rounded' === $arbtt_btn_shape ) : ?>
+		border-radius: 8px;
 		<?php else : ?>
 		border-radius: <?php echo esc_attr( $arbtt_bdrd ); ?>px;
-
 		<?php endif; ?>
 		z-index: <?php echo absint( $arbtt_zindex ); ?>;
 		border: <?php echo esc_attr( $arbtt_bdr ); ?>px solid <?php echo esc_attr( $arbtt_bdr_color ); ?>;

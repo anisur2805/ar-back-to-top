@@ -205,4 +205,15 @@ jQuery(document).ready(function ($) {
 
     toggleDisplayPagesRow();
     $displayMode.on('change', toggleDisplayPagesRow);
+
+    // Button Shape → Border Radius dependency
+    const $btnShape      = $('#arbtt_btn_shape');
+    const $bdrdRow       = $('#arbtt_bdrd').closest('tr');
+
+    function toggleBorderRadiusRow() {
+        $bdrdRow.toggle($btnShape.val() === 'custom');
+    }
+
+    toggleBorderRadiusRow();
+    $btnShape.on('change', toggleBorderRadiusRow);
 });

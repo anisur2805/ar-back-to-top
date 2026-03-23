@@ -280,6 +280,7 @@ final class AR_Back_To_Top {
 		$this->register_field( 'arbtt_bgc_hover', 'Button Background Hover Color', 'arbtt', array( $this, 'render_bgc_hover_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_clr', 'Button Color', 'arbtt', array( $this, 'render_clr_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_clr_hover', 'Button Color Hover', 'arbtt', array( $this, 'render_clr_hover_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_btn_shape', __( 'Button Shape', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_btn_shape_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_bdrd', 'Button Border Radius', 'arbtt', array( $this, 'render_bdrd_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_bdr', 'Button Border', 'arbtt', array( $this, 'render_bdr_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_bdr_color', 'Button Border Color', 'arbtt', array( $this, 'render_bdr_color_field' ), 'arbtt_ssection_id' );
@@ -501,6 +502,23 @@ final class AR_Back_To_Top {
 	public function render_bdr_color_hover_field() {
 		?>
 		<input type="text" name="arbtt_bdr_color_hover" class="arcs ar-btt-color" id="arbtt_bdr_color_hover" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bdr_color_hover' ) ); ?>"/>
+		<?php
+	}
+
+	/**
+	 * Render button shape field
+	 *
+	 * @return void
+	 */
+	public function render_btn_shape_field() {
+		$current = get_option( 'arbtt_btn_shape', 'custom' );
+		?>
+		<select name="arbtt_btn_shape" id="arbtt_btn_shape">
+			<option value="circle"<?php selected( 'circle', $current ); ?>><?php esc_html_e( 'Circle', 'ar-back-to-top' ); ?></option>
+			<option value="square"<?php selected( 'square', $current ); ?>><?php esc_html_e( 'Square', 'ar-back-to-top' ); ?></option>
+			<option value="rounded"<?php selected( 'rounded', $current ); ?>><?php esc_html_e( 'Rounded Square', 'ar-back-to-top' ); ?></option>
+			<option value="custom"<?php selected( 'custom', $current ); ?>><?php esc_html_e( 'Custom (set below)', 'ar-back-to-top' ); ?></option>
+		</select>
 		<?php
 	}
 
@@ -1147,6 +1165,7 @@ final class AR_Back_To_Top {
 			'arbtt_bgc_hover'                  => '#fff',
 			'arbtt_clr'                        => '#fff',
 			'arbtt_clr_hover'                  => '#fff',
+			'arbtt_btn_shape'                  => 'custom',
 			'arbtt_bdrd'                       => '5',
 			'arbtt_bdr'                        => '2',
 			'arbtt_bdr_color'                  => '#fff',
