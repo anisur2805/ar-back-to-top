@@ -253,6 +253,14 @@ jQuery(document).ready(function ($) {
         handleButtonStyle($(this).val());
     });
 
+    // Button Shape → Border Radius dependency (must be before handleProgressBarToggle)
+    const $btnShape = $('#arbtt_btn_shape');
+    const $bdrdRow  = $('#arbtt_bdrd').closest('tr');
+
+    function toggleBorderRadiusRow() {
+        $bdrdRow.toggle($btnShape.val() === 'custom' && !$btnShape.prop('disabled'));
+    }
+
     function handleProgressBarToggle() {
         const isEnabled = $progressBar.is(":checked") && $("#arbtt_btnst").val() !== 'both';
 
@@ -347,14 +355,6 @@ jQuery(document).ready(function ($) {
 
     toggleMobileOffsets();
     $hideOnPhone.on('change', toggleMobileOffsets);
-
-    // Button Shape → Border Radius dependency
-    const $btnShape      = $('#arbtt_btn_shape');
-    const $bdrdRow       = $('#arbtt_bdrd').closest('tr');
-
-    function toggleBorderRadiusRow() {
-        $bdrdRow.toggle($btnShape.val() === 'custom');
-    }
 
     toggleBorderRadiusRow();
     $btnShape.on('change', toggleBorderRadiusRow);
