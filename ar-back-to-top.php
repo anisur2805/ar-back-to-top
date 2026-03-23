@@ -1237,7 +1237,8 @@ final class AR_Back_To_Top {
 				<span class="screen-reader-text"><?php esc_html_e( 'Scroll to top', 'ar-back-to-top' ); ?></span>
 				<?php if ( 'fa' === $arbtt_btnst ) : ?>
 					<?php
-					$icon_id = AR_SVG_Icons::fa_class_to_id( $arbtt_fi );
+					$icons   = AR_SVG_Icons::get_icons();
+					$icon_id = isset( $icons[ $arbtt_fi ] ) ? $arbtt_fi : AR_SVG_Icons::fa_class_to_id( $arbtt_fi );
 					echo AR_SVG_Icons::get_icon( $icon_id, array( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG is hardcoded safe markup.
 						'class'       => 'arbtt-svg-icon',
 						'aria-hidden' => 'true',
