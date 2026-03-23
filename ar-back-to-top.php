@@ -240,6 +240,8 @@ final class AR_Back_To_Top {
 		$this->register_field( 'arbtt_twidth', __( 'Tablet Breakpoint Width', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_twidth_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_hide_on_phone', __( 'Hide Button on Mobile Devices', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_hophone_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_pwidth', __( 'Mobile Breakpoint Width', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_pwidth_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_auto_hide', __( 'Auto Hide Button', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_auto_hide_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_auto_hide_after', __( 'Auto Hide After (seconds)', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_auto_hide_after_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_custom_css', __( 'Custom CSS', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_custom_css_field' ), 'arbtt_ssection_id' );
 	}
 
@@ -751,6 +753,34 @@ final class AR_Back_To_Top {
 		<input type="number" name="arbtt_twidth" class="aras arbtt_twidth" id="arbtt_twidth" placeholder="1024" value="<?php echo esc_attr( get_option( 'arbtt_twidth' ) ); ?>"/>
 		<span class="description"><?php echo esc_html__( 'px', 'ar-back-to-top' ); ?></span>
 		<p><?php echo esc_html__( 'Enter the width of the screen at which the button will be hidden on tablet devices.', 'ar-back-to-top' ); ?></p>
+		<?php
+	}
+
+	/**
+	 * Render auto hide field
+	 *
+	 * @return void
+	 */
+	public function render_auto_hide_field() {
+		?>
+		<label class="ar-btt-toggle" for="arbtt_auto_hide">
+			<input type="checkbox" name="arbtt_auto_hide" id="arbtt_auto_hide" value="1"<?php checked( '1', esc_attr( get_option( 'arbtt_auto_hide' ) ) ); ?> class="ar-btt-toggle-checkbox">
+			<div class="ar-btt-toggle-switch"></div>
+			<span class="description"><?php esc_html_e( 'Automatically hide button after a period of inactivity', 'ar-back-to-top' ); ?></span>
+		</label>
+		<?php
+	}
+
+	/**
+	 * Render auto hide after field
+	 *
+	 * @return void
+	 */
+	public function render_auto_hide_after_field() {
+		$value = get_option( 'arbtt_auto_hide_after', '3' );
+		?>
+		<input type="number" name="arbtt_auto_hide_after" class="aras" id="arbtt_auto_hide_after" min="1" max="60" placeholder="3" value="<?php echo esc_attr( $value ); ?>"/>
+		<span class="description"><?php esc_html_e( 'seconds', 'ar-back-to-top' ); ?></span>
 		<?php
 	}
 

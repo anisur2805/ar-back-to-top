@@ -6,15 +6,35 @@
 ( function() {
 	'use strict';
 
-	var visibleAfter = parseInt( arbtt_obj.btn_visible_after, 10 ) || 100;
-	var fadeDuration = parseInt( arbtt_obj.fade_in, 10 ) || 950;
-	var btn = document.querySelector( '.arbtt' );
+	var visibleAfter  = parseInt( arbtt_obj.btn_visible_after, 10 ) || 100;
+	var fadeDuration  = parseInt( arbtt_obj.fade_in, 10 ) || 950;
+	var autoHide      = arbtt_obj.auto_hide || false;
+	var autoHideAfter = ( parseInt( arbtt_obj.auto_hide_after, 10 ) || 3 ) * 1000;
+	var btn           = document.querySelector( '.arbtt' );
 
 	if ( ! btn ) {
 		return;
 	}
 
-	var ticking = false;
+	var ticking      = false;
+	var hideTimer    = null;
+
+	/**
+	 * Reset the auto-hide timer.
+	 */
+	function resetAutoHideTimer() {
+		if ( ! autoHide ) {
+			return;
+		}
+		if ( hideTimer ) {
+			clearTimeout( hideTimer );
+		}
+		hideTimer = setTimeout( function() {
+			if ( btn.style.display !== 'none' ) {
+				btn.style.display = 'none';
+			}
+		}, autoHideAfter );
+	}
 
 	/**
 	 * Handle scroll visibility with requestAnimationFrame throttle.
@@ -25,8 +45,12 @@
 				if ( window.scrollY > visibleAfter ) {
 					btn.style.display = 'flex';
 					btn.style.opacity = '';
+					resetAutoHideTimer();
 				} else {
 					btn.style.display = 'none';
+					if ( hideTimer ) {
+						clearTimeout( hideTimer );
+					}
 				}
 				ticking = false;
 			} );

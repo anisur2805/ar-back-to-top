@@ -64,11 +64,16 @@ class AR_Assets {
 		$btnwidth          = ( get_option( 'arbtt_btnwidth' ) ) ? (int) get_option( 'arbtt_btnwidth' ) : 40;
 		$btnheight         = ( get_option( 'arbtt_btnheight' ) ) ? (int) get_option( 'arbtt_btnheight' ) : 40;
 
+		$auto_hide       = get_option( 'arbtt_auto_hide' ) ? true : false;
+		$auto_hide_after = ( get_option( 'arbtt_auto_hide_after' ) ) ? (int) get_option( 'arbtt_auto_hide_after' ) : 3;
+
 		$arobj_array = array(
 			'btn_visible_after' => $btn_visible_after,
 			'fade_in'           => $fade_in,
 			'btnwidth'          => $btnwidth,
 			'btnheight'         => $btnheight,
+			'auto_hide'         => $auto_hide,
+			'auto_hide_after'   => $auto_hide_after,
 		);
 
 		wp_localize_script( 'arbtt_custom_js', 'arbtt_obj', $arobj_array );
