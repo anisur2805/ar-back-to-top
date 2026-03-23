@@ -260,4 +260,32 @@ jQuery(document).ready(function ($) {
 
     toggleBorderRadiusRow();
     $btnShape.on('change', toggleBorderRadiusRow);
+
+    // === Tab navigation ===
+    $('.arbtt-tabs .nav-tab').on('click', function(e) {
+        e.preventDefault();
+        var tabId = $(this).data('tab');
+
+        $('.arbtt-tabs .nav-tab').removeClass('nav-tab-active');
+        $(this).addClass('nav-tab-active');
+
+        $('.arbtt-tab-content').removeClass('arbtt-tab-active');
+        $('#' + tabId).addClass('arbtt-tab-active');
+
+        // Save active tab to localStorage
+        if (window.localStorage) {
+            localStorage.setItem('arbtt_active_tab', tabId);
+        }
+    });
+
+    // Restore last active tab
+    if (window.localStorage) {
+        var savedTab = localStorage.getItem('arbtt_active_tab');
+        if (savedTab && $('#' + savedTab).length) {
+            $('.arbtt-tabs .nav-tab').removeClass('nav-tab-active');
+            $('.arbtt-tabs .nav-tab[data-tab="' + savedTab + '"]').addClass('nav-tab-active');
+            $('.arbtt-tab-content').removeClass('arbtt-tab-active');
+            $('#' + savedTab).addClass('arbtt-tab-active');
+        }
+    }
 });

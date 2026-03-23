@@ -1,1 +1,292 @@
-#arbtt .form-table th{width:300px;vertical-align:middle}#arbtt .form-table td{padding:2px 0}#arbtt input.aras,#arbtt input.arcs,select#arbtt_btnps{width:160px}i.arw{font-size:16px;line-height:16px;vertical-align:top;margin:0 10px 0 0}.form-table input#arbtt_btndm.ardm{width:72px!important}.arbtt-image{display:inline-flex;align-items:center}.arbtt-image label{display:inline-flex;align-items:center;margin-right:10px}.arbtt-image label input{margin:0 8px 0 0!important}input#arbtt_btn_ext_img_url+img{margin-bottom:-7px}.ar-btt-wrap .ar-btt-toggle{cursor:pointer}.ar-btt-wrap .ar-btt-toggle-switch{display:inline-block;background:#ccc;border-radius:16px;width:44px;height:22px;position:relative;vertical-align:middle;transition:background .25s}.ar-btt-wrap .ar-btt-toggle-switch:before{content:"";display:block;background:#fff;border-radius:50%;box-shadow:none;width:16px;height:16px;position:absolute;top:3px;left:4px;transition:left .25s}.ar-btt-wrap .ar-btt-toggle-checkbox:checked+.ar-btt-toggle-switch{background-color:#2271b1}.ar-btt-wrap .ar-btt-toggle-checkbox:checked+.ar-btt-toggle-switch:before{left:24px}.ar-btt-wrap .ar-btt-toggle-checkbox{position:absolute;visibility:hidden}.ar-btt-wrap .ar-btt-tooltip-container{position:relative;display:inline-block;cursor:help;background:#000;color:#fff;border-radius:50%;width:20px;height:20px;text-align:center;line-height:20px}.arbtt-preview-icon{margin:0 10px;font-size:18px;vertical-align:middle;background:#ddd;width:40px;height:30px;display:inline-flex!important;align-items:center;justify-content:center;border-radius:5px}#arbtt-fa-icon-modal{position:fixed;top:50%;left:50%;width:80%;height:80%;background:#fff;border:1px solid #ccc;overflow:auto;z-index:999999;padding:20px;box-sizing:border-box;transform:translate(-50%,-50%)}body.arbtt-modal-open::after{position:fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.65);z-index:99999;content:'';display:block}.arbtt-fa-modal-header{display:flex;align-items:center;margin-bottom:20px;border-bottom:1px solid #e6e6e6}.arbtt-fa-modal-header h2{margin:0 0 20px}.arbtt-fa-modal-header button{position:absolute;right:20px;top:20px;cursor:pointer;border:0;background:#eb3a3a;color:#fff;padding:8px 12px;border-radius:5px}.arbtt-fa-modal-content{max-height:100%}.arbtt-fa-icon-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:10px;margin-top:15px}.arbtt-fa-icon-list i{padding:10px;font-size:20px;cursor:pointer;text-align:center;width:80px;height:60px;border:1px solid #eee;box-sizing:border-box;display:inline-flex!important;align-items:center;justify-content:center;border-radius:5px;transition:.25s}.arbtt-fa-icon-list i:hover{border-color:#007cba;background:#f0f8ff}.arbtt-fa-picker-wrap>input{width:fit-content}.arbtt-fa-picker-wrap{display:flex;align-items:center}.arbtt-header-actions .button-primary {position: fixed;right: 20px;top: 50px;} #arbtt .form-table th, #arbtt .form-table td {padding: 0 0 22px;}
+/* === Header === */
+.ar-btt-wrap .arbtt-header {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 16px;
+}
+.ar-btt-wrap .arbtt-header h1 {
+	margin: 0;
+	font-size: 23px;
+	font-weight: 400;
+	line-height: 1.3;
+}
+.ar-btt-wrap .arbtt-version {
+	background: #f0f0f1;
+	padding: 2px 10px;
+	border-radius: 12px;
+	font-size: 12px;
+	color: #50575e;
+	margin: 0;
+}
+
+/* === Tabs === */
+.arbtt-tabs {
+	margin-bottom: 0 !important;
+	border-bottom: 1px solid #c3c4c7;
+}
+.arbtt-tabs .nav-tab {
+	cursor: pointer;
+	font-size: 13px;
+	padding: 6px 14px;
+}
+
+/* === Tab content === */
+.arbtt-tab-content {
+	display: none;
+}
+.arbtt-tab-content.arbtt-tab-active {
+	display: block;
+}
+
+/* === Card === */
+.arbtt-card {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-top: none;
+	padding: 12px 24px 24px;
+	margin-bottom: 20px;
+}
+
+/* === Form table inside cards === */
+.arbtt-card .form-table {
+	margin-top: 0;
+}
+.arbtt-card .form-table th {
+	width: 200px;
+	vertical-align: middle;
+	padding: 12px 10px 12px 0;
+	font-weight: 600;
+	font-size: 13px;
+}
+.arbtt-card .form-table td {
+	padding: 12px 10px;
+}
+.arbtt-card .form-table tr {
+	border-bottom: 1px solid #f0f0f1;
+}
+.arbtt-card .form-table tr:last-child {
+	border-bottom: none;
+}
+
+/* === Form inputs === */
+#arbtt input.aras,
+#arbtt input.arcs,
+#arbtt select {
+	width: 160px;
+}
+#arbtt input.regular-text {
+	width: 300px;
+}
+#arbtt textarea {
+	width: 100%;
+	max-width: 500px;
+	font-family: monospace;
+	font-size: 13px;
+}
+.form-table input#arbtt_btndm.ardm {
+	width: 72px !important;
+}
+
+/* === Toggle switch === */
+.ar-btt-wrap .ar-btt-toggle {
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+.ar-btt-wrap .ar-btt-toggle-switch {
+	display: inline-block;
+	background: #ccc;
+	border-radius: 16px;
+	width: 44px;
+	height: 22px;
+	position: relative;
+	vertical-align: middle;
+	transition: background 0.25s;
+	flex-shrink: 0;
+}
+.ar-btt-wrap .ar-btt-toggle-switch:before {
+	content: "";
+	display: block;
+	background: #fff;
+	border-radius: 50%;
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	top: 3px;
+	left: 4px;
+	transition: left 0.25s;
+}
+.ar-btt-wrap .ar-btt-toggle-checkbox:checked + .ar-btt-toggle-switch {
+	background-color: #2271b1;
+}
+.ar-btt-wrap .ar-btt-toggle-checkbox:checked + .ar-btt-toggle-switch:before {
+	left: 24px;
+}
+.ar-btt-wrap .ar-btt-toggle-checkbox {
+	position: absolute;
+	visibility: hidden;
+}
+
+/* === Description text === */
+.arbtt-card .description,
+.arbtt-card p.description {
+	color: #646970;
+	font-size: 12px;
+	margin-top: 4px;
+}
+.arbtt-card p.description code {
+	font-size: 12px;
+	padding: 1px 6px;
+	background: #f0f0f1;
+}
+
+/* === Image radios === */
+.arbtt-image {
+	display: inline-flex;
+	align-items: center;
+}
+.arbtt-image label {
+	display: inline-flex;
+	align-items: center;
+	margin-right: 10px;
+}
+.arbtt-image label input {
+	margin: 0 8px 0 0 !important;
+}
+
+/* === Icon picker === */
+.arbtt-fa-picker-wrap {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+.arbtt-fa-picker-wrap > input {
+	width: fit-content;
+}
+.arbtt-preview-icon {
+	margin: 0;
+	font-size: 18px;
+	vertical-align: middle;
+	background: #f0f0f1;
+	width: 36px;
+	height: 36px;
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	border-radius: 6px;
+}
+
+/* === Icon modal === */
+#arbtt-fa-icon-modal {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 70%;
+	max-width: 700px;
+	max-height: 70vh;
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-radius: 8px;
+	overflow: auto;
+	z-index: 999999;
+	padding: 24px;
+	box-sizing: border-box;
+	transform: translate(-50%, -50%);
+	box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+body.arbtt-modal-open::after {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.5);
+	z-index: 99999;
+	content: '';
+	display: block;
+}
+.arbtt-fa-modal-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 16px;
+	padding-bottom: 12px;
+	border-bottom: 1px solid #f0f0f1;
+}
+.arbtt-fa-modal-header h2 {
+	margin: 0;
+	font-size: 16px;
+}
+.arbtt-fa-modal-header button {
+	cursor: pointer;
+	border: 0;
+	background: #d63638;
+	color: #fff;
+	padding: 6px 14px;
+	border-radius: 4px;
+	font-size: 13px;
+}
+.arbtt-fa-modal-header button:hover {
+	background: #b32d2e;
+}
+.arbtt-fa-icon-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+	gap: 8px;
+	margin-top: 12px;
+}
+.arbtt-fa-icon-list i {
+	padding: 10px;
+	font-size: 20px;
+	cursor: pointer;
+	text-align: center;
+	height: 50px;
+	border: 1px solid #f0f0f1;
+	box-sizing: border-box;
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	border-radius: 6px;
+	transition: 0.2s;
+}
+.arbtt-fa-icon-list i:hover {
+	border-color: #2271b1;
+	background: #f0f7fc;
+	color: #2271b1;
+}
+
+/* === Footer actions === */
+.arbtt-footer-actions {
+	padding: 16px 0 0;
+	display: flex;
+	gap: 10px;
+	align-items: center;
+}
+.arbtt-footer-actions .button-primary {
+	font-size: 13px;
+}
+.arbtt-reset-form {
+	margin-top: 0;
+	display: inline-block;
+}
+.arbtt-reset-form .arbtt-reset-btn {
+	color: #b32d2e !important;
+	border-color: #b32d2e !important;
+}
+.arbtt-reset-form .arbtt-reset-btn:hover {
+	background: #fcf0f1 !important;
+}
+
+/* === Custom icon upload === */
+.arbtt-custom-icon-wrap {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+/* === External img preview === */
+input#arbtt_btn_ext_img_url + img {
+	margin-bottom: -7px;
+}

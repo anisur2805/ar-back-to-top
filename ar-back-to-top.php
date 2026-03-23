@@ -228,27 +228,53 @@ final class AR_Back_To_Top {
 	 * @return void
 	 */
 	public function render_admin_page() {
+		$tabs = array(
+			'general'    => __( 'General', 'ar-back-to-top' ),
+			'appearance' => __( 'Appearance', 'ar-back-to-top' ),
+			'colors'     => __( 'Colors & Style', 'ar-back-to-top' ),
+			'position'   => __( 'Position & Size', 'ar-back-to-top' ),
+			'scroll'     => __( 'Scroll Behavior', 'ar-back-to-top' ),
+			'visibility' => __( 'Visibility', 'ar-back-to-top' ),
+			'advanced'   => __( 'Advanced', 'ar-back-to-top' ),
+		);
 		?>
 		<div class="wrap ar-btt-wrap">
-			<form method="post" action="options.php" id="arbtt">
-				<?php
-					echo '<div class="arbtt-header-actions">';
-					echo '<h1>' . esc_html__( 'Back To Top', 'ar-back-to-top' ) . '</h1>';
-					submit_button( 'Save Changes', 'primary', 'submit_top', false );
+			<div class="arbtt-header">
+				<h1><?php esc_html_e( 'Back To Top', 'ar-back-to-top' ); ?></h1>
+				<p class="arbtt-version"><?php echo esc_html( 'v' . ARBTTOP_VERSION ); ?></p>
+			</div>
 
-					echo '</div>';
-					settings_fields( 'arbtt_ssection_id' );
-					do_settings_sections( 'arbtt' );
-					submit_button();
-				?>
+			<nav class="arbtt-tabs nav-tab-wrapper">
+				<?php foreach ( $tabs as $tab_key => $tab_label ) : ?>
+					<a href="#arbtt-tab-<?php echo esc_attr( $tab_key ); ?>" class="nav-tab<?php echo 'general' === $tab_key ? ' nav-tab-active' : ''; ?>" data-tab="arbtt-tab-<?php echo esc_attr( $tab_key ); ?>">
+						<?php echo esc_html( $tab_label ); ?>
+					</a>
+				<?php endforeach; ?>
+			</nav>
+
+			<form method="post" action="options.php" id="arbtt">
+				<?php settings_fields( 'arbtt_options' ); ?>
+
+				<?php foreach ( $tabs as $tab_key => $tab_label ) : ?>
+					<div id="arbtt-tab-<?php echo esc_attr( $tab_key ); ?>" class="arbtt-tab-content<?php echo 'general' === $tab_key ? ' arbtt-tab-active' : ''; ?>">
+						<div class="arbtt-card">
+							<?php do_settings_sections( 'arbtt_' . $tab_key ); ?>
+						</div>
+					</div>
+				<?php endforeach; ?>
+
+				<div class="arbtt-footer-actions">
+					<?php submit_button( esc_html__( 'Save Changes', 'ar-back-to-top' ), 'primary', 'submit', false ); ?>
+				</div>
 			</form>
-			<form method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=arbtt' ) ); ?>" style="margin-top:10px;">
+
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=arbtt' ) ); ?>" class="arbtt-reset-form">
 				<?php wp_nonce_field( 'arbtt_reset_defaults', 'arbtt_reset_nonce' ); ?>
 				<input type="hidden" name="arbtt_reset_defaults" value="1" />
 				<?php
 				submit_button(
 					esc_html__( 'Reset to Defaults', 'ar-back-to-top' ),
-					'secondary',
+					'secondary arbtt-reset-btn',
 					'arbtt_reset_btn',
 					false,
 					array( 'onclick' => 'return confirm("' . esc_js( __( 'Are you sure you want to reset all settings to defaults?', 'ar-back-to-top' ) ) . '");' )
@@ -265,55 +291,67 @@ final class AR_Back_To_Top {
 	 * @return void
 	 */
 	public function register_settings() {
-		$this->register_field( 'arbtt_enable', 'Enable Back To Top', 'arbtt', array( $this, 'render_enable_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_enable_scroll_progress', 'Enable Scroll Progress', 'arbtt', array( $this, 'render_enable_scroll_progress_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_enable_scroll_progress_size', 'Enable Scroll Progress Size', 'arbtt', array( $this, 'render_enable_scroll_progress_size_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_progress_color', 'Progress Color', 'arbtt', array( $this, 'render_progress_color_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_is_async', 'Enable Async', 'arbtt', array( $this, 'render_is_async_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_btnst', __( 'Button Style', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_btnst_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_fi', __( 'Font Icon', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_fi_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_btntx', __( 'Button Text', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_btntx_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_btn_img', __( 'Choose Button Image', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_btnimg_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_btn_img_position', __( 'Choose Button Image Position', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_arbtt_btn_img_position' ), 'arbtt_ssection_id' );
-		// $this->register_field( 'arbtt_btn_custom_icon', __( 'Custom Icon URL', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_btn_custom_icon_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_btn_ext_img_url', __( 'External Image Url', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_btnimg_url_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_custom_icon_url', __( 'Upload Custom Icon', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_custom_icon_upload_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_bgc', 'Button Background Color', 'arbtt', array( $this, 'render_bgc_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_bgc_hover', 'Button Background Hover Color', 'arbtt', array( $this, 'render_bgc_hover_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_clr', 'Button Color', 'arbtt', array( $this, 'render_clr_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_clr_hover', 'Button Color Hover', 'arbtt', array( $this, 'render_clr_hover_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_btn_shape', __( 'Button Shape', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_btn_shape_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_bdrd', 'Button Border Radius', 'arbtt', array( $this, 'render_bdrd_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_bdr', 'Button Border', 'arbtt', array( $this, 'render_bdr_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_bdr_color', 'Button Border Color', 'arbtt', array( $this, 'render_bdr_color_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_bdr_color_hover', 'Button Hover Border Color', 'arbtt', array( $this, 'render_bdr_color_hover_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_btnps', 'Button Position', 'arbtt', array( $this, 'render_btnps_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_btn_offset_bottom', 'Button Offset Bottom', 'arbtt', array( $this, 'render_btn_offset_bottom_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_btn_offset_right', 'Button Offset Right', 'arbtt', array( $this, 'render_btn_offset_right_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_btn_offset_left', 'Button Offset Left', 'arbtt', array( $this, 'render_btn_offset_left_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_btnapr', 'Button Appear After Scroll', 'arbtt', array( $this, 'render_btnapr_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_btndm', 'Button Dimension', 'arbtt', array( $this, 'render_btndm_field' ), 'arbtt_ssection_id', array( $this, 'sanitize_dimension_field' ) );
-		$this->register_field( 'arbtt_btn_padding', 'Button Padding', 'arbtt', array( $this, 'render_btn_padding_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_btnoc', 'Button Opacity', 'arbtt', array( $this, 'render_btnoc_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_fadein', 'Scroll Duration', 'arbtt', array( $this, 'render_fadein_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_fz', 'Font Icon/ Image Size', 'arbtt', array( $this, 'render_fz_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_hide_on_desktop', __( 'Hide Button on Desktop', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_hodesktop_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_dwidth', __( 'Desktop Breakpoint Width', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_dwidth_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_hide_on_tablet', __( 'Hide Button on Tablet Devices', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_hotablet_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_twidth', __( 'Tablet Breakpoint Width', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_twidth_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_hide_on_phone', __( 'Hide Button on Mobile Devices', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_hophone_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_pwidth', __( 'Mobile Breakpoint Width', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_pwidth_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_mobile_offset_bottom', __( 'Mobile Offset Bottom', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_mobile_offset_bottom_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_mobile_offset_side', __( 'Mobile Offset Side', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_mobile_offset_side_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_scroll_easing', __( 'Scroll Easing Effect', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_scroll_easing_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_display_mode', __( 'Display Mode', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_display_mode_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_display_pages', __( 'Select Pages', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_display_pages_field' ), 'arbtt_ssection_id', array( $this, 'sanitize_display_pages_field' ) );
-		$this->register_field( 'arbtt_tooltip_text', __( 'Button Tooltip Text', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_tooltip_text_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_zindex', __( 'Button Z-Index', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_zindex_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_show_in_admin', __( 'Show in Admin Area', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_show_in_admin_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_auto_hide', __( 'Auto Hide Button', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_auto_hide_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_auto_hide_after', __( 'Auto Hide After (seconds)', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_auto_hide_after_field' ), 'arbtt_ssection_id' );
-		$this->register_field( 'arbtt_custom_css', __( 'Custom CSS', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_custom_css_field' ), 'arbtt_ssection_id' );
+		// Tab 1: General.
+		$this->register_field( 'arbtt_enable', __( 'Enable Back To Top', 'ar-back-to-top' ), 'arbtt_general', array( $this, 'render_enable_field' ), 'arbtt_section_general' );
+		$this->register_field( 'arbtt_is_async', __( 'Enable Async', 'ar-back-to-top' ), 'arbtt_general', array( $this, 'render_is_async_field' ), 'arbtt_section_general' );
+		$this->register_field( 'arbtt_show_in_admin', __( 'Show in Admin Area', 'ar-back-to-top' ), 'arbtt_general', array( $this, 'render_show_in_admin_field' ), 'arbtt_section_general' );
+
+		// Tab 2: Appearance.
+		$this->register_field( 'arbtt_btnst', __( 'Button Style', 'ar-back-to-top' ), 'arbtt_appearance', array( $this, 'render_btnst_field' ), 'arbtt_section_appearance' );
+		$this->register_field( 'arbtt_fi', __( 'Font Icon', 'ar-back-to-top' ), 'arbtt_appearance', array( $this, 'render_fi_field' ), 'arbtt_section_appearance' );
+		$this->register_field( 'arbtt_btntx', __( 'Button Text', 'ar-back-to-top' ), 'arbtt_appearance', array( $this, 'render_btntx_field' ), 'arbtt_section_appearance' );
+		$this->register_field( 'arbtt_btn_img', __( 'Choose Button Image', 'ar-back-to-top' ), 'arbtt_appearance', array( $this, 'render_btnimg_field' ), 'arbtt_section_appearance' );
+		$this->register_field( 'arbtt_btn_img_position', __( 'Image Position', 'ar-back-to-top' ), 'arbtt_appearance', array( $this, 'render_arbtt_btn_img_position' ), 'arbtt_section_appearance' );
+		$this->register_field( 'arbtt_btn_ext_img_url', __( 'External Image URL', 'ar-back-to-top' ), 'arbtt_appearance', array( $this, 'render_btnimg_url_field' ), 'arbtt_section_appearance' );
+		$this->register_field( 'arbtt_custom_icon_url', __( 'Upload Custom Icon', 'ar-back-to-top' ), 'arbtt_appearance', array( $this, 'render_custom_icon_upload_field' ), 'arbtt_section_appearance' );
+		$this->register_field( 'arbtt_fz', __( 'Icon / Image Size', 'ar-back-to-top' ), 'arbtt_appearance', array( $this, 'render_fz_field' ), 'arbtt_section_appearance' );
+		$this->register_field( 'arbtt_tooltip_text', __( 'Tooltip Text', 'ar-back-to-top' ), 'arbtt_appearance', array( $this, 'render_tooltip_text_field' ), 'arbtt_section_appearance' );
+
+		// Tab 3: Colors & Style.
+		$this->register_field( 'arbtt_bgc', __( 'Background Color', 'ar-back-to-top' ), 'arbtt_colors', array( $this, 'render_bgc_field' ), 'arbtt_section_colors' );
+		$this->register_field( 'arbtt_bgc_hover', __( 'Background Hover', 'ar-back-to-top' ), 'arbtt_colors', array( $this, 'render_bgc_hover_field' ), 'arbtt_section_colors' );
+		$this->register_field( 'arbtt_clr', __( 'Icon / Text Color', 'ar-back-to-top' ), 'arbtt_colors', array( $this, 'render_clr_field' ), 'arbtt_section_colors' );
+		$this->register_field( 'arbtt_clr_hover', __( 'Icon / Text Hover', 'ar-back-to-top' ), 'arbtt_colors', array( $this, 'render_clr_hover_field' ), 'arbtt_section_colors' );
+		$this->register_field( 'arbtt_btn_shape', __( 'Button Shape', 'ar-back-to-top' ), 'arbtt_colors', array( $this, 'render_btn_shape_field' ), 'arbtt_section_colors' );
+		$this->register_field( 'arbtt_bdrd', __( 'Border Radius', 'ar-back-to-top' ), 'arbtt_colors', array( $this, 'render_bdrd_field' ), 'arbtt_section_colors' );
+		$this->register_field( 'arbtt_bdr', __( 'Border Width', 'ar-back-to-top' ), 'arbtt_colors', array( $this, 'render_bdr_field' ), 'arbtt_section_colors' );
+		$this->register_field( 'arbtt_bdr_color', __( 'Border Color', 'ar-back-to-top' ), 'arbtt_colors', array( $this, 'render_bdr_color_field' ), 'arbtt_section_colors' );
+		$this->register_field( 'arbtt_bdr_color_hover', __( 'Border Hover Color', 'ar-back-to-top' ), 'arbtt_colors', array( $this, 'render_bdr_color_hover_field' ), 'arbtt_section_colors' );
+		$this->register_field( 'arbtt_btnoc', __( 'Opacity', 'ar-back-to-top' ), 'arbtt_colors', array( $this, 'render_btnoc_field' ), 'arbtt_section_colors' );
+
+		// Tab 4: Position & Size.
+		$this->register_field( 'arbtt_btndm', __( 'Button Dimension', 'ar-back-to-top' ), 'arbtt_position', array( $this, 'render_btndm_field' ), 'arbtt_section_position', array( $this, 'sanitize_dimension_field' ) );
+		$this->register_field( 'arbtt_btn_padding', __( 'Button Padding', 'ar-back-to-top' ), 'arbtt_position', array( $this, 'render_btn_padding_field' ), 'arbtt_section_position' );
+		$this->register_field( 'arbtt_btnps', __( 'Position', 'ar-back-to-top' ), 'arbtt_position', array( $this, 'render_btnps_field' ), 'arbtt_section_position' );
+		$this->register_field( 'arbtt_btn_offset_bottom', __( 'Offset Bottom', 'ar-back-to-top' ), 'arbtt_position', array( $this, 'render_btn_offset_bottom_field' ), 'arbtt_section_position' );
+		$this->register_field( 'arbtt_btn_offset_right', __( 'Offset Right', 'ar-back-to-top' ), 'arbtt_position', array( $this, 'render_btn_offset_right_field' ), 'arbtt_section_position' );
+		$this->register_field( 'arbtt_btn_offset_left', __( 'Offset Left', 'ar-back-to-top' ), 'arbtt_position', array( $this, 'render_btn_offset_left_field' ), 'arbtt_section_position' );
+		$this->register_field( 'arbtt_zindex', __( 'Z-Index', 'ar-back-to-top' ), 'arbtt_position', array( $this, 'render_zindex_field' ), 'arbtt_section_position' );
+
+		// Tab 5: Scroll Behavior.
+		$this->register_field( 'arbtt_btnapr', __( 'Appear After Scroll', 'ar-back-to-top' ), 'arbtt_scroll', array( $this, 'render_btnapr_field' ), 'arbtt_section_scroll' );
+		$this->register_field( 'arbtt_fadein', __( 'Scroll Duration', 'ar-back-to-top' ), 'arbtt_scroll', array( $this, 'render_fadein_field' ), 'arbtt_section_scroll' );
+		$this->register_field( 'arbtt_scroll_easing', __( 'Easing Effect', 'ar-back-to-top' ), 'arbtt_scroll', array( $this, 'render_scroll_easing_field' ), 'arbtt_section_scroll' );
+		$this->register_field( 'arbtt_auto_hide', __( 'Auto Hide', 'ar-back-to-top' ), 'arbtt_scroll', array( $this, 'render_auto_hide_field' ), 'arbtt_section_scroll' );
+		$this->register_field( 'arbtt_auto_hide_after', __( 'Auto Hide After', 'ar-back-to-top' ), 'arbtt_scroll', array( $this, 'render_auto_hide_after_field' ), 'arbtt_section_scroll' );
+		$this->register_field( 'arbtt_enable_scroll_progress', __( 'Scroll Progress', 'ar-back-to-top' ), 'arbtt_scroll', array( $this, 'render_enable_scroll_progress_field' ), 'arbtt_section_scroll' );
+		$this->register_field( 'arbtt_enable_scroll_progress_size', __( 'Progress Size', 'ar-back-to-top' ), 'arbtt_scroll', array( $this, 'render_enable_scroll_progress_size_field' ), 'arbtt_section_scroll' );
+		$this->register_field( 'arbtt_progress_color', __( 'Progress Color', 'ar-back-to-top' ), 'arbtt_scroll', array( $this, 'render_progress_color_field' ), 'arbtt_section_scroll' );
+
+		// Tab 6: Visibility.
+		$this->register_field( 'arbtt_display_mode', __( 'Display Mode', 'ar-back-to-top' ), 'arbtt_visibility', array( $this, 'render_display_mode_field' ), 'arbtt_section_visibility' );
+		$this->register_field( 'arbtt_display_pages', __( 'Select Pages', 'ar-back-to-top' ), 'arbtt_visibility', array( $this, 'render_display_pages_field' ), 'arbtt_section_visibility', array( $this, 'sanitize_display_pages_field' ) );
+		$this->register_field( 'arbtt_hide_on_desktop', __( 'Hide on Desktop', 'ar-back-to-top' ), 'arbtt_visibility', array( $this, 'render_hodesktop_field' ), 'arbtt_section_visibility' );
+		$this->register_field( 'arbtt_dwidth', __( 'Desktop Breakpoint', 'ar-back-to-top' ), 'arbtt_visibility', array( $this, 'render_dwidth_field' ), 'arbtt_section_visibility' );
+		$this->register_field( 'arbtt_hide_on_tablet', __( 'Hide on Tablet', 'ar-back-to-top' ), 'arbtt_visibility', array( $this, 'render_hotablet_field' ), 'arbtt_section_visibility' );
+		$this->register_field( 'arbtt_twidth', __( 'Tablet Breakpoint', 'ar-back-to-top' ), 'arbtt_visibility', array( $this, 'render_twidth_field' ), 'arbtt_section_visibility' );
+		$this->register_field( 'arbtt_hide_on_phone', __( 'Hide on Mobile', 'ar-back-to-top' ), 'arbtt_visibility', array( $this, 'render_hophone_field' ), 'arbtt_section_visibility' );
+		$this->register_field( 'arbtt_pwidth', __( 'Mobile Breakpoint', 'ar-back-to-top' ), 'arbtt_visibility', array( $this, 'render_pwidth_field' ), 'arbtt_section_visibility' );
+		$this->register_field( 'arbtt_mobile_offset_bottom', __( 'Mobile Offset Bottom', 'ar-back-to-top' ), 'arbtt_visibility', array( $this, 'render_mobile_offset_bottom_field' ), 'arbtt_section_visibility' );
+		$this->register_field( 'arbtt_mobile_offset_side', __( 'Mobile Offset Side', 'ar-back-to-top' ), 'arbtt_visibility', array( $this, 'render_mobile_offset_side_field' ), 'arbtt_section_visibility' );
+
+		// Tab 7: Advanced.
+		$this->register_field( 'arbtt_custom_css', __( 'Custom CSS', 'ar-back-to-top' ), 'arbtt_advanced', array( $this, 'render_custom_css_field' ), 'arbtt_section_advanced' );
 	}
 
 	/**
@@ -326,7 +364,7 @@ final class AR_Back_To_Top {
 	 * @param string   $register_id   The settings section ID.
 	 * @param callable $sanitize_cb   (Optional) Sanitization callback for the setting.
 	 */
-	private function register_field( $id, $text, $slug, $callback, $register_id, $sanitize_cb = 'sanitize_text_field' ) {
+	private function register_field( $id, $text, $slug, $callback, $section_id, $sanitize_cb = 'sanitize_text_field' ) {
 		$label = sprintf( '<label for="%s">%s</label>', esc_attr( $id ), esc_html( $text ) );
 
 		add_settings_field(
@@ -334,11 +372,11 @@ final class AR_Back_To_Top {
 			$label,
 			$callback,
 			$slug,
-			$register_id
+			$section_id
 		);
 
 		register_setting(
-			$register_id,
+			'arbtt_options',
 			$id,
 			array(
 				'sanitize_callback' => $sanitize_cb,
@@ -352,21 +390,19 @@ final class AR_Back_To_Top {
 	 * @return void
 	 */
 	public function add_settings_section() {
-		add_settings_section(
-			'arbtt_ssection_id',
-			__( 'Back To Top Settings', 'ar-back-to-top' ),
-			array( $this, 'render_section_description' ),
-			'arbtt'
+		$sections = array(
+			'arbtt_section_general'    => 'arbtt_general',
+			'arbtt_section_appearance' => 'arbtt_appearance',
+			'arbtt_section_colors'     => 'arbtt_colors',
+			'arbtt_section_position'   => 'arbtt_position',
+			'arbtt_section_scroll'     => 'arbtt_scroll',
+			'arbtt_section_visibility' => 'arbtt_visibility',
+			'arbtt_section_advanced'   => 'arbtt_advanced',
 		);
-	}
 
-	/**
-	 * Render section description
-	 *
-	 * @return void
-	 */
-	public function render_section_description() {
-		echo '';
+		foreach ( $sections as $section_id => $page_slug ) {
+			add_settings_section( $section_id, '', '__return_false', $page_slug );
+		}
 	}
 
 	/**
