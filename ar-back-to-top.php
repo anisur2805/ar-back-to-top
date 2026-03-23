@@ -240,6 +240,8 @@ final class AR_Back_To_Top {
 		$this->register_field( 'arbtt_twidth', __( 'Tablet Breakpoint Width', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_twidth_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_hide_on_phone', __( 'Hide Button on Mobile Devices', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_hophone_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_pwidth', __( 'Mobile Breakpoint Width', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_pwidth_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_display_mode', __( 'Display Mode', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_display_mode_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_display_pages', __( 'Select Pages', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_display_pages_field' ), 'arbtt_ssection_id', array( $this, 'sanitize_display_pages_field' ) );
 		$this->register_field( 'arbtt_tooltip_text', __( 'Button Tooltip Text', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_tooltip_text_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_zindex', __( 'Button Z-Index', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_zindex_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_auto_hide', __( 'Auto Hide Button', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_auto_hide_field' ), 'arbtt_ssection_id' );
@@ -759,6 +761,75 @@ final class AR_Back_To_Top {
 	}
 
 	/**
+	 * Render display mode field
+	 *
+	 * @return void
+	 */
+	public function render_display_mode_field() {
+		$current = get_option( 'arbtt_display_mode', 'all' );
+		?>
+		<select name="arbtt_display_mode" id="arbtt_display_mode">
+			<option value="all"<?php selected( 'all', $current ); ?>><?php esc_html_e( 'Show on all pages', 'ar-back-to-top' ); ?></option>
+			<option value="include"<?php selected( 'include', $current ); ?>><?php esc_html_e( 'Show only on selected pages', 'ar-back-to-top' ); ?></option>
+			<option value="exclude"<?php selected( 'exclude', $current ); ?>><?php esc_html_e( 'Hide on selected pages', 'ar-back-to-top' ); ?></option>
+		</select>
+		<?php
+	}
+
+	/**
+	 * Render display pages field
+	 *
+	 * @return void
+	 */
+	public function render_display_pages_field() {
+		$selected_ids = get_option( 'arbtt_display_pages', array() );
+		if ( ! is_array( $selected_ids ) ) {
+			$selected_ids = array();
+		}
+
+		$pages = get_pages( array( 'number' => 200 ) );
+		$posts = get_posts(
+			array(
+				'numberposts' => 200,
+				'post_type'   => 'post',
+				'post_status' => 'publish',
+			)
+		);
+		?>
+		<select name="arbtt_display_pages[]" id="arbtt_display_pages" multiple="multiple" style="min-width:300px;min-height:150px;">
+			<optgroup label="<?php esc_attr_e( 'Pages', 'ar-back-to-top' ); ?>">
+				<?php foreach ( $pages as $page ) : ?>
+					<option value="<?php echo absint( $page->ID ); ?>"<?php echo in_array( (string) $page->ID, $selected_ids, true ) ? ' selected' : ''; ?>>
+						<?php echo esc_html( $page->post_title ); ?>
+					</option>
+				<?php endforeach; ?>
+			</optgroup>
+			<optgroup label="<?php esc_attr_e( 'Posts', 'ar-back-to-top' ); ?>">
+				<?php foreach ( $posts as $post ) : ?>
+					<option value="<?php echo absint( $post->ID ); ?>"<?php echo in_array( (string) $post->ID, $selected_ids, true ) ? ' selected' : ''; ?>>
+						<?php echo esc_html( $post->post_title ); ?>
+					</option>
+				<?php endforeach; ?>
+			</optgroup>
+		</select>
+		<p class="description"><?php esc_html_e( 'Hold Ctrl/Cmd to select multiple pages/posts.', 'ar-back-to-top' ); ?></p>
+		<?php
+	}
+
+	/**
+	 * Sanitize display pages field
+	 *
+	 * @param mixed $input The input to sanitize.
+	 * @return array
+	 */
+	public function sanitize_display_pages_field( $input ) {
+		if ( ! is_array( $input ) ) {
+			return array();
+		}
+		return array_map( 'absint', $input );
+	}
+
+	/**
 	 * Render tooltip text field
 	 *
 	 * @return void
@@ -929,6 +1000,11 @@ final class AR_Back_To_Top {
 			return;
 		}
 
+		// Check page/post display conditions.
+		if ( ! $this->should_display_on_current_page() ) {
+			return;
+		}
+
 		require_once ARBTTOP_PATH . '/inc/dynamic-style.css.php';
 
 		?>
@@ -969,6 +1045,32 @@ final class AR_Back_To_Top {
 			</button>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Check if the button should display on the current page.
+	 *
+	 * @return bool
+	 */
+	private function should_display_on_current_page() {
+		$display_mode  = get_option( 'arbtt_display_mode', 'all' );
+		$display_pages = get_option( 'arbtt_display_pages', array() );
+
+		if ( 'all' === $display_mode || ! is_array( $display_pages ) || empty( $display_pages ) ) {
+			return true;
+		}
+
+		$current_id = get_queried_object_id();
+
+		if ( 'include' === $display_mode ) {
+			return in_array( $current_id, array_map( 'absint', $display_pages ), true );
+		}
+
+		if ( 'exclude' === $display_mode ) {
+			return ! in_array( $current_id, array_map( 'absint', $display_pages ), true );
+		}
+
+		return true;
 	}
 
 	/**
