@@ -158,6 +158,7 @@ final class AR_Back_To_Top {
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_init', array( $this, 'add_settings_section' ) );
 		add_action( 'wp_footer', array( $this, 'render_back_to_top' ) );
+		add_action( 'admin_footer', array( $this, 'render_back_to_top_admin' ) );
 		add_action( 'admin_init', array( $this, 'handle_activation_redirect' ) );
 		add_action( 'admin_init', array( $this, 'handle_reset_defaults' ) );
 
@@ -309,6 +310,7 @@ final class AR_Back_To_Top {
 		$this->register_field( 'arbtt_display_pages', __( 'Select Pages', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_display_pages_field' ), 'arbtt_ssection_id', array( $this, 'sanitize_display_pages_field' ) );
 		$this->register_field( 'arbtt_tooltip_text', __( 'Button Tooltip Text', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_tooltip_text_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_zindex', __( 'Button Z-Index', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_zindex_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_show_in_admin', __( 'Show in Admin Area', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_show_in_admin_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_auto_hide', __( 'Auto Hide Button', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_auto_hide_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_auto_hide_after', __( 'Auto Hide After (seconds)', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_auto_hide_after_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_custom_css', __( 'Custom CSS', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_custom_css_field' ), 'arbtt_ssection_id' );
@@ -1033,6 +1035,21 @@ final class AR_Back_To_Top {
 	}
 
 	/**
+	 * Render show in admin area field
+	 *
+	 * @return void
+	 */
+	public function render_show_in_admin_field() {
+		?>
+		<label class="ar-btt-toggle" for="arbtt_show_in_admin">
+			<input type="checkbox" name="arbtt_show_in_admin" id="arbtt_show_in_admin" value="1"<?php checked( '1', esc_attr( get_option( 'arbtt_show_in_admin' ) ) ); ?> class="ar-btt-toggle-checkbox">
+			<div class="ar-btt-toggle-switch"></div>
+			<span class="description"><?php esc_html_e( 'Display the back-to-top button in the WordPress admin dashboard', 'ar-back-to-top' ); ?></span>
+		</label>
+		<?php
+	}
+
+	/**
 	 * Render auto hide field
 	 *
 	 * @return void
@@ -1179,8 +1196,8 @@ final class AR_Back_To_Top {
 			return;
 		}
 
-		// Check page/post display conditions.
-		if ( ! $this->should_display_on_current_page() ) {
+		// Check page/post display conditions (skip in admin context).
+		if ( empty( $this->is_admin_render ) && ! $this->should_display_on_current_page() ) {
 			return;
 		}
 
@@ -1284,6 +1301,7 @@ final class AR_Back_To_Top {
 			'arbtt_mobile_offset_bottom'       => '',
 			'arbtt_mobile_offset_side'         => '',
 			'arbtt_scroll_easing'              => 'ease-in-out',
+			'arbtt_show_in_admin'              => '0',
 			'arbtt_auto_hide'                  => '0',
 			'arbtt_auto_hide_after'            => '3',
 		);
@@ -1321,6 +1339,48 @@ final class AR_Back_To_Top {
 	 *
 	 * @return bool
 	 */
+	/**
+	 * Render back to top button in admin area.
+	 *
+	 * @return void
+	 */
+	public function render_back_to_top_admin() {
+		if ( '1' !== get_option( 'arbtt_enable' ) ) {
+			return;
+		}
+
+		if ( '1' !== get_option( 'arbtt_show_in_admin' ) ) {
+			return;
+		}
+
+		// Enqueue frontend assets in admin.
+		wp_enqueue_style( 'arbtt_fe_admin_frontend', ARBTTOP_ASSETS . '/css/style.css', array(), ARBTTOP_VERSION, 'all' );
+		wp_enqueue_style( 'arbtt_fa_admin_frontend', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css', array(), '6.5.1', 'all' );
+		wp_enqueue_script( 'arbtt_fe_admin_js', ARBTTOP_ASSETS . '/js/arbtt-fe.js', array(), ARBTTOP_VERSION, true );
+
+		$btn_visible_after = ( get_option( 'arbtt_btnapr' ) ) ? (int) get_option( 'arbtt_btnapr' ) : 100;
+		$fade_in           = ( get_option( 'arbtt_fadein' ) ) ? (int) get_option( 'arbtt_fadein' ) : 950;
+
+		wp_localize_script(
+			'arbtt_fe_admin_js',
+			'arbtt_obj',
+			array(
+				'btn_visible_after' => $btn_visible_after,
+				'fade_in'           => $fade_in,
+				'btnwidth'          => 40,
+				'btnheight'         => 40,
+				'auto_hide'         => get_option( 'arbtt_auto_hide' ) ? true : false,
+				'auto_hide_after'   => ( get_option( 'arbtt_auto_hide_after' ) ) ? (int) get_option( 'arbtt_auto_hide_after' ) : 3,
+				'scroll_easing'     => get_option( 'arbtt_scroll_easing', 'ease-in-out' ),
+			)
+		);
+
+		// Render the button, skipping page display check.
+		$this->is_admin_render = true;
+		$this->render_back_to_top();
+		$this->is_admin_render = false;
+	}
+
 	private function should_display_on_current_page() {
 		$display_mode  = get_option( 'arbtt_display_mode', 'all' );
 		$display_pages = get_option( 'arbtt_display_pages', array() );
