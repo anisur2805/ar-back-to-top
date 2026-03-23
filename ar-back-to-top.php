@@ -282,20 +282,28 @@ final class AR_Back_To_Top {
 				<div class="arbtt-sidebar">
 					<div class="arbtt-preview-card">
 						<h3><?php esc_html_e( 'Preview', 'ar-back-to-top' ); ?></h3>
-						<div class="arbtt-preview-area">
-							<div class="arbtt-preview-page">
-								<div class="arbtt-preview-line" style="width:80%"></div>
-								<div class="arbtt-preview-line" style="width:60%"></div>
-								<div class="arbtt-preview-line" style="width:90%"></div>
-								<div class="arbtt-preview-line" style="width:45%"></div>
-								<div class="arbtt-preview-line" style="width:75%"></div>
-								<div class="arbtt-preview-line" style="width:55%"></div>
+						<div class="arbtt-preview-browser">
+							<div class="arbtt-preview-toolbar">
+								<span class="arbtt-dot arbtt-dot-red"></span>
+								<span class="arbtt-dot arbtt-dot-yellow"></span>
+								<span class="arbtt-dot arbtt-dot-green"></span>
+								<span class="arbtt-preview-url">yoursite.com</span>
 							</div>
-							<div class="arbtt-preview-btn" id="arbtt-preview-btn">
-								<span class="arbtt-preview-btn-icon"></span>
+							<div class="arbtt-preview-area">
+								<div class="arbtt-preview-line" style="width:80%"></div>
+								<div class="arbtt-preview-line" style="width:55%"></div>
+								<div class="arbtt-preview-line" style="width:90%"></div>
+								<div class="arbtt-preview-line" style="width:40%"></div>
+								<div class="arbtt-preview-line" style="width:70%"></div>
+								<div class="arbtt-preview-line" style="width:60%"></div>
+								<div class="arbtt-preview-line" style="width:85%"></div>
+								<div class="arbtt-preview-line" style="width:50%"></div>
+								<div class="arbtt-preview-btn" id="arbtt-preview-btn">
+									<span class="arbtt-preview-btn-icon"></span>
+								</div>
 							</div>
 						</div>
-						<p class="arbtt-preview-hint"><?php esc_html_e( 'Save to update the preview on the frontend.', 'ar-back-to-top' ); ?></p>
+						<p class="arbtt-preview-hint"><?php esc_html_e( 'Live preview. Save to apply on frontend.', 'ar-back-to-top' ); ?></p>
 					</div>
 				</div>
 			</div>
