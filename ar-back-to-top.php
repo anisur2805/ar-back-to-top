@@ -252,35 +252,51 @@ final class AR_Back_To_Top {
 				<?php endforeach; ?>
 			</nav>
 
-			<form method="post" action="options.php" id="arbtt">
-				<?php settings_fields( 'arbtt_options' ); ?>
+			<div class="arbtt-layout">
+				<div class="arbtt-main">
+					<form method="post" action="options.php" id="arbtt">
+						<?php settings_fields( 'arbtt_options' ); ?>
 
-				<?php foreach ( $tabs as $tab_key => $tab_label ) : ?>
-					<div id="arbtt-tab-<?php echo esc_attr( $tab_key ); ?>" class="arbtt-tab-content<?php echo 'general' === $tab_key ? ' arbtt-tab-active' : ''; ?>">
-						<div class="arbtt-card">
-							<?php do_settings_sections( 'arbtt_' . $tab_key ); ?>
+						<?php foreach ( $tabs as $tab_key => $tab_label ) : ?>
+							<div id="arbtt-tab-<?php echo esc_attr( $tab_key ); ?>" class="arbtt-tab-content<?php echo 'general' === $tab_key ? ' arbtt-tab-active' : ''; ?>">
+								<div class="arbtt-card">
+									<?php do_settings_sections( 'arbtt_' . $tab_key ); ?>
+								</div>
+							</div>
+						<?php endforeach; ?>
+
+						<div class="arbtt-footer-actions">
+							<?php submit_button( esc_html__( 'Save Changes', 'ar-back-to-top' ), 'primary', 'submit', false ); ?>
+							<button type="submit" form="arbtt-reset-form" class="button arbtt-reset-btn" onclick="return confirm('<?php echo esc_js( __( 'Are you sure you want to reset all settings to defaults?', 'ar-back-to-top' ) ); ?>');"><?php esc_html_e( 'Reset to Defaults', 'ar-back-to-top' ); ?></button>
 						</div>
-					</div>
-				<?php endforeach; ?>
+					</form>
 
-				<div class="arbtt-footer-actions">
-					<?php submit_button( esc_html__( 'Save Changes', 'ar-back-to-top' ), 'primary', 'submit', false ); ?>
+					<form method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=arbtt' ) ); ?>" id="arbtt-reset-form" style="display:none;">
+						<?php wp_nonce_field( 'arbtt_reset_defaults', 'arbtt_reset_nonce' ); ?>
+						<input type="hidden" name="arbtt_reset_defaults" value="1" />
+					</form>
 				</div>
-			</form>
 
-			<form method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=arbtt' ) ); ?>" class="arbtt-reset-form">
-				<?php wp_nonce_field( 'arbtt_reset_defaults', 'arbtt_reset_nonce' ); ?>
-				<input type="hidden" name="arbtt_reset_defaults" value="1" />
-				<?php
-				submit_button(
-					esc_html__( 'Reset to Defaults', 'ar-back-to-top' ),
-					'secondary arbtt-reset-btn',
-					'arbtt_reset_btn',
-					false,
-					array( 'onclick' => 'return confirm("' . esc_js( __( 'Are you sure you want to reset all settings to defaults?', 'ar-back-to-top' ) ) . '");' )
-				);
-				?>
-			</form>
+				<div class="arbtt-sidebar">
+					<div class="arbtt-preview-card">
+						<h3><?php esc_html_e( 'Preview', 'ar-back-to-top' ); ?></h3>
+						<div class="arbtt-preview-area">
+							<div class="arbtt-preview-page">
+								<div class="arbtt-preview-line" style="width:80%"></div>
+								<div class="arbtt-preview-line" style="width:60%"></div>
+								<div class="arbtt-preview-line" style="width:90%"></div>
+								<div class="arbtt-preview-line" style="width:45%"></div>
+								<div class="arbtt-preview-line" style="width:75%"></div>
+								<div class="arbtt-preview-line" style="width:55%"></div>
+							</div>
+							<div class="arbtt-preview-btn" id="arbtt-preview-btn">
+								<span class="arbtt-preview-btn-icon"></span>
+							</div>
+						</div>
+						<p class="arbtt-preview-hint"><?php esc_html_e( 'Save to update the preview on the frontend.', 'ar-back-to-top' ); ?></p>
+					</div>
+				</div>
+			</div>
 		</div>
 		<?php
 	}
@@ -294,6 +310,7 @@ final class AR_Back_To_Top {
 		// Tab 1: General.
 		$this->register_field( 'arbtt_enable', __( 'Enable Back To Top', 'ar-back-to-top' ), 'arbtt_general', array( $this, 'render_enable_field' ), 'arbtt_section_general' );
 		$this->register_field( 'arbtt_is_async', __( 'Enable Async', 'ar-back-to-top' ), 'arbtt_general', array( $this, 'render_is_async_field' ), 'arbtt_section_general' );
+		$this->register_field( 'arbtt_fa_loading', __( 'Font Awesome Loading', 'ar-back-to-top' ), 'arbtt_general', array( $this, 'render_fa_loading_field' ), 'arbtt_section_general' );
 		$this->register_field( 'arbtt_show_in_admin', __( 'Show in Admin Area', 'ar-back-to-top' ), 'arbtt_general', array( $this, 'render_show_in_admin_field' ), 'arbtt_section_general' );
 
 		// Tab 2: Appearance.
@@ -467,6 +484,23 @@ final class AR_Back_To_Top {
 			<div class="ar-btt-toggle-switch"></div>
 		</label>
 		<p class="description"><?php echo esc_html__( 'Enable this option to improve site performance by loading scripts asynchronously.', 'ar-back-to-top' ); ?> <br/> <?php echo esc_html__( 'Disable only if it causes compatibility issues with other plugins or scripts.', 'ar-back-to-top' ); ?></p>
+		<?php
+	}
+
+	/**
+	 * Render Font Awesome loading field
+	 *
+	 * @return void
+	 */
+	public function render_fa_loading_field() {
+		$current = get_option( 'arbtt_fa_loading', 'fa6' );
+		?>
+		<select name="arbtt_fa_loading" id="arbtt_fa_loading">
+			<option value="fa6"<?php selected( 'fa6', $current ); ?>><?php esc_html_e( 'Font Awesome 6 (default)', 'ar-back-to-top' ); ?></option>
+			<option value="fa5"<?php selected( 'fa5', $current ); ?>><?php esc_html_e( 'Font Awesome 5', 'ar-back-to-top' ); ?></option>
+			<option value="none"<?php selected( 'none', $current ); ?>><?php esc_html_e( 'Do not load (already loaded by theme/plugin)', 'ar-back-to-top' ); ?></option>
+		</select>
+		<p class="description"><?php esc_html_e( 'Choose which Font Awesome version to load, or skip if your theme already includes it.', 'ar-back-to-top' ); ?></p>
 		<?php
 	}
 
@@ -1337,6 +1371,7 @@ final class AR_Back_To_Top {
 			'arbtt_mobile_offset_bottom'       => '',
 			'arbtt_mobile_offset_side'         => '',
 			'arbtt_scroll_easing'              => 'ease-in-out',
+			'arbtt_fa_loading'                 => 'fa6',
 			'arbtt_show_in_admin'              => '0',
 			'arbtt_auto_hide'                  => '0',
 			'arbtt_auto_hide_after'            => '3',

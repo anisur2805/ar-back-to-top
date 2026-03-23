@@ -1,6 +1,71 @@
 jQuery(document).ready(function ($) {
     "use strict";
 
+    // Select2 for pages multiselect
+    if ($.fn.select2 && $('#arbtt_display_pages').length) {
+        $('#arbtt_display_pages').select2({
+            placeholder: 'Search and select pages/posts...',
+            allowClear: true,
+            width: '100%'
+        });
+    }
+
+    // Live preview update
+    function updatePreview() {
+        var $btn = $('#arbtt-preview-btn');
+        if (!$btn.length) return;
+
+        $btn.css({
+            'background-color': $('#arbtt_bgc').val() || '#000',
+            'color': ($('#arbtt_clr').val() || '#fff'),
+            'border-radius': (function() {
+                var shape = $('#arbtt_btn_shape').val();
+                if (shape === 'circle') return '50%';
+                if (shape === 'square') return '0';
+                if (shape === 'rounded') return '8px';
+                return ($('#arbtt_bdrd').val() || '5') + 'px';
+            })(),
+            'border': ($('#arbtt_bdr').val() || '2') + 'px solid ' + ($('#arbtt_bdr_color').val() || '#fff'),
+            'opacity': $('#arbtt_btnoc').val() || '0.5',
+            'width': ($('.arbtt_btndm').first().val() || '40') + 'px',
+            'height': ($('.arbtt_btndm').last().val() || '40') + 'px',
+        });
+
+        // Position
+        var pos = $('#arbtt_btnps').val() || 'right';
+        $btn.css({ 'left': '', 'right': '', 'transform': '' });
+        if (pos === 'center') {
+            $btn.css({ 'left': '50%', 'transform': 'translateX(-50%)' });
+        } else if (pos === 'left') {
+            $btn.css('left', '8px');
+        } else {
+            $btn.css('right', '8px');
+        }
+
+        // Icon
+        var style = $('#arbtt_btnst').val();
+        var $icon = $btn.find('.arbtt-preview-btn-icon');
+        $icon.attr('class', 'arbtt-preview-btn-icon');
+        if (style === 'fa') {
+            var iconClass = $('#arbtt_fi_picker').val() || 'fa-solid fa-angle-up';
+            $icon.attr('class', 'arbtt-preview-btn-icon ' + iconClass);
+            $icon.text('');
+        } else if (style === 'txt') {
+            $icon.text($('#arbtt_btntx').val() || 'Top');
+        } else {
+            $icon.attr('class', 'arbtt-preview-btn-icon fa-solid fa-angle-up');
+            $icon.text('');
+        }
+
+        $icon.css({ 'color': $('#arbtt_clr').val() || '#fff', 'font-size': ($('#arbtt_fz').val() || '20') + 'px' });
+    }
+
+    // Bind preview updates to all relevant inputs
+    $('#arbtt input, #arbtt select, #arbtt textarea').on('change input', function() {
+        updatePreview();
+    });
+    setTimeout(updatePreview, 100);
+
     const $progressBar         = $("input[name='arbtt_enable_scroll_progress']");
     const $progressBarFields   = $("input[name='arbtt_enable_scroll_progress_size']").closest("tr");
     const $progressBarColorRow = $("input[name='arbtt_progress_color']").closest("tr");
