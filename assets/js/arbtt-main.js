@@ -66,32 +66,32 @@ jQuery(document).ready(function ($) {
         $checkbox.on("change", toggleRows);
     });
     const faIcons = [
-        "fa fa-angle-up",
-        "fa fa-angle-double-up",
-        "fa fa-arrow-up",
-        "fa fa-arrow-circle-up",
-        "fa fa-arrow-circle-o-up",
-        "fa fa-chevron-up",
-        "fa fa-hand-o-up",
-        "fa fa-caret-up",
-        "fa fa-long-arrow-up",
-        "fa fa-level-up",
-        "fa fa-sort-asc",
-        "fa fa-upload",
-        "fa fa-toggle-up",
-        "fa fa-step-backward",
-        "fa fa-eject",
-        "fa fa-fast-backward",
-        "fa fa-angle-double-left",
-        "fa fa-hand-rock-o",
-        "fa fa-hand-pointer-o",
+        "fa-solid fa-angle-up",
+        "fa-solid fa-angles-up",
+        "fa-solid fa-arrow-up",
+        "fa-solid fa-circle-arrow-up",
+        "fa-solid fa-chevron-up",
+        "fa-solid fa-caret-up",
+        "fa-solid fa-arrow-up-long",
+        "fa-solid fa-turn-up",
+        "fa-solid fa-sort-up",
+        "fa-solid fa-upload",
+        "fa-solid fa-square-caret-up",
+        "fa-solid fa-backward-step",
+        "fa-solid fa-eject",
+        "fa-solid fa-backward-fast",
+        "fa-solid fa-hand-point-up",
+        "fa-solid fa-hand-back-fist",
+        "fa-solid fa-circle-chevron-up",
+        "fa-solid fa-up-long",
+        "fa-solid fa-rocket",
     ];
     function renderIconList(filter = "") {
         const $container = $(".arbtt-fa-icon-list").empty();
         faIcons.forEach((icon) => {
             if (!filter || icon.includes(filter.toLowerCase())) {
                 $container.append(
-                    `<i class="fa ${icon}" data-icon="${icon}" title="${icon}"></i>`
+                    `<i class="${icon}" data-icon="${icon}" title="${icon}"></i>`
                 );
             }
         });
@@ -110,7 +110,7 @@ jQuery(document).ready(function ($) {
         $("#arbtt_fi_picker").val(selectedIcon);
         $(".arbtt-preview-icon").attr(
             "class",
-            `fa ${selectedIcon} arbtt-preview-icon`
+            `${selectedIcon} arbtt-preview-icon`
         );
         $("#arbtt-fa-icon-modal").fadeOut();
         $("body").removeClass("arbtt-modal-open");

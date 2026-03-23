@@ -18,7 +18,7 @@ class AR_Assets {
 
 		if ( 'toplevel_page_arbtt' === $hook ) {
 			wp_enqueue_style( 'jquery_minicolors', ARBTTOP_ASSETS . '/minicolors/jquery.minicolors.css', array(), '1.0', 'all' );
-			wp_enqueue_style( 'arbtt_fa', ARBTTOP_ASSETS . '/css/font-awesome.min.css', array(), '1.0', 'all' );
+			wp_enqueue_style( 'arbtt_fa', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css', array(), '6.5.1', 'all' );
 			wp_enqueue_script( 'arbtt_minucolor_js', ARBTTOP_ASSETS . '/minicolors/jquery.minicolors.min.js', array( 'jquery' ), '1.0', true );
 			wp_enqueue_script( 'arbtt_custom_js', ARBTTOP_ASSETS . '/js/arbtt-main.js', array( 'jquery' ), ARBTTOP_VERSION, true );
 		}
@@ -86,7 +86,7 @@ class AR_Assets {
 		}
 
 		wp_enqueue_style( 'arbtt_fe_admin', ARBTTOP_ASSETS . '/css/style.css', array(), ARBTTOP_VERSION, 'all' );
-		wp_enqueue_style( 'arbtt_fa', ARBTTOP_ASSETS . '/css/font-awesome.min.css', array(), '4.7.0', 'all' );
+		wp_enqueue_style( 'arbtt_fa', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css', array(), '6.5.1', 'all' );
 		wp_enqueue_script( 'arbtt_custom_js', ARBTTOP_ASSETS . '/js/arbtt-fe.js', array(), ARBTTOP_VERSION, true );
 
 		$btn_visible_after = ( get_option( 'arbtt_btnapr' ) ) ? (int) get_option( 'arbtt_btnapr' ) : 100;
