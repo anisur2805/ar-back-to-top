@@ -602,7 +602,7 @@ input#arbtt_btn_ext_img_url + img {
 }
 #arbtt .select2-container--default .select2-selection--multiple .select2-selection__rendered li {
 	margin: 0 !important;
-	padding: 0 !important;
+	padding: 2px 18px 4px 10px !important;
 	float: none !important;
 }
 #arbtt .select2-container--default .select2-selection--multiple .select2-selection__choice {
@@ -647,11 +647,12 @@ input#arbtt_btn_ext_img_url + img {
 }
 #arbtt .select2-container--default .select2-search--inline .select2-search__field {
 	margin: 0 !important;
-	padding: 4px 0 !important;
+	padding: 4px 12px !important;
 	height: 30px !important;
 	font-size: 13px !important;
 	font-family: inherit !important;
 	min-width: 150px !important;
+	box-sizing: border-box;
 }
 #arbtt .select2-container--default .select2-selection__clear {
 	margin-top: 0 !important;

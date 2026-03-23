@@ -41,6 +41,13 @@ final class AR_Back_To_Top {
 	private $options = array();
 
 	/**
+	 * Flag to skip page display check when rendering in admin.
+	 *
+	 * @var bool
+	 */
+	private $is_admin_render = false;
+
+	/**
 	 * Get singleton instance
 	 *
 	 * @return AR_Back_To_Top
