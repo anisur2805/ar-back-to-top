@@ -10,7 +10,51 @@
 	var fadeDuration  = parseInt( arbtt_obj.fade_in, 10 ) || 950;
 	var autoHide      = arbtt_obj.auto_hide || false;
 	var autoHideAfter = ( parseInt( arbtt_obj.auto_hide_after, 10 ) || 3 ) * 1000;
+	var scrollEasing  = arbtt_obj.scroll_easing || 'ease-in-out';
 	var btn           = document.querySelector( '.arbtt' );
+
+	/**
+	 * Easing functions.
+	 */
+	var easingFunctions = {
+		'linear': function( t ) {
+			return t;
+		},
+		'ease-in': function( t ) {
+			return t * t;
+		},
+		'ease-out': function( t ) {
+			return t * ( 2 - t );
+		},
+		'ease-in-out': function( t ) {
+			return t < 0.5 ? 2 * t * t : -1 + ( 4 - 2 * t ) * t;
+		}
+	};
+
+	/**
+	 * Animate scroll to top with custom easing.
+	 *
+	 * @param {number}   duration Duration in ms.
+	 * @param {Function} easing   Easing function.
+	 */
+	function scrollToTop( duration, easing ) {
+		var startY    = window.scrollY;
+		var startTime = performance.now();
+
+		function step( currentTime ) {
+			var elapsed  = currentTime - startTime;
+			var progress = Math.min( elapsed / duration, 1 );
+			var easedProgress = easing( progress );
+
+			window.scrollTo( 0, startY * ( 1 - easedProgress ) );
+
+			if ( progress < 1 ) {
+				window.requestAnimationFrame( step );
+			}
+		}
+
+		window.requestAnimationFrame( step );
+	}
 
 	if ( ! btn ) {
 		return;
@@ -59,14 +103,12 @@
 	}
 
 	/**
-	 * Smooth scroll to top on button click.
+	 * Smooth scroll to top on button click with configured easing.
 	 */
 	btn.addEventListener( 'click', function( e ) {
 		e.preventDefault();
-		window.scrollTo( {
-			top: 0,
-			behavior: 'smooth'
-		} );
+		var easingFn = easingFunctions[ scrollEasing ] || easingFunctions['ease-in-out'];
+		scrollToTop( fadeDuration, easingFn );
 	} );
 
 	window.addEventListener( 'scroll', onScroll, { passive: true } );

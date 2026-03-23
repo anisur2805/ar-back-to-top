@@ -254,6 +254,7 @@ final class AR_Back_To_Top {
 		$this->register_field( 'arbtt_twidth', __( 'Tablet Breakpoint Width', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_twidth_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_hide_on_phone', __( 'Hide Button on Mobile Devices', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_hophone_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_pwidth', __( 'Mobile Breakpoint Width', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_pwidth_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_scroll_easing', __( 'Scroll Easing Effect', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_scroll_easing_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_display_mode', __( 'Display Mode', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_display_mode_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_display_pages', __( 'Select Pages', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_display_pages_field' ), 'arbtt_ssection_id', array( $this, 'sanitize_display_pages_field' ) );
 		$this->register_field( 'arbtt_tooltip_text', __( 'Button Tooltip Text', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_tooltip_text_field' ), 'arbtt_ssection_id' );
@@ -775,6 +776,24 @@ final class AR_Back_To_Top {
 	}
 
 	/**
+	 * Render scroll easing field
+	 *
+	 * @return void
+	 */
+	public function render_scroll_easing_field() {
+		$current = get_option( 'arbtt_scroll_easing', 'ease-in-out' );
+		?>
+		<select name="arbtt_scroll_easing" id="arbtt_scroll_easing">
+			<option value="linear"<?php selected( 'linear', $current ); ?>><?php esc_html_e( 'Linear', 'ar-back-to-top' ); ?></option>
+			<option value="ease-in"<?php selected( 'ease-in', $current ); ?>><?php esc_html_e( 'Ease In', 'ar-back-to-top' ); ?></option>
+			<option value="ease-out"<?php selected( 'ease-out', $current ); ?>><?php esc_html_e( 'Ease Out', 'ar-back-to-top' ); ?></option>
+			<option value="ease-in-out"<?php selected( 'ease-in-out', $current ); ?>><?php esc_html_e( 'Ease In-Out', 'ar-back-to-top' ); ?></option>
+		</select>
+		<p class="description"><?php esc_html_e( 'Controls the acceleration curve of the scroll animation.', 'ar-back-to-top' ); ?></p>
+		<?php
+	}
+
+	/**
 	 * Render display mode field
 	 *
 	 * @return void
@@ -1106,6 +1125,7 @@ final class AR_Back_To_Top {
 			'arbtt_display_pages'              => array(),
 			'arbtt_tooltip_text'               => '',
 			'arbtt_zindex'                     => '9999',
+			'arbtt_scroll_easing'              => 'ease-in-out',
 			'arbtt_auto_hide'                  => '0',
 			'arbtt_auto_hide_after'            => '3',
 		);

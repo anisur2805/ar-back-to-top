@@ -96,6 +96,7 @@ class AR_Assets {
 
 		$auto_hide       = get_option( 'arbtt_auto_hide' ) ? true : false;
 		$auto_hide_after = ( get_option( 'arbtt_auto_hide_after' ) ) ? (int) get_option( 'arbtt_auto_hide_after' ) : 3;
+		$scroll_easing   = get_option( 'arbtt_scroll_easing', 'ease-in-out' );
 
 		$arobj_array = array(
 			'btn_visible_after' => $btn_visible_after,
@@ -104,6 +105,7 @@ class AR_Assets {
 			'btnheight'         => $btnheight,
 			'auto_hide'         => $auto_hide,
 			'auto_hide_after'   => $auto_hide_after,
+			'scroll_easing'     => $scroll_easing,
 		);
 
 		wp_localize_script( 'arbtt_custom_js', 'arbtt_obj', $arobj_array );
