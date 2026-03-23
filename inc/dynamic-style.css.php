@@ -28,16 +28,14 @@
 		background-color: <?php echo esc_attr( $arbtt_bgc ); ?> !important;
 		opacity: <?php echo esc_attr( $arbtt_btnoc ); ?>;
 
-		<?php
-		if ( 'both' !== $arbtt_btnst && $arbtt_enable_scroll_progress ) :
-			?>
-		border-radius: 100px;
-		<?php elseif ( 'circle' === $arbtt_btn_shape ) : ?>
+		<?php if ( 'circle' === $arbtt_btn_shape ) : ?>
 		border-radius: 50%;
 		<?php elseif ( 'square' === $arbtt_btn_shape ) : ?>
 		border-radius: 0;
 		<?php elseif ( 'rounded' === $arbtt_btn_shape ) : ?>
 		border-radius: 8px;
+		<?php elseif ( 'both' !== $arbtt_btnst && '1' === $arbtt_enable_scroll_progress ) : ?>
+		border-radius: 50%;
 		<?php else : ?>
 		border-radius: <?php echo esc_attr( $arbtt_bdrd ); ?>px;
 		<?php endif; ?>
@@ -57,7 +55,7 @@
 	}
 	<?php endif; ?>
 
-	<?php if ( 'both' !== $arbtt_btnst && $arbtt_enable_scroll_progress ) : ?>
+	<?php if ( 'both' !== $arbtt_btnst && '1' === $arbtt_enable_scroll_progress ) : ?>
 	.progress-svg {
 		position: absolute;
 		top: -<?php echo esc_attr( $arbtt_bdr + 1 ); ?>px;

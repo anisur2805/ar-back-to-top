@@ -1242,7 +1242,7 @@ final class AR_Back_To_Top {
 		$arbtt_bgc       = get_option( 'arbtt_bgc' ) ? get_option( 'arbtt_bgc' ) : $defaults['bgc'];
 		$arbtt_bgc_hover = get_option( 'arbtt_bgc_hover' ) ? get_option( 'arbtt_bgc_hover' ) : $defaults['bgc_hover'];
 		$arbtt_enable    = get_option( 'arbtt_enable' ) ? get_option( 'arbtt_enable' ) : $defaults['enable'];
-		$arbtt_enable_scroll_progress = get_option( 'arbtt_enable_scroll_progress' ) ? get_option( 'arbtt_enable_scroll_progress' ) : $defaults['enable_scroll_progress'];
+		$arbtt_enable_scroll_progress = get_option( 'arbtt_enable_scroll_progress', '0' );
 		$arbtt_enable_scroll_progress_size = get_option( 'arbtt_enable_scroll_progress_size' ) ? get_option( 'arbtt_enable_scroll_progress_size' ) : $defaults['enable_scroll_progress_size'];
 		$arbtt_fz                = get_option( 'arbtt_fz' ) ? get_option( 'arbtt_fz' ) : $defaults['fz'];
 		$arbtt_clr               = get_option( 'arbtt_clr' ) ? get_option( 'arbtt_clr' ) : $defaults['clr'];
@@ -1323,7 +1323,7 @@ final class AR_Back_To_Top {
 				<?php endif; ?>
 
 				<?php
-				if ( 'both' !== $arbtt_btnst && $arbtt_enable_scroll_progress ) :
+				if ( 'both' !== $arbtt_btnst && '1' === $arbtt_enable_scroll_progress ) :
 					$size      = (int) $arbtt_enable_scroll_progress_size;
 					$half_size = $size / 2;
 					$viewbox   = sprintf(
