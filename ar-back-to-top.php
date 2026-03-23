@@ -302,6 +302,8 @@ final class AR_Back_To_Top {
 		$this->register_field( 'arbtt_twidth', __( 'Tablet Breakpoint Width', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_twidth_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_hide_on_phone', __( 'Hide Button on Mobile Devices', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_hophone_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_pwidth', __( 'Mobile Breakpoint Width', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_pwidth_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_mobile_offset_bottom', __( 'Mobile Offset Bottom', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_mobile_offset_bottom_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_mobile_offset_side', __( 'Mobile Offset Side', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_mobile_offset_side_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_scroll_easing', __( 'Scroll Easing Effect', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_scroll_easing_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_display_mode', __( 'Display Mode', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_display_mode_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_display_pages', __( 'Select Pages', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_display_pages_field' ), 'arbtt_ssection_id', array( $this, 'sanitize_display_pages_field' ) );
@@ -879,6 +881,32 @@ final class AR_Back_To_Top {
 	}
 
 	/**
+	 * Render mobile offset bottom field
+	 *
+	 * @return void
+	 */
+	public function render_mobile_offset_bottom_field() {
+		?>
+		<input type="number" name="arbtt_mobile_offset_bottom" class="aras" id="arbtt_mobile_offset_bottom" placeholder="20" value="<?php echo esc_attr( get_option( 'arbtt_mobile_offset_bottom', '' ) ); ?>"/>
+		<span class="description"><?php esc_html_e( 'px', 'ar-back-to-top' ); ?></span>
+		<p class="description"><?php esc_html_e( 'Leave empty to use the desktop value.', 'ar-back-to-top' ); ?></p>
+		<?php
+	}
+
+	/**
+	 * Render mobile offset side field
+	 *
+	 * @return void
+	 */
+	public function render_mobile_offset_side_field() {
+		?>
+		<input type="number" name="arbtt_mobile_offset_side" class="aras" id="arbtt_mobile_offset_side" placeholder="20" value="<?php echo esc_attr( get_option( 'arbtt_mobile_offset_side', '' ) ); ?>"/>
+		<span class="description"><?php esc_html_e( 'px', 'ar-back-to-top' ); ?></span>
+		<p class="description"><?php esc_html_e( 'Left/right offset on mobile. Leave empty to use the desktop value.', 'ar-back-to-top' ); ?></p>
+		<?php
+	}
+
+	/**
 	 * Render tablet width field
 	 *
 	 * @return void
@@ -1253,6 +1281,8 @@ final class AR_Back_To_Top {
 			'arbtt_display_pages'              => array(),
 			'arbtt_tooltip_text'               => '',
 			'arbtt_zindex'                     => '9999',
+			'arbtt_mobile_offset_bottom'       => '',
+			'arbtt_mobile_offset_side'         => '',
 			'arbtt_scroll_easing'              => 'ease-in-out',
 			'arbtt_auto_hide'                  => '0',
 			'arbtt_auto_hide_after'            => '3',

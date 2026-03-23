@@ -236,6 +236,20 @@ jQuery(document).ready(function ($) {
         $(this).hide();
     });
 
+    // Mobile Offset fields: show when mobile is NOT hidden
+    const $hideOnPhone        = $('#arbtt_hide_on_phone');
+    const $mobileOffsetBottom = $('#arbtt_mobile_offset_bottom').closest('tr');
+    const $mobileOffsetSide   = $('#arbtt_mobile_offset_side').closest('tr');
+
+    function toggleMobileOffsets() {
+        var show = !$hideOnPhone.is(':checked');
+        $mobileOffsetBottom.toggle(show);
+        $mobileOffsetSide.toggle(show);
+    }
+
+    toggleMobileOffsets();
+    $hideOnPhone.on('change', toggleMobileOffsets);
+
     // Button Shape → Border Radius dependency
     const $btnShape      = $('#arbtt_btn_shape');
     const $bdrdRow       = $('#arbtt_bdrd').closest('tr');

@@ -195,6 +195,26 @@
 			<?php
 		}
 endif;
+
+	// Mobile-specific positioning overrides
+	$mobile_offset_bottom = get_option( 'arbtt_mobile_offset_bottom', '' );
+	$mobile_offset_side   = get_option( 'arbtt_mobile_offset_side', '' );
+
+	if ( '' !== $mobile_offset_bottom || '' !== $mobile_offset_side ) :
+		?>
+		/* Mobile positioning overrides */
+		@media (max-width: <?php echo esc_attr( $phone_width ); ?>px) {
+			.arbtt {
+				<?php if ( '' !== $mobile_offset_bottom ) : ?>
+				bottom: <?php echo absint( $mobile_offset_bottom ); ?>px !important;
+				<?php endif; ?>
+				<?php if ( '' !== $mobile_offset_side && 'center' !== $arbtt_btnps ) : ?>
+				<?php echo esc_attr( $arbtt_btnps ); ?>: <?php echo absint( $mobile_offset_side ); ?>px !important;
+				<?php endif; ?>
+			}
+		}
+		<?php
+	endif;
 	?>
 
 </style>
