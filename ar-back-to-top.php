@@ -873,22 +873,23 @@ final class AR_Back_To_Top {
 
 		?>
 		<div class="arbtt-container" id="arbtt-container">
-			<div class="arbtt arbtt-icon-pos-<?php echo esc_attr( $arbtt_btn_img_position ); ?>" id="arbtt">
+			<button type="button" class="arbtt arbtt-icon-pos-<?php echo esc_attr( $arbtt_btn_img_position ); ?>" id="arbtt" aria-label="<?php esc_attr_e( 'Scroll to top', 'ar-back-to-top' ); ?>">
+				<span class="screen-reader-text"><?php esc_html_e( 'Scroll to top', 'ar-back-to-top' ); ?></span>
 				<?php if ( 'fa' === $arbtt_btnst ) : ?>
-					<span class="<?php echo esc_attr( $arbtt_fi ); ?>"></span>
+					<span class="<?php echo esc_attr( $arbtt_fi ); ?>" aria-hidden="true"></span>
 
 				<?php elseif ( 'txt' === $arbtt_btnst ) : ?>
 					<?php echo esc_html( $arbtt_btntx ); ?>
 
 				<?php elseif ( 'img' === $arbtt_btnst ) : ?>
-					<img src="<?php echo esc_url( ARBTTOP_ASSETS . '/images/' . basename( $arbtt_btn_img ) ); ?>" alt="<?php esc_attr_e( 'Button image', 'ar-back-to-top' ); ?>" />
+					<img src="<?php echo esc_url( ARBTTOP_ASSETS . '/images/' . basename( $arbtt_btn_img ) ); ?>" alt="" />
 
 				<?php elseif ( 'both' === $arbtt_btnst ) : ?>
-					<img class="both-img" src="<?php echo esc_url( ARBTTOP_ASSETS . '/images/' . basename( $arbtt_btn_img ) ); ?>" alt="<?php esc_attr_e( 'Button image', 'ar-back-to-top' ); ?>" />
+					<img class="both-img" src="<?php echo esc_url( ARBTTOP_ASSETS . '/images/' . basename( $arbtt_btn_img ) ); ?>" alt="" />
 					<?php echo esc_html( $arbtt_btntx ); ?>
 
 				<?php elseif ( 'external' === $arbtt_btnst ) : ?>
-					<img src="<?php echo esc_url( $external_img_url ); ?>" alt="<?php esc_attr_e( 'External button image', 'ar-back-to-top' ); ?>" />
+					<img src="<?php echo esc_url( $external_img_url ); ?>" alt="" />
 				<?php endif; ?>
 
 				<?php
@@ -901,11 +902,11 @@ final class AR_Back_To_Top {
 						100 + $size
 					);
 					?>
-					<svg class="progress-svg" width="100%" height="100%" viewBox="<?php echo esc_attr( $viewbox ); ?>">
+					<svg class="progress-svg" width="100%" height="100%" viewBox="<?php echo esc_attr( $viewbox ); ?>" aria-hidden="true">
 						<path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"></path>
 					</svg>
 				<?php endif; ?>
-			</div>
+			</button>
 		</div>
 		<?php
 	}

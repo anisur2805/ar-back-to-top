@@ -79,10 +79,31 @@
 		display: block;
 	}
 
-	.arbtt:visited,
-	.arbtt:focus {
+	.arbtt:visited {
 		color: #fff;
-		outline: 0;
+	}
+
+	.arbtt:focus-visible {
+		outline: 2px solid <?php echo esc_attr( $arbtt_clr ); ?>;
+		outline-offset: 2px;
+	}
+
+	button.arbtt {
+		cursor: pointer;
+		font-family: inherit;
+	}
+
+	.screen-reader-text {
+		border: 0;
+		clip: rect(1px, 1px, 1px, 1px);
+		clip-path: inset(50%);
+		height: 1px;
+		margin: -1px;
+		overflow: hidden;
+		padding: 0;
+		position: absolute;
+		width: 1px;
+		word-wrap: normal !important;
 	}
 
 	.arbtt img {
