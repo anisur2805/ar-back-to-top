@@ -1,7 +1,9 @@
 <?php
 
-/*
- * Main Assets class for enqueue admin and frontend assets
+/**
+ * Main Assets class for enqueue admin and frontend assets.
+ *
+ * @package AR_Back_To_Top
  */
 
 class AR_Assets {
@@ -18,9 +20,14 @@ class AR_Assets {
 
 		if ( 'toplevel_page_arbtt' === $hook ) {
 			wp_enqueue_style( 'jquery_minicolors', ARBTTOP_ASSETS . '/minicolors/jquery.minicolors.css', array(), '1.0', 'all' );
-			wp_enqueue_style( 'arbtt_fa', ARBTTOP_ASSETS . '/css/font-awesome.min.css', array(), '1.0', 'all' );
+			wp_enqueue_style( 'select2-css', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', array(), '4.1.0', 'all' );
+
+			self::enqueue_font_awesome();
+
 			wp_enqueue_script( 'arbtt_minucolor_js', ARBTTOP_ASSETS . '/minicolors/jquery.minicolors.min.js', array( 'jquery' ), '1.0', true );
-			wp_enqueue_script( 'arbtt_custom_js', ARBTTOP_ASSETS . '/js/arbtt-main.js', array( 'jquery' ), ARBTTOP_VERSION, true );
+			wp_enqueue_script( 'select2-js', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', array( 'jquery' ), '4.1.0', true );
+			wp_enqueue_media();
+			wp_enqueue_script( 'arbtt_custom_js', ARBTTOP_ASSETS . '/js/arbtt-main.js', array( 'jquery', 'select2-js' ), ARBTTOP_VERSION, true );
 		}
 	}
 
@@ -35,12 +42,66 @@ class AR_Assets {
 	 */
 	public function script_loader_tag( $tag, $handle, $src ) {
 		if ( 'arbtt_custom_js' === $handle && 'on' === get_option( 'arbtt_is_async' ) ) {
-			// WPCS: XSS ok. - This is a known false positive.
-			// The purpose of this filter is to modify the script tag.
-			// We are safely adding the 'defer' attribute.
 			return '<script src="' . esc_url( $src ) . '" defer></script>';
 		}
 		return $tag;
+	}
+
+	/**
+	 * Enqueue Font Awesome based on user setting.
+	 * Skips if 'none' is selected or if FA is already registered by another source.
+	 *
+	 * @return void
+	 */
+	private static function enqueue_font_awesome() {
+		$fa_loading = get_option( 'arbtt_fa_loading', 'fa6' );
+
+		if ( 'none' === $fa_loading ) {
+			return;
+		}
+
+		// Skip if Font Awesome is already enqueued by theme or another plugin.
+		if ( wp_style_is( 'font-awesome', 'registered' ) || wp_style_is( 'font-awesome', 'enqueued' ) ) {
+			return;
+		}
+		if ( wp_style_is( 'fontawesome', 'registered' ) || wp_style_is( 'fontawesome', 'enqueued' ) ) {
+			return;
+		}
+		if ( wp_style_is( 'font-awesome-5', 'registered' ) || wp_style_is( 'font-awesome-5', 'enqueued' ) ) {
+			return;
+		}
+
+		if ( 'fa5' === $fa_loading ) {
+			wp_enqueue_style( 'arbtt_fa', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css', array(), '5.15.4', 'all' );
+		} else {
+			wp_enqueue_style( 'arbtt_fa', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css', array(), '6.5.1', 'all' );
+		}
+	}
+
+	/**
+	 * Check if the button should display on the current page.
+	 *
+	 * @return bool
+	 */
+	private static function should_display() {
+		$display_mode  = get_option( 'arbtt_display_mode', 'all' );
+		$display_pages = get_option( 'arbtt_display_pages', array() );
+
+		if ( 'all' === $display_mode || ! is_array( $display_pages ) || empty( $display_pages ) ) {
+			return true;
+		}
+
+		$current_id = get_queried_object_id();
+
+		if ( 'include' === $display_mode ) {
+			return in_array( $current_id, array_map( 'absint', $display_pages ), true );
+		}
+
+		if ( 'exclude' === $display_mode ) {
+			return ! in_array( $current_id, array_map( 'absint', $display_pages ), true );
+		}
+
+		return true;
 	}
 
 	/**
@@ -55,20 +116,33 @@ class AR_Assets {
 			return;
 		}
 
+		if ( ! self::should_display() ) {
+			return;
+		}
+
 		wp_enqueue_style( 'arbtt_fe_admin', ARBTTOP_ASSETS . '/css/style.css', array(), ARBTTOP_VERSION, 'all' );
-		wp_enqueue_style( 'arbtt_fa', ARBTTOP_ASSETS . '/css/font-awesome.min.css', array(), '4.7.0', 'all' );
-		wp_enqueue_script( 'arbtt_custom_js', ARBTTOP_ASSETS . '/js/arbtt-fe.js', array( 'jquery' ), ARBTTOP_VERSION, true );
+
+		self::enqueue_font_awesome();
+
+		wp_enqueue_script( 'arbtt_custom_js', ARBTTOP_ASSETS . '/js/arbtt-fe.js', array(), ARBTTOP_VERSION, true );
 
 		$btn_visible_after = ( get_option( 'arbtt_btnapr' ) ) ? (int) get_option( 'arbtt_btnapr' ) : 100;
 		$fade_in           = ( get_option( 'arbtt_fadein' ) ) ? (int) get_option( 'arbtt_fadein' ) : 950;
 		$btnwidth          = ( get_option( 'arbtt_btnwidth' ) ) ? (int) get_option( 'arbtt_btnwidth' ) : 40;
 		$btnheight         = ( get_option( 'arbtt_btnheight' ) ) ? (int) get_option( 'arbtt_btnheight' ) : 40;
 
+		$auto_hide       = get_option( 'arbtt_auto_hide' ) ? true : false;
+		$auto_hide_after = ( get_option( 'arbtt_auto_hide_after' ) ) ? (int) get_option( 'arbtt_auto_hide_after' ) : 3;
+		$scroll_easing   = get_option( 'arbtt_scroll_easing', 'ease-in-out' );
+
 		$arobj_array = array(
 			'btn_visible_after' => $btn_visible_after,
 			'fade_in'           => $fade_in,
 			'btnwidth'          => $btnwidth,
 			'btnheight'         => $btnheight,
+			'auto_hide'         => $auto_hide,
+			'auto_hide_after'   => $auto_hide_after,
+			'scroll_easing'     => $scroll_easing,
 		);
 
 		wp_localize_script( 'arbtt_custom_js', 'arbtt_obj', $arobj_array );
