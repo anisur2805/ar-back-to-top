@@ -1270,6 +1270,7 @@ final class AR_Back_To_Top {
 		$arbtt_btn_img_position  = get_option( 'arbtt_btn_img_position' ) ? sanitize_text_field( get_option( 'arbtt_btn_img_position' ) ) : $defaults['arbtt_btn_img_position'];
 		$arbtt_tooltip_text      = get_option( 'arbtt_tooltip_text', '' );
 		$arbtt_zindex            = get_option( 'arbtt_zindex', '9999' );
+		$arbtt_btn_shape         = get_option( 'arbtt_btn_shape', 'custom' );
 
 		// Handle button dimensions
 		$arbtt_btndm = get_option( 'arbtt_btndm', array() );

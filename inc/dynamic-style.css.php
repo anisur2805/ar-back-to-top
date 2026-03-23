@@ -29,7 +29,6 @@
 		opacity: <?php echo esc_attr( $arbtt_btnoc ); ?>;
 
 		<?php
-		$arbtt_btn_shape = isset( $arbtt_btn_shape ) ? $arbtt_btn_shape : get_option( 'arbtt_btn_shape', 'custom' );
 		if ( 'both' !== $arbtt_btnst && $arbtt_enable_scroll_progress ) :
 			?>
 		border-radius: 100px;
