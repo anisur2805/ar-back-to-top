@@ -29,7 +29,7 @@
 		border-radius: <?php echo esc_attr( $arbtt_bdrd ); ?>px;
 
 		<?php endif; ?>
-		z-index: 9999;
+		z-index: <?php echo absint( $arbtt_zindex ); ?>;
 		border: <?php echo esc_attr( $arbtt_bdr ); ?>px solid <?php echo esc_attr( $arbtt_bdr_color ); ?>;
 		transition: all 0.3s ease-in-out;
 		box-sizing: border-box;

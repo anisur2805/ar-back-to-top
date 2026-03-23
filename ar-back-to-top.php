@@ -240,6 +240,8 @@ final class AR_Back_To_Top {
 		$this->register_field( 'arbtt_twidth', __( 'Tablet Breakpoint Width', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_twidth_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_hide_on_phone', __( 'Hide Button on Mobile Devices', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_hophone_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_pwidth', __( 'Mobile Breakpoint Width', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_pwidth_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_tooltip_text', __( 'Button Tooltip Text', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_tooltip_text_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_zindex', __( 'Button Z-Index', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_zindex_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_auto_hide', __( 'Auto Hide Button', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_auto_hide_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_auto_hide_after', __( 'Auto Hide After (seconds)', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_auto_hide_after_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_custom_css', __( 'Custom CSS', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_custom_css_field' ), 'arbtt_ssection_id' );
@@ -757,6 +759,32 @@ final class AR_Back_To_Top {
 	}
 
 	/**
+	 * Render tooltip text field
+	 *
+	 * @return void
+	 */
+	public function render_tooltip_text_field() {
+		$value = get_option( 'arbtt_tooltip_text', '' );
+		?>
+		<input type="text" name="arbtt_tooltip_text" class="regular-text" id="arbtt_tooltip_text" placeholder="<?php esc_attr_e( 'Scroll to top', 'ar-back-to-top' ); ?>" value="<?php echo esc_attr( $value ); ?>"/>
+		<p class="description"><?php esc_html_e( 'Text shown on hover. Leave empty to disable tooltip.', 'ar-back-to-top' ); ?></p>
+		<?php
+	}
+
+	/**
+	 * Render z-index field
+	 *
+	 * @return void
+	 */
+	public function render_zindex_field() {
+		$value = get_option( 'arbtt_zindex', '9999' );
+		?>
+		<input type="number" name="arbtt_zindex" class="aras" id="arbtt_zindex" min="1" max="2147483647" placeholder="9999" value="<?php echo esc_attr( $value ); ?>"/>
+		<p class="description"><?php esc_html_e( 'Controls stacking order. Increase if the button is hidden behind other elements.', 'ar-back-to-top' ); ?></p>
+		<?php
+	}
+
+	/**
 	 * Render auto hide field
 	 *
 	 * @return void
@@ -882,6 +910,8 @@ final class AR_Back_To_Top {
 		$arbtt_progress_color    = get_option( 'arbtt_progress_color' ) ? get_option( 'arbtt_progress_color' ) : $defaults['progress_color'];
 		$external_img_url        = get_option( 'arbtt_btn_ext_img_url' ) ? get_option( 'arbtt_btn_ext_img_url' ) : ARBTTOP_ASSETS . '/images/Back-to-Top.png';
 		$arbtt_btn_img_position  = get_option( 'arbtt_btn_img_position' ) ? sanitize_text_field( get_option( 'arbtt_btn_img_position' ) ) : $defaults['arbtt_btn_img_position'];
+		$arbtt_tooltip_text      = get_option( 'arbtt_tooltip_text', '' );
+		$arbtt_zindex            = get_option( 'arbtt_zindex', '9999' );
 
 		// Handle button dimensions
 		$arbtt_btndm = get_option( 'arbtt_btndm', array() );
@@ -903,7 +933,7 @@ final class AR_Back_To_Top {
 
 		?>
 		<div class="arbtt-container" id="arbtt-container">
-			<button type="button" class="arbtt arbtt-icon-pos-<?php echo esc_attr( $arbtt_btn_img_position ); ?>" id="arbtt" aria-label="<?php esc_attr_e( 'Scroll to top', 'ar-back-to-top' ); ?>">
+			<button type="button" class="arbtt arbtt-icon-pos-<?php echo esc_attr( $arbtt_btn_img_position ); ?>" id="arbtt" aria-label="<?php esc_attr_e( 'Scroll to top', 'ar-back-to-top' ); ?>"<?php echo ! empty( $arbtt_tooltip_text ) ? ' title="' . esc_attr( $arbtt_tooltip_text ) . '"' : ''; ?>>
 				<span class="screen-reader-text"><?php esc_html_e( 'Scroll to top', 'ar-back-to-top' ); ?></span>
 				<?php if ( 'fa' === $arbtt_btnst ) : ?>
 					<span class="<?php echo esc_attr( $arbtt_fi ); ?>" aria-hidden="true"></span>
