@@ -65,7 +65,7 @@ jQuery(document).ready(function ($) {
                 imgUrl = $('input[name="arbtt_btn_img"]:checked').closest('label').find('img').attr('src') || '';
             }
             if (imgUrl) {
-                $icon.html('<img src="' + imgUrl + '" style="width:' + iconSize + ';height:' + iconSize + ';object-fit:contain;" alt="" />');
+                $icon.html('<img src="' + imgUrl + '" class="arbtt-preview-img" alt="" />');
             }
         } else {
             $icon.attr('class', 'arbtt-preview-btn-icon fa-solid fa-angle-up');
