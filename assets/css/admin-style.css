@@ -698,3 +698,12 @@ input#arbtt_btn_ext_img_url + img {
 	padding: 8px 10px !important;
 	font-size: 13px !important;
 }
+
+.minicolors-theme-default .minicolors-input {
+    padding-left: 35px !important;
+}
+
+body .minicolors-theme-default .minicolors-swatch {
+    top: 8px;
+    left: 10px;
+}
