@@ -258,6 +258,26 @@ jQuery(document).ready(function ($) {
 
         $progressBarFields.toggle(isEnabled);
         $progressBarColorRow.toggle(isEnabled);
+
+        // Progress requires circle — lock the shape dropdown.
+        var $shapeSelect = $('#arbtt_btn_shape');
+        if (isEnabled) {
+            $shapeSelect.val('circle').prop('disabled', true);
+            $shapeSelect.closest('tr').find('.arbtt-shape-notice').remove();
+            $shapeSelect.after('<span class="arbtt-shape-notice description" style="margin-left:8px;color:#d63638;">Scroll progress requires circle shape</span>');
+            // Disabled fields don't submit — add a hidden input.
+            $shapeSelect.closest('td').find('.arbtt-shape-hidden').remove();
+            $shapeSelect.closest('td').append('<input type="hidden" name="arbtt_btn_shape" value="circle" class="arbtt-shape-hidden" />');
+        } else {
+            $shapeSelect.prop('disabled', false);
+            $shapeSelect.closest('tr').find('.arbtt-shape-notice').remove();
+            $shapeSelect.closest('td').find('.arbtt-shape-hidden').remove();
+        }
+
+        // Also update border radius row visibility.
+        if (typeof toggleBorderRadiusRow === 'function') {
+            toggleBorderRadiusRow();
+        }
     }
 
     // Initial state on page load
