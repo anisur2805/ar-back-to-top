@@ -137,10 +137,23 @@
 
 	<?php
 	// Convert boolean flags and integer values
-	$hide_on_tablet = $arbtt_hide_on_tablet === '1';
-	$hide_on_phone  = $arbtt_hide_on_phone === '1';
-	$phone_width    = (int) $arbtt_pwidth; // Custom mobile width from settings
-	$tablet_width   = (int) $arbtt_twidth; // Standard tablet breakpoint
+	$hide_on_desktop = isset( $arbtt_hide_on_desktop ) ? $arbtt_hide_on_desktop === '1' : get_option( 'arbtt_hide_on_desktop' ) === '1';
+	$desktop_width   = isset( $arbtt_dwidth ) ? (int) $arbtt_dwidth : (int) get_option( 'arbtt_dwidth', 1025 );
+	$hide_on_tablet  = $arbtt_hide_on_tablet === '1';
+	$hide_on_phone   = $arbtt_hide_on_phone === '1';
+	$phone_width     = (int) $arbtt_pwidth;
+	$tablet_width    = (int) $arbtt_twidth;
+
+	if ( $hide_on_desktop ) :
+		?>
+		/* Hide on desktop screens */
+		@media (min-width: <?php echo esc_attr( $desktop_width ); ?>px) {
+			#arbtt-container {
+				display: none !important;
+			}
+		}
+		<?php
+	endif;
 
 	// Only output styles if at least one device type is selected for hiding
 	if ( $hide_on_tablet || $hide_on_phone ) :

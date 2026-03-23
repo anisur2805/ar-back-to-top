@@ -295,6 +295,8 @@ final class AR_Back_To_Top {
 		$this->register_field( 'arbtt_btnoc', 'Button Opacity', 'arbtt', array( $this, 'render_btnoc_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_fadein', 'Scroll Duration', 'arbtt', array( $this, 'render_fadein_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_fz', 'Font Icon/ Image Size', 'arbtt', array( $this, 'render_fz_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_hide_on_desktop', __( 'Hide Button on Desktop', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_hodesktop_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_dwidth', __( 'Desktop Breakpoint Width', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_dwidth_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_hide_on_tablet', __( 'Hide Button on Tablet Devices', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_hotablet_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_twidth', __( 'Tablet Breakpoint Width', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_twidth_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_hide_on_phone', __( 'Hide Button on Mobile Devices', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_hophone_field' ), 'arbtt_ssection_id' );
@@ -798,6 +800,34 @@ final class AR_Back_To_Top {
 	}
 
 	/**
+	 * Render hide on desktop field
+	 *
+	 * @return void
+	 */
+	public function render_hodesktop_field() {
+		?>
+		<label class="ar-btt-toggle" for="arbtt_hide_on_desktop">
+			<input type="checkbox" name="arbtt_hide_on_desktop" id="arbtt_hide_on_desktop" value="1"<?php checked( '1', esc_attr( get_option( 'arbtt_hide_on_desktop' ) ) ); ?> class="ar-btt-toggle-checkbox arbtt-toggle-next" data-toggle-next="1">
+			<div class="ar-btt-toggle-switch"></div>
+			<span class="description"><?php esc_html_e( 'Hide button on desktop screens', 'ar-back-to-top' ); ?></span>
+		</label>
+		<?php
+	}
+
+	/**
+	 * Render desktop breakpoint width field
+	 *
+	 * @return void
+	 */
+	public function render_dwidth_field() {
+		?>
+		<input type="number" name="arbtt_dwidth" class="aras arbtt_dwidth" id="arbtt_dwidth" placeholder="1025" value="<?php echo esc_attr( get_option( 'arbtt_dwidth', '1025' ) ); ?>"/>
+		<span class="description"><?php esc_html_e( 'px', 'ar-back-to-top' ); ?></span>
+		<p><?php esc_html_e( 'Hide on screens wider than this value.', 'ar-back-to-top' ); ?></p>
+		<?php
+	}
+
+	/**
 	 * Render hide on tablet field
 	 *
 	 * @return void
@@ -1181,6 +1211,8 @@ final class AR_Back_To_Top {
 			'arbtt_btnoc'                      => '0.5',
 			'arbtt_fadein'                     => '950',
 			'arbtt_fz'                         => '20',
+			'arbtt_hide_on_desktop'            => '0',
+			'arbtt_dwidth'                     => '1025',
 			'arbtt_hide_on_tablet'             => '0',
 			'arbtt_twidth'                     => '1024',
 			'arbtt_hide_on_phone'              => '0',
