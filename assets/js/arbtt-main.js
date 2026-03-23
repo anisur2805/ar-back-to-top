@@ -49,9 +49,15 @@ jQuery(document).ready(function ($) {
         $icon.attr('class', 'arbtt-preview-btn-icon').empty().css({ 'background': '', 'border-radius': '' });
 
         if (style === 'fa') {
-            var iconClass = $('#arbtt_fi_picker').val() || 'fa-solid fa-angle-up';
-            $icon.attr('class', 'arbtt-preview-btn-icon ' + iconClass);
-            $icon.css({ 'color': $('#arbtt_clr').val() || '#fff', 'font-size': iconSize });
+            var iconId = $('#arbtt_fi_picker').val() || 'angle-up';
+            var iconSvg = '';
+            for (var i = 0; i < svgIcons.length; i++) {
+                if (svgIcons[i].id === iconId) { iconSvg = svgIcons[i].svg; break; }
+            }
+            if (iconSvg) {
+                $icon.html(iconSvg);
+                $icon.find('svg').css({ 'width': iconSize, 'height': iconSize, 'fill': ($('#arbtt_clr').val() || '#fff') });
+            }
         } else if (style === 'txt') {
             $icon.text($('#arbtt_btntx').val() || 'Top');
             $icon.css({ 'color': $('#arbtt_clr').val() || '#fff', 'font-size': iconSize });
@@ -143,33 +149,16 @@ jQuery(document).ready(function ($) {
         toggleRows();
         $checkbox.on("change", toggleRows);
     });
-    const faIcons = [
-        "fa-solid fa-angle-up",
-        "fa-solid fa-angles-up",
-        "fa-solid fa-arrow-up",
-        "fa-solid fa-circle-arrow-up",
-        "fa-solid fa-chevron-up",
-        "fa-solid fa-caret-up",
-        "fa-solid fa-arrow-up-long",
-        "fa-solid fa-turn-up",
-        "fa-solid fa-sort-up",
-        "fa-solid fa-upload",
-        "fa-solid fa-square-caret-up",
-        "fa-solid fa-backward-step",
-        "fa-solid fa-eject",
-        "fa-solid fa-backward-fast",
-        "fa-solid fa-hand-point-up",
-        "fa-solid fa-hand-back-fist",
-        "fa-solid fa-circle-chevron-up",
-        "fa-solid fa-up-long",
-        "fa-solid fa-rocket",
-    ];
-    function renderIconList(filter = "") {
-        const $container = $(".arbtt-fa-icon-list").empty();
-        faIcons.forEach((icon) => {
-            if (!filter || icon.includes(filter.toLowerCase())) {
+    // SVG icon data passed from PHP via wp_localize_script.
+    var svgIcons = (typeof arbtt_svg_icons !== 'undefined') ? arbtt_svg_icons : [];
+
+    function renderIconList(filter) {
+        filter = filter || '';
+        var $container = $(".arbtt-fa-icon-list").empty();
+        svgIcons.forEach(function(icon) {
+            if (!filter || icon.id.includes(filter.toLowerCase()) || icon.label.toLowerCase().includes(filter.toLowerCase())) {
                 $container.append(
-                    `<i class="${icon}" data-icon="${icon}" title="${icon}"></i>`
+                    '<div class="arbtt-icon-item" data-icon="' + icon.id + '" title="' + icon.label + '">' + icon.svg + '</div>'
                 );
             }
         });
@@ -180,16 +169,13 @@ jQuery(document).ready(function ($) {
         $("body").addClass("arbtt-modal-open");
     });
     $("#arbtt-fa-search").on("input", function () {
-        const keyword = $(this).val();
-        renderIconList(keyword);
+        renderIconList($(this).val());
     });
-    $(document).on("click", ".arbtt-fa-icon-list i", function () {
-        const selectedIcon = $(this).data("icon");
-        $("#arbtt_fi_picker").val(selectedIcon);
-        $(".arbtt-preview-icon").attr(
-            "class",
-            `${selectedIcon} arbtt-preview-icon`
-        );
+    $(document).on("click", ".arbtt-fa-icon-list .arbtt-icon-item", function () {
+        var selectedId = $(this).data("icon");
+        var selectedSvg = $(this).html();
+        $("#arbtt_fi_picker").val(selectedId);
+        $(".arbtt-preview-icon").html(selectedSvg);
         $("#arbtt-fa-icon-modal").fadeOut();
         $("body").removeClass("arbtt-modal-open");
     });

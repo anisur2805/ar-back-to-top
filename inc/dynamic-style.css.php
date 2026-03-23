@@ -104,12 +104,11 @@
 		border-color: <?php echo esc_attr( $arbtt_bdr_color_hover ); ?> !important;
 	}
 
-	.arbtt .fa,
-	.arbtt .fa-solid,
-	.arbtt .fa-regular {
-		line-height: <?php echo esc_attr( $btnheight ) / 2; ?>px;
-		font-size: <?php echo esc_attr( $arbtt_fz ); ?>px;
+	.arbtt .arbtt-svg-icon {
+		width: <?php echo esc_attr( $arbtt_fz ); ?>px;
+		height: <?php echo esc_attr( $arbtt_fz ); ?>px;
 		display: block;
+		fill: currentColor;
 	}
 
 	.arbtt:visited {

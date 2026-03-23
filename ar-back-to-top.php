@@ -145,6 +145,7 @@ final class AR_Back_To_Top {
 			'inc/class-ar-settings-menu.php',
 			'inc/class-ar-status.php',
 			'inc/class-ar-frontend.php',
+			'inc/class-ar-svg-icons.php',
 			'inc/class-ar-assets.php',
 		);
 
@@ -327,12 +328,11 @@ final class AR_Back_To_Top {
 		// Tab 1: General.
 		$this->register_field( 'arbtt_enable', __( 'Enable Back To Top', 'ar-back-to-top' ), 'arbtt_general', array( $this, 'render_enable_field' ), 'arbtt_section_general' );
 		$this->register_field( 'arbtt_is_async', __( 'Enable Async', 'ar-back-to-top' ), 'arbtt_general', array( $this, 'render_is_async_field' ), 'arbtt_section_general' );
-		$this->register_field( 'arbtt_fa_loading', __( 'Font Awesome Loading', 'ar-back-to-top' ), 'arbtt_general', array( $this, 'render_fa_loading_field' ), 'arbtt_section_general' );
 		$this->register_field( 'arbtt_show_in_admin', __( 'Show in Admin Area', 'ar-back-to-top' ), 'arbtt_general', array( $this, 'render_show_in_admin_field' ), 'arbtt_section_general' );
 
 		// Tab 2: Appearance.
 		$this->register_field( 'arbtt_btnst', __( 'Button Style', 'ar-back-to-top' ), 'arbtt_appearance', array( $this, 'render_btnst_field' ), 'arbtt_section_appearance' );
-		$this->register_field( 'arbtt_fi', __( 'Font Icon', 'ar-back-to-top' ), 'arbtt_appearance', array( $this, 'render_fi_field' ), 'arbtt_section_appearance' );
+		$this->register_field( 'arbtt_fi', __( 'Choose Icon', 'ar-back-to-top' ), 'arbtt_appearance', array( $this, 'render_fi_field' ), 'arbtt_section_appearance' );
 		$this->register_field( 'arbtt_btntx', __( 'Button Text', 'ar-back-to-top' ), 'arbtt_appearance', array( $this, 'render_btntx_field' ), 'arbtt_section_appearance' );
 		$this->register_field( 'arbtt_btn_img', __( 'Choose Button Image', 'ar-back-to-top' ), 'arbtt_appearance', array( $this, 'render_btnimg_field' ), 'arbtt_section_appearance' );
 		$this->register_field( 'arbtt_btn_img_position', __( 'Image Position', 'ar-back-to-top' ), 'arbtt_appearance', array( $this, 'render_arbtt_btn_img_position' ), 'arbtt_section_appearance' );
@@ -750,17 +750,24 @@ final class AR_Back_To_Top {
 	 */
 	public function render_fi_field() {
 		?>
-		<?php $selected_icon = esc_attr( get_option( 'arbtt_fi', 'fa-solid fa-angle-up' ) ); ?>
+		<?php
+		$selected_icon = get_option( 'arbtt_fi', 'angle-up' );
+		// Migrate old FA class values to SVG icon IDs.
+		if ( strpos( $selected_icon, 'fa' ) !== false ) {
+			$selected_icon = AR_SVG_Icons::fa_class_to_id( $selected_icon );
+			update_option( 'arbtt_fi', $selected_icon );
+		}
+		?>
 		<div class="arbtt-fa-picker-wrap">
 			<input type="text" id="arbtt_fi_picker" name="arbtt_fi" value="<?php echo esc_attr( $selected_icon ); ?>" class="regular-text" readonly />
-			<i class="<?php echo esc_attr( $selected_icon ); ?> arbtt-preview-icon"></i>
+			<span class="arbtt-preview-icon"><?php echo AR_SVG_Icons::get_icon( $selected_icon ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 			<button type="button" class="button arbtt-open-icon-picker">Select Icon</button>
 		</div>
 
 		<div id="arbtt-fa-icon-modal" style="display:none;">
 			<div class="arbtt-fa-modal-content">
 				<div class="arbtt-fa-modal-header">
-					<h2><?php echo esc_html__( 'Font Awesome Icons', 'ar-back-to-top' ); ?></h2>
+					<h2><?php esc_html_e( 'Choose Icon', 'ar-back-to-top' ); ?></h2>
 					<button type="button" class="arbtt-close-icon-picker"><?php echo esc_html__( 'Close', 'ar-back-to-top' ); ?></button>
 				</div>
 				<input type="text" id="arbtt-fa-search" placeholder="<?php echo esc_attr__( 'Search icon...', 'ar-back-to-top' ); ?>" class="regular-text" />
@@ -1190,7 +1197,7 @@ final class AR_Back_To_Top {
 		?>
 		<select name="arbtt_btnst" id="arbtt_btnst">
 			<option value="" selected="selected"><?php echo esc_html__( 'Select Option', 'ar-back-to-top' ); ?></option>
-			<option value="fa"<?php selected( 'fa', $current ); ?>><?php echo esc_html__( 'Font Awesome Icon', 'ar-back-to-top' ); ?></option>
+			<option value="fa"<?php selected( 'fa', $current ); ?>><?php esc_html_e( 'SVG Icon', 'ar-back-to-top' ); ?></option>
 			<option value="txt"<?php selected( 'txt', $current ); ?>><?php echo esc_html__( 'Text Only', 'ar-back-to-top' ); ?></option>
 			<option value="img"<?php selected( 'img', $current ); ?>><?php echo esc_html__( 'Image Only', 'ar-back-to-top' ); ?></option>
 			<option value="both"<?php selected( 'both', $current ); ?>><?php echo esc_html__( 'Both', 'ar-back-to-top' ); ?></option>
@@ -1300,7 +1307,15 @@ final class AR_Back_To_Top {
 			<button type="button" class="arbtt arbtt-icon-pos-<?php echo esc_attr( $arbtt_btn_img_position ); ?>" id="arbtt" aria-label="<?php esc_attr_e( 'Scroll to top', 'ar-back-to-top' ); ?>"<?php echo ! empty( $arbtt_tooltip_text ) ? ' title="' . esc_attr( $arbtt_tooltip_text ) . '"' : ''; ?>>
 				<span class="screen-reader-text"><?php esc_html_e( 'Scroll to top', 'ar-back-to-top' ); ?></span>
 				<?php if ( 'fa' === $arbtt_btnst ) : ?>
-					<span class="<?php echo esc_attr( $arbtt_fi ); ?>" aria-hidden="true"></span>
+					<?php
+					$icon_id = AR_SVG_Icons::fa_class_to_id( $arbtt_fi );
+					echo AR_SVG_Icons::get_icon( $icon_id, array( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG is hardcoded safe markup.
+						'class'       => 'arbtt-svg-icon',
+						'aria-hidden' => 'true',
+						'width'       => esc_attr( $arbtt_fz ),
+						'height'      => esc_attr( $arbtt_fz ),
+					) );
+					?>
 
 				<?php elseif ( 'txt' === $arbtt_btnst ) : ?>
 					<?php echo esc_html( $arbtt_btntx ); ?>
@@ -1354,7 +1369,7 @@ final class AR_Back_To_Top {
 			'arbtt_progress_color'             => '#ff0',
 			'arbtt_is_async'                   => '',
 			'arbtt_btnst'                      => 'txt',
-			'arbtt_fi'                         => 'fa-solid fa-angle-up',
+			'arbtt_fi'                         => 'angle-up',
 			'arbtt_btntx'                      => 'Top',
 			'arbtt_btn_img'                    => 'arbtt6.png',
 			'arbtt_btn_img_position'           => 'right',
@@ -1448,7 +1463,6 @@ final class AR_Back_To_Top {
 
 		// Enqueue frontend assets in admin.
 		wp_enqueue_style( 'arbtt_fe_admin_frontend', ARBTTOP_ASSETS . '/css/style.css', array(), ARBTTOP_VERSION, 'all' );
-		wp_enqueue_style( 'arbtt_fa_admin_frontend', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css', array(), '6.5.1', 'all' );
 		wp_enqueue_script( 'arbtt_fe_admin_js', ARBTTOP_ASSETS . '/js/arbtt-fe.js', array(), ARBTTOP_VERSION, true );
 
 		$btn_visible_after = ( get_option( 'arbtt_btnapr' ) ) ? (int) get_option( 'arbtt_btnapr' ) : 100;

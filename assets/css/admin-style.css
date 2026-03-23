@@ -288,7 +288,6 @@
 }
 .arbtt-preview-icon {
 	margin: 0;
-	font-size: 20px;
 	vertical-align: middle;
 	background: #f0f0f1;
 	width: 40px;
@@ -298,6 +297,11 @@
 	justify-content: center;
 	border-radius: 8px;
 	border: 1px solid #e0e0e0;
+}
+.arbtt-preview-icon svg {
+	width: 20px;
+	height: 20px;
+	fill: #1d2327;
 }
 
 /* === Icon modal === */
@@ -370,22 +374,26 @@ body.arbtt-modal-open::after {
 	gap: 8px;
 	margin-top: 16px;
 }
-.arbtt-fa-icon-list i {
+.arbtt-fa-icon-list .arbtt-icon-item {
 	padding: 12px;
-	font-size: 22px;
 	cursor: pointer;
 	text-align: center;
 	height: 54px;
 	color: #50575e;
 	border: 1px solid #f0f0f1;
 	box-sizing: border-box;
-	display: inline-flex !important;
+	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	border-radius: 8px;
 	transition: all 0.15s ease;
 }
-.arbtt-fa-icon-list i:hover {
+.arbtt-fa-icon-list .arbtt-icon-item svg {
+	width: 24px;
+	height: 24px;
+	fill: currentColor;
+}
+.arbtt-fa-icon-list .arbtt-icon-item:hover {
 	border-color: #2271b1;
 	background: #f0f7fc;
 	color: #2271b1;
