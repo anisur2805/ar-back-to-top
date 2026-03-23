@@ -66,7 +66,6 @@ final class AR_Back_To_Top {
 		$this->init_hooks();
 		$this->define_constants();
 		$this->load_class_files();
-		$this->maybe_migrate_fa_icons();
 	}
 
 	/**
@@ -82,49 +81,6 @@ final class AR_Back_To_Top {
 	 * @return void
 	 */
 	public function __wakeup() {}
-
-	/**
-	 * Migrate Font Awesome 4.x icon classes to 6.x format.
-	 *
-	 * @return void
-	 */
-	private function maybe_migrate_fa_icons() {
-		if ( get_option( 'arbtt_fa6_migrated' ) ) {
-			return;
-		}
-
-		$current_icon = get_option( 'arbtt_fi', '' );
-
-		if ( ! empty( $current_icon ) && strpos( $current_icon, 'fa-solid' ) === false ) {
-			$fa4_to_fa6 = array(
-				'fa fa-angle-up'          => 'fa-solid fa-angle-up',
-				'fa fa-angle-double-up'   => 'fa-solid fa-angles-up',
-				'fa fa-arrow-up'          => 'fa-solid fa-arrow-up',
-				'fa fa-arrow-circle-up'   => 'fa-solid fa-circle-arrow-up',
-				'fa fa-arrow-circle-o-up' => 'fa-solid fa-circle-arrow-up',
-				'fa fa-chevron-up'        => 'fa-solid fa-chevron-up',
-				'fa fa-hand-o-up'         => 'fa-solid fa-hand-point-up',
-				'fa fa-caret-up'          => 'fa-solid fa-caret-up',
-				'fa fa-long-arrow-up'     => 'fa-solid fa-arrow-up-long',
-				'fa fa-level-up'          => 'fa-solid fa-turn-up',
-				'fa fa-sort-asc'          => 'fa-solid fa-sort-up',
-				'fa fa-upload'            => 'fa-solid fa-upload',
-				'fa fa-toggle-up'         => 'fa-solid fa-square-caret-up',
-				'fa fa-step-backward'     => 'fa-solid fa-backward-step',
-				'fa fa-eject'             => 'fa-solid fa-eject',
-				'fa fa-fast-backward'     => 'fa-solid fa-backward-fast',
-				'fa fa-angle-double-left' => 'fa-solid fa-angles-left',
-				'fa fa-hand-rock-o'       => 'fa-solid fa-hand-back-fist',
-				'fa fa-hand-pointer-o'    => 'fa-solid fa-hand-point-up',
-			);
-
-			if ( isset( $fa4_to_fa6[ $current_icon ] ) ) {
-				update_option( 'arbtt_fi', $fa4_to_fa6[ $current_icon ] );
-			}
-		}
-
-		update_option( 'arbtt_fa6_migrated', '1' );
-	}
 
 	/**
 	 * Define constants
