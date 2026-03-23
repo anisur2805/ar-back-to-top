@@ -239,7 +239,7 @@ class AR_Settings_Menu {
 		$meta_position = array(
 			'top'    => __( 'Top', 'ar-back-to-top' ),
 			'bottom' => __( 'Bottom', 'ar-back-to-top' ),
-			'both'   => __( 'Both', 'ar-back-to-top' ),
+			'both'   => __( 'Both Top & Bottom', 'ar-back-to-top' ),
 		);
 		?>
 		<select name="arbtt_meta_position" class="regular-text">

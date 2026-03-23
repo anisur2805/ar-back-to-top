@@ -84,7 +84,6 @@
 		width: <?php echo esc_attr( $btnwidth + 2 ); ?>px;
 		height: <?php echo esc_attr( $btnheight + 2 ); ?>px;
 		pointer-events: none;
-		/* transform: rotate(-90deg); */
 		overflow: visible;
 	}
 	.progress-svg path {
@@ -139,9 +138,6 @@
 	}
 
 	.arbtt img {
-		/* height: calc(<?php echo esc_attr( $arbtt_fz ); ?>px - 10px);
-		width: calc(<?php echo esc_attr( $arbtt_fz ); ?>px - 10px);
-		margin: -4px 0 0; */
 		height: <?php echo esc_attr( $arbtt_fz ); ?>px;
 		width: <?php echo esc_attr( $arbtt_fz ); ?>px;
 		padding: 0;

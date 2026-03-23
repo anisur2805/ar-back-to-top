@@ -94,19 +94,6 @@ jQuery(document).ready(function ($) {
     $(".arbtt_fi, .arbtt_btn_img, #arbtt_btntx, .arbtt_btn_ext_img_url")
         .parents("tr")
         .hide();
-    function handleButtonStyle(val) {
-        const $fi = $(".arbtt_fi").parents("tr");
-        const $txt = $("#arbtt_btntx").parents("tr");
-        const $img = $(".arbtt_btn_img").parents("tr");
-        $fi.add($txt).add($img).hide();
-        if (val === "fa") {
-            $fi.show("blind");
-        } else if (val === "txt") {
-            $txt.show("blind");
-        } else if (val === "img") {
-            $img.show("blind");
-        }
-    }
     function handleButtonPosition(val) {
         const $left = $("#arbtt_btn_offset_left").parents("tr");
         const $right = $("#arbtt_btn_offset_right").parents("tr");
@@ -125,7 +112,7 @@ jQuery(document).ready(function ($) {
     }
     handleButtonStyle($("#arbtt_btnst").val());
     handleButtonPosition($("#arbtt_btnps").val());
-    $("#arbtt_bgc, #arbtt_clr, #arbtt_bdclr, .ar-btt-color").minicolors();
+    $("#arbtt_bgc, #arbtt_clr, .ar-btt-color").minicolors();
     $("#arbtt_btnst").on("change", function () {
         handleButtonStyle($(this).val());
         toggleImagePositionRow();

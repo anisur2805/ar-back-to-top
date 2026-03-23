@@ -34,13 +34,6 @@ final class AR_Back_To_Top {
 	private static $instance = null;
 
 	/**
-	 * Plugin options
-	 *
-	 * @var array
-	 */
-	private $options = array();
-
-	/**
 	 * Flag to skip page display check when rendering in admin.
 	 *
 	 * @var bool
@@ -93,7 +86,6 @@ final class AR_Back_To_Top {
 		define( 'ARBTTOP_PATH', __DIR__ );
 		define( 'ARBTTOP_URL', plugins_url( '', __FILE__ ) );
 		define( 'ARBTTOP_ASSETS', ARBTTOP_URL . '/assets' );
-		define( 'ARBTTOP_INCLUDES', ARBTTOP_URL . '/inc' );
 	}
 
 	public function load_class_files() {
@@ -123,10 +115,8 @@ final class AR_Back_To_Top {
 		add_action( 'admin_init', array( $this, 'add_settings_section' ) );
 		add_action( 'wp_footer', array( $this, 'render_back_to_top' ) );
 		add_action( 'admin_footer', array( $this, 'render_back_to_top_admin' ) );
-		add_action( 'admin_init', array( $this, 'handle_activation_redirect' ) );
 		add_action( 'admin_init', array( $this, 'handle_reset_defaults' ) );
 
-		register_activation_hook( __FILE__, array( $this, 'plugin_activation' ) );
 		register_uninstall_hook( __FILE__, array( __CLASS__, 'plugin_uninstall' ) );
 
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'add_action_links' ) );
@@ -457,23 +447,6 @@ final class AR_Back_To_Top {
 			<div class="ar-btt-toggle-switch"></div>
 		</label>
 		<p class="description"><?php echo esc_html__( 'Enable this option to improve site performance by loading scripts asynchronously.', 'ar-back-to-top' ); ?> <br/> <?php echo esc_html__( 'Disable only if it causes compatibility issues with other plugins or scripts.', 'ar-back-to-top' ); ?></p>
-		<?php
-	}
-
-	/**
-	 * Render Font Awesome loading field
-	 *
-	 * @return void
-	 */
-	public function render_fa_loading_field() {
-		$current = get_option( 'arbtt_fa_loading', 'fa6' );
-		?>
-		<select name="arbtt_fa_loading" id="arbtt_fa_loading">
-			<option value="fa6"<?php selected( 'fa6', $current ); ?>><?php esc_html_e( 'Font Awesome 6 (default)', 'ar-back-to-top' ); ?></option>
-			<option value="fa5"<?php selected( 'fa5', $current ); ?>><?php esc_html_e( 'Font Awesome 5', 'ar-back-to-top' ); ?></option>
-			<option value="none"<?php selected( 'none', $current ); ?>><?php esc_html_e( 'Do not load (already loaded by theme/plugin)', 'ar-back-to-top' ); ?></option>
-		</select>
-		<p class="description"><?php esc_html_e( 'Choose which Font Awesome version to load, or skip if your theme already includes it.', 'ar-back-to-top' ); ?></p>
 		<?php
 	}
 
@@ -1364,7 +1337,6 @@ final class AR_Back_To_Top {
 			'arbtt_mobile_offset_bottom'       => '',
 			'arbtt_mobile_offset_side'         => '',
 			'arbtt_scroll_easing'              => 'ease-in-out',
-			'arbtt_fa_loading'                 => 'fa6',
 			'arbtt_show_in_admin'              => '0',
 			'arbtt_auto_hide'                  => '0',
 			'arbtt_auto_hide_after'            => '3',
@@ -1502,26 +1474,6 @@ final class AR_Back_To_Top {
 		}
 
 		return $data;
-	}
-
-	/**
-	 * Plugin activation
-	 *
-	 * @return void
-	 */
-	public function plugin_activation() {
-		add_option( 'arbtt_do_activation_redirect', true );
-	}
-
-	/**
-	 * Handle activation redirect
-	 *
-	 * @return void
-	 */
-	public function handle_activation_redirect() {
-		if ( get_option( 'arbtt_do_activation_redirect', false ) ) {
-			delete_option( 'arbtt_do_activation_redirect' );
-		}
 	}
 
 	private function sanitize_custom_css( string $css ): string {
