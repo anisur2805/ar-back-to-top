@@ -301,7 +301,7 @@ jQuery(document).ready(function ($) {
         frame.on('select', function() {
             var attachment = frame.state().get('selection').first().toJSON();
             $('#arbtt_custom_icon_url').val(attachment.url);
-            $('.arbtt-custom-icon-preview').attr('src', attachment.url).show();
+            $('.arbtt-custom-icon-preview').show().find('img').attr('src', attachment.url);
             $('#arbtt_remove_icon_btn').show();
         });
         frame.open();
@@ -310,7 +310,7 @@ jQuery(document).ready(function ($) {
     $('#arbtt_remove_icon_btn').on('click', function(e) {
         e.preventDefault();
         $('#arbtt_custom_icon_url').val('');
-        $('.arbtt-custom-icon-preview').attr('src', '').hide();
+        $('.arbtt-custom-icon-preview').hide().find('img').attr('src', '');
         $(this).hide();
     });
 

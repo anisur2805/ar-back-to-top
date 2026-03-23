@@ -795,9 +795,13 @@ final class AR_Back_To_Top {
 			<button type="button" class="button arbtt-remove-icon" id="arbtt_remove_icon_btn"<?php echo empty( $icon_url ) ? ' style="display:none;"' : ''; ?>><?php esc_html_e( 'Remove', 'ar-back-to-top' ); ?></button>
 		</div>
 		<?php if ( ! empty( $icon_url ) ) : ?>
-			<img src="<?php echo esc_url( $icon_url ); ?>" width="30" height="30" class="arbtt-custom-icon-preview" alt="<?php esc_attr_e( 'Custom icon preview', 'ar-back-to-top' ); ?>" style="margin-top:5px;" />
+			<div class="arbtt-custom-icon-preview" style="margin-top:8px;">
+				<img src="<?php echo esc_url( $icon_url ); ?>" alt="<?php esc_attr_e( 'Custom icon preview', 'ar-back-to-top' ); ?>" />
+			</div>
 		<?php else : ?>
-			<img src="" width="30" height="30" class="arbtt-custom-icon-preview" alt="" style="margin-top:5px;display:none;" />
+			<div class="arbtt-custom-icon-preview" style="margin-top:8px;display:none;">
+				<img src="" alt="" />
+			</div>
 		<?php endif; ?>
 		<p class="description"><?php esc_html_e( 'Upload a PNG, JPG, GIF, or SVG file from your media library.', 'ar-back-to-top' ); ?></p>
 		<?php
