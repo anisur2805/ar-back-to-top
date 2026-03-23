@@ -115,6 +115,7 @@ final class AR_Back_To_Top {
 		add_action( 'admin_init', array( $this, 'add_settings_section' ) );
 		add_action( 'wp_footer', array( $this, 'render_back_to_top' ) );
 		add_action( 'admin_init', array( $this, 'handle_activation_redirect' ) );
+		add_action( 'admin_init', array( $this, 'handle_reset_defaults' ) );
 
 		register_activation_hook( __FILE__, array( $this, 'plugin_activation' ) );
 		register_uninstall_hook( __FILE__, array( __CLASS__, 'plugin_uninstall' ) );
@@ -194,6 +195,19 @@ final class AR_Back_To_Top {
 					settings_fields( 'arbtt_ssection_id' );
 					do_settings_sections( 'arbtt' );
 					submit_button();
+				?>
+			</form>
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=arbtt' ) ); ?>" style="margin-top:10px;">
+				<?php wp_nonce_field( 'arbtt_reset_defaults', 'arbtt_reset_nonce' ); ?>
+				<input type="hidden" name="arbtt_reset_defaults" value="1" />
+				<?php
+				submit_button(
+					esc_html__( 'Reset to Defaults', 'ar-back-to-top' ),
+					'secondary',
+					'arbtt_reset_btn',
+					false,
+					array( 'onclick' => 'return confirm("' . esc_js( __( 'Are you sure you want to reset all settings to defaults?', 'ar-back-to-top' ) ) . '");' )
+				);
 				?>
 			</form>
 		</div>
@@ -1045,6 +1059,83 @@ final class AR_Back_To_Top {
 			</button>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Get default option values.
+	 *
+	 * @return array
+	 */
+	public static function get_default_options() {
+		return array(
+			'arbtt_enable'                     => '0',
+			'arbtt_enable_scroll_progress'     => '0',
+			'arbtt_enable_scroll_progress_size' => '4',
+			'arbtt_progress_color'             => '#ff0',
+			'arbtt_is_async'                   => '',
+			'arbtt_btnst'                      => 'txt',
+			'arbtt_fi'                         => 'fa-angle-up',
+			'arbtt_btntx'                      => 'Top',
+			'arbtt_btn_img'                    => 'arbtt6.png',
+			'arbtt_btn_img_position'           => 'right',
+			'arbtt_btn_ext_img_url'            => '',
+			'arbtt_bgc'                        => '#000',
+			'arbtt_bgc_hover'                  => '#fff',
+			'arbtt_clr'                        => '#fff',
+			'arbtt_clr_hover'                  => '#fff',
+			'arbtt_bdrd'                       => '5',
+			'arbtt_bdr'                        => '2',
+			'arbtt_bdr_color'                  => '#fff',
+			'arbtt_bdr_color_hover'            => '#fff',
+			'arbtt_btnps'                      => 'right',
+			'arbtt_btn_offset_bottom'          => '100',
+			'arbtt_btn_offset_right'           => '100',
+			'arbtt_btn_offset_left'            => '100',
+			'arbtt_btnapr'                     => '100',
+			'arbtt_btndm'                      => array( 'w' => 40, 'h' => 40 ),
+			'arbtt_btn_padding'                => '10',
+			'arbtt_btnoc'                      => '0.5',
+			'arbtt_fadein'                     => '950',
+			'arbtt_fz'                         => '20',
+			'arbtt_hide_on_tablet'             => '0',
+			'arbtt_twidth'                     => '1024',
+			'arbtt_hide_on_phone'              => '0',
+			'arbtt_pwidth'                     => '767',
+			'arbtt_custom_css'                 => '',
+			'arbtt_display_mode'               => 'all',
+			'arbtt_display_pages'              => array(),
+			'arbtt_tooltip_text'               => '',
+			'arbtt_zindex'                     => '9999',
+			'arbtt_auto_hide'                  => '0',
+			'arbtt_auto_hide_after'            => '3',
+		);
+	}
+
+	/**
+	 * Handle reset to defaults.
+	 *
+	 * @return void
+	 */
+	public function handle_reset_defaults() {
+		if ( ! isset( $_POST['arbtt_reset_defaults'] ) ) {
+			return;
+		}
+
+		if ( ! isset( $_POST['arbtt_reset_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['arbtt_reset_nonce'] ) ), 'arbtt_reset_defaults' ) ) {
+			return;
+		}
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$defaults = self::get_default_options();
+
+		foreach ( $defaults as $key => $value ) {
+			update_option( $key, $value );
+		}
+
+		add_settings_error( 'arbtt_ssection_id', 'arbtt_reset', __( 'All settings have been reset to defaults.', 'ar-back-to-top' ), 'updated' );
 	}
 
 	/**
