@@ -967,7 +967,8 @@ final class AR_Back_To_Top {
 	 */
 	public function render_custom_css_field() {
 		?>
-		<textarea name="arbtt_custom_css" id="arbtt_custom_css" rows="10" cols="50"><?php echo esc_textarea( get_option( 'arbtt_custom_css' ) ); ?></textarea>
+		<textarea name="arbtt_custom_css" id="arbtt_custom_css" rows="10" cols="50" placeholder="<?php echo esc_attr( ".arbtt { /* your custom styles */ }" ); ?>"><?php echo esc_textarea( get_option( 'arbtt_custom_css' ) ); ?></textarea>
+		<p class="description"><?php echo esc_html__( 'CSS hooks:', 'ar-back-to-top' ); ?> <code>.arbtt-container</code>, <code>.arbtt</code>, <code>.progress-svg</code></p>
 		<?php
 	}
 
