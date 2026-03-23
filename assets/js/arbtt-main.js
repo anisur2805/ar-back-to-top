@@ -45,19 +45,32 @@ jQuery(document).ready(function ($) {
         // Icon
         var style = $('#arbtt_btnst').val();
         var $icon = $btn.find('.arbtt-preview-btn-icon');
-        $icon.attr('class', 'arbtt-preview-btn-icon');
+        var iconSize = ($('#arbtt_fz').val() || '20') + 'px';
+        $icon.attr('class', 'arbtt-preview-btn-icon').empty().css({ 'background': '', 'border-radius': '' });
+
         if (style === 'fa') {
             var iconClass = $('#arbtt_fi_picker').val() || 'fa-solid fa-angle-up';
             $icon.attr('class', 'arbtt-preview-btn-icon ' + iconClass);
-            $icon.text('');
+            $icon.css({ 'color': $('#arbtt_clr').val() || '#fff', 'font-size': iconSize });
         } else if (style === 'txt') {
             $icon.text($('#arbtt_btntx').val() || 'Top');
+            $icon.css({ 'color': $('#arbtt_clr').val() || '#fff', 'font-size': iconSize });
+        } else if (style === 'upload' || style === 'img' || style === 'external') {
+            var imgUrl = '';
+            if (style === 'upload') {
+                imgUrl = $('#arbtt_custom_icon_url').val();
+            } else if (style === 'external') {
+                imgUrl = $('#arbtt_btn_ext_img_url').val();
+            } else if (style === 'img') {
+                imgUrl = $('input[name="arbtt_btn_img"]:checked').closest('label').find('img').attr('src') || '';
+            }
+            if (imgUrl) {
+                $icon.html('<img src="' + imgUrl + '" style="width:' + iconSize + ';height:' + iconSize + ';object-fit:contain;" alt="" />');
+            }
         } else {
             $icon.attr('class', 'arbtt-preview-btn-icon fa-solid fa-angle-up');
-            $icon.text('');
+            $icon.css({ 'color': $('#arbtt_clr').val() || '#fff', 'font-size': iconSize });
         }
-
-        $icon.css({ 'color': $('#arbtt_clr').val() || '#fff', 'font-size': ($('#arbtt_fz').val() || '20') + 'px' });
     }
 
     // Bind preview updates to all relevant inputs
