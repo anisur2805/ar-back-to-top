@@ -940,7 +940,7 @@ final class AR_Back_To_Top {
 	public function render_auto_hide_field() {
 		?>
 		<label class="ar-btt-toggle" for="arbtt_auto_hide">
-			<input type="checkbox" name="arbtt_auto_hide" id="arbtt_auto_hide" value="1"<?php checked( '1', esc_attr( get_option( 'arbtt_auto_hide' ) ) ); ?> class="ar-btt-toggle-checkbox">
+			<input type="checkbox" name="arbtt_auto_hide" id="arbtt_auto_hide" value="1"<?php checked( '1', esc_attr( get_option( 'arbtt_auto_hide' ) ) ); ?> class="ar-btt-toggle-checkbox arbtt-toggle-next" data-toggle-next="1">
 			<div class="ar-btt-toggle-switch"></div>
 			<span class="description"><?php esc_html_e( 'Automatically hide button after a period of inactivity', 'ar-back-to-top' ); ?></span>
 		</label>

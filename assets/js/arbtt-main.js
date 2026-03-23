@@ -193,4 +193,16 @@ jQuery(document).ready(function ($) {
 
     // On change
     $buttonStyleSelect.on('change', toggleImagePositionRow);
+
+    // Display Mode → Select Pages dependency
+    const $displayMode     = $('#arbtt_display_mode');
+    const $displayPagesRow = $('#arbtt_display_pages').closest('tr');
+
+    function toggleDisplayPagesRow() {
+        const mode = $displayMode.val();
+        $displayPagesRow.toggle(mode === 'include' || mode === 'exclude');
+    }
+
+    toggleDisplayPagesRow();
+    $displayMode.on('change', toggleDisplayPagesRow);
 });
