@@ -166,6 +166,8 @@ final class AR_Back_To_Top {
 		register_uninstall_hook( __FILE__, array( __CLASS__, 'plugin_uninstall' ) );
 
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'add_action_links' ) );
+		add_filter( 'upload_mimes', array( $this, 'allow_svg_upload' ) );
+		add_filter( 'wp_check_filetype_and_ext', array( $this, 'fix_svg_mime_type' ), 10, 5 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_action( 'plugin_loaded', array( $this, 'load_textdomain' ) );
 	}
@@ -1471,6 +1473,45 @@ final class AR_Back_To_Top {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Allow SVG file uploads.
+	 *
+	 * @param array $mimes Allowed MIME types.
+	 * @return array
+	 */
+	public function allow_svg_upload( $mimes ) {
+		if ( current_user_can( 'manage_options' ) ) {
+			$mimes['svg']  = 'image/svg+xml';
+			$mimes['svgz'] = 'image/svg+xml';
+		}
+		return $mimes;
+	}
+
+	/**
+	 * Fix SVG MIME type detection on upload.
+	 *
+	 * @param array       $data     File data.
+	 * @param string      $file     Full path to the file.
+	 * @param string      $filename The name of the file.
+	 * @param string[]    $mimes    Allowed MIME types.
+	 * @param string|bool $real_mime The MIME type determined by PHP.
+	 * @return array
+	 */
+	public function fix_svg_mime_type( $data, $file, $filename, $mimes, $real_mime = false ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return $data;
+		}
+
+		$ext = pathinfo( $filename, PATHINFO_EXTENSION );
+
+		if ( 'svg' === strtolower( $ext ) ) {
+			$data['type'] = 'image/svg+xml';
+			$data['ext']  = 'svg';
+		}
+
+		return $data;
 	}
 
 	/**
