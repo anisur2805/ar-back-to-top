@@ -1,4 +1,3 @@
-<!-- ARBTT Debug: shape=<?php echo esc_html( $arbtt_btn_shape ); ?> progress=<?php echo esc_html( $arbtt_enable_scroll_progress ); ?> -->
 <style type="text/css">
 	#arbtt-container {
 		display: <?php echo esc_attr( $display ); ?>;
@@ -29,6 +28,14 @@
 		background-color: <?php echo esc_attr( $arbtt_bgc ); ?> !important;
 		opacity: <?php echo esc_attr( $arbtt_btnoc ); ?>;
 
+		z-index: <?php echo absint( $arbtt_zindex ); ?>;
+		border: <?php echo esc_attr( $arbtt_bdr ); ?>px solid <?php echo esc_attr( $arbtt_bdr_color ); ?>;
+		transition: all 0.3s ease-in-out;
+		box-sizing: border-box;
+	}
+
+	/* Shape - high specificity to override theme button styles */
+	#arbtt-container button#arbtt.arbtt {
 		<?php if ( 'circle' === $arbtt_btn_shape ) : ?>
 		border-radius: 50% !important;
 		<?php elseif ( 'square' === $arbtt_btn_shape ) : ?>
@@ -40,10 +47,6 @@
 		<?php else : ?>
 		border-radius: <?php echo esc_attr( $arbtt_bdrd ); ?>px !important;
 		<?php endif; ?>
-		z-index: <?php echo absint( $arbtt_zindex ); ?>;
-		border: <?php echo esc_attr( $arbtt_bdr ); ?>px solid <?php echo esc_attr( $arbtt_bdr_color ); ?>;
-		transition: all 0.3s ease-in-out;
-		box-sizing: border-box;
 	}
 
 	<?php if ( 'right' === $arbtt_btn_img_position ) : ?>
