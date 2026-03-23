@@ -1,3 +1,4 @@
+<!-- ARBTT Debug: shape=<?php echo esc_html( $arbtt_btn_shape ); ?> progress=<?php echo esc_html( $arbtt_enable_scroll_progress ); ?> -->
 <style type="text/css">
 	#arbtt-container {
 		display: <?php echo esc_attr( $display ); ?>;
@@ -29,15 +30,15 @@
 		opacity: <?php echo esc_attr( $arbtt_btnoc ); ?>;
 
 		<?php if ( 'circle' === $arbtt_btn_shape ) : ?>
-		border-radius: 50%;
+		border-radius: 50% !important;
 		<?php elseif ( 'square' === $arbtt_btn_shape ) : ?>
-		border-radius: 0;
+		border-radius: 0 !important;
 		<?php elseif ( 'rounded' === $arbtt_btn_shape ) : ?>
-		border-radius: 8px;
+		border-radius: 8px !important;
 		<?php elseif ( 'both' !== $arbtt_btnst && '1' === $arbtt_enable_scroll_progress ) : ?>
-		border-radius: 50%;
+		border-radius: 50% !important;
 		<?php else : ?>
-		border-radius: <?php echo esc_attr( $arbtt_bdrd ); ?>px;
+		border-radius: <?php echo esc_attr( $arbtt_bdrd ); ?>px !important;
 		<?php endif; ?>
 		z-index: <?php echo absint( $arbtt_zindex ); ?>;
 		border: <?php echo esc_attr( $arbtt_bdr ); ?>px solid <?php echo esc_attr( $arbtt_bdr_color ); ?>;

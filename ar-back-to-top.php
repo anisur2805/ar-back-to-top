@@ -1293,7 +1293,7 @@ final class AR_Back_To_Top {
 			return;
 		}
 
-		require_once ARBTTOP_PATH . '/inc/dynamic-style.css.php';
+		require ARBTTOP_PATH . '/inc/dynamic-style.css.php';
 
 		?>
 		<div class="arbtt-container" id="arbtt-container">
