@@ -542,8 +542,9 @@ final class AR_Back_To_Top {
 	public function render_btnps_field() {
 		?>
 		<select name="arbtt_btnps" id="arbtt_btnps">
-			<option value="left"<?php selected( 'left', esc_attr( get_option( 'arbtt_btnps' ) ) ); ?>><?php echo esc_html__( 'Left Side', 'ar-back-to-top' ); ?></option>
-			<option value="right"<?php selected( 'right', esc_attr( get_option( 'arbtt_btnps' ) ) ); ?>><?php echo esc_html__( 'Right Side', 'ar-back-to-top' ); ?></option>
+			<option value="left"<?php selected( 'left', esc_attr( get_option( 'arbtt_btnps' ) ) ); ?>><?php esc_html_e( 'Left Side', 'ar-back-to-top' ); ?></option>
+			<option value="right"<?php selected( 'right', esc_attr( get_option( 'arbtt_btnps' ) ) ); ?>><?php esc_html_e( 'Right Side', 'ar-back-to-top' ); ?></option>
+			<option value="center"<?php selected( 'center', esc_attr( get_option( 'arbtt_btnps' ) ) ); ?>><?php esc_html_e( 'Center Bottom', 'ar-back-to-top' ); ?></option>
 		</select>
 		<?php
 	}

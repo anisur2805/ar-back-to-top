@@ -16,7 +16,12 @@
 		text-decoration: none !important;
 		position: fixed;
 		bottom: <?php echo esc_attr( $arbtt_btn_offset_bottom ); ?>px;
+		<?php if ( 'center' === $arbtt_btnps ) : ?>
+		left: 50%;
+		transform: translateX(-50%);
+		<?php else : ?>
 		<?php echo esc_attr( $arbtt_btnps ); ?>: <?php echo esc_attr( 'left' === $arbtt_btnps ? $arbtt_btn_offset_left : $arbtt_btn_offset_right ); ?>px;
+		<?php endif; ?>
 		display: none;
 		align-items: center;
 		justify-content: center;
