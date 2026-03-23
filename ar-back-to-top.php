@@ -276,6 +276,7 @@ final class AR_Back_To_Top {
 		$this->register_field( 'arbtt_btn_img_position', __( 'Choose Button Image Position', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_arbtt_btn_img_position' ), 'arbtt_ssection_id' );
 		// $this->register_field( 'arbtt_btn_custom_icon', __( 'Custom Icon URL', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_btn_custom_icon_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_btn_ext_img_url', __( 'External Image Url', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_btnimg_url_field' ), 'arbtt_ssection_id' );
+		$this->register_field( 'arbtt_custom_icon_url', __( 'Upload Custom Icon', 'ar-back-to-top' ), 'arbtt', array( $this, 'render_custom_icon_upload_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_bgc', 'Button Background Color', 'arbtt', array( $this, 'render_bgc_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_bgc_hover', 'Button Background Hover Color', 'arbtt', array( $this, 'render_bgc_hover_field' ), 'arbtt_ssection_id' );
 		$this->register_field( 'arbtt_clr', 'Button Color', 'arbtt', array( $this, 'render_clr_field' ), 'arbtt_ssection_id' );
@@ -705,6 +706,28 @@ final class AR_Back_To_Top {
 	}
 
 	/**
+	 * Render custom icon upload field
+	 *
+	 * @return void
+	 */
+	public function render_custom_icon_upload_field() {
+		$icon_url = get_option( 'arbtt_custom_icon_url', '' );
+		?>
+		<div class="arbtt-custom-icon-wrap">
+			<input type="text" name="arbtt_custom_icon_url" id="arbtt_custom_icon_url" class="regular-text" value="<?php echo esc_url( $icon_url ); ?>" placeholder="<?php esc_attr_e( 'Select or upload an icon', 'ar-back-to-top' ); ?>" readonly />
+			<button type="button" class="button arbtt-upload-icon" id="arbtt_upload_icon_btn"><?php esc_html_e( 'Upload Icon', 'ar-back-to-top' ); ?></button>
+			<button type="button" class="button arbtt-remove-icon" id="arbtt_remove_icon_btn"<?php echo empty( $icon_url ) ? ' style="display:none;"' : ''; ?>><?php esc_html_e( 'Remove', 'ar-back-to-top' ); ?></button>
+		</div>
+		<?php if ( ! empty( $icon_url ) ) : ?>
+			<img src="<?php echo esc_url( $icon_url ); ?>" width="30" height="30" class="arbtt-custom-icon-preview" alt="<?php esc_attr_e( 'Custom icon preview', 'ar-back-to-top' ); ?>" style="margin-top:5px;" />
+		<?php else : ?>
+			<img src="" width="30" height="30" class="arbtt-custom-icon-preview" alt="" style="margin-top:5px;display:none;" />
+		<?php endif; ?>
+		<p class="description"><?php esc_html_e( 'Upload a PNG, JPG, GIF, or SVG file from your media library.', 'ar-back-to-top' ); ?></p>
+		<?php
+	}
+
+	/**
 	 * Render button image field
 	 *
 	 * @return void
@@ -1035,7 +1058,8 @@ final class AR_Back_To_Top {
 			<option value="txt"<?php selected( 'txt', $current ); ?>><?php echo esc_html__( 'Text Only', 'ar-back-to-top' ); ?></option>
 			<option value="img"<?php selected( 'img', $current ); ?>><?php echo esc_html__( 'Image Only', 'ar-back-to-top' ); ?></option>
 			<option value="both"<?php selected( 'both', $current ); ?>><?php echo esc_html__( 'Both', 'ar-back-to-top' ); ?></option>
-			<option value="external"<?php selected( 'external', $current ); ?>><?php echo esc_html__( 'External Image URL', 'ar-back-to-top' ); ?></option>
+			<option value="external"<?php selected( 'external', $current ); ?>><?php esc_html_e( 'External Image URL', 'ar-back-to-top' ); ?></option>
+			<option value="upload"<?php selected( 'upload', $current ); ?>><?php esc_html_e( 'Custom Upload', 'ar-back-to-top' ); ?></option>
 		</select>
 		<p class="shown-if-both" style="display: none;"><?php echo esc_html__( 'If selected both, then progress will be unsupported.', 'ar-back-to-top' ); ?></p>
 		<?php
@@ -1153,6 +1177,12 @@ final class AR_Back_To_Top {
 
 				<?php elseif ( 'external' === $arbtt_btnst ) : ?>
 					<img src="<?php echo esc_url( $external_img_url ); ?>" alt="" />
+
+				<?php elseif ( 'upload' === $arbtt_btnst ) : ?>
+					<?php $custom_icon_url = get_option( 'arbtt_custom_icon_url', '' ); ?>
+					<?php if ( ! empty( $custom_icon_url ) ) : ?>
+						<img src="<?php echo esc_url( $custom_icon_url ); ?>" alt="" />
+					<?php endif; ?>
 				<?php endif; ?>
 
 				<?php
@@ -1192,6 +1222,7 @@ final class AR_Back_To_Top {
 			'arbtt_btn_img'                    => 'arbtt6.png',
 			'arbtt_btn_img_position'           => 'right',
 			'arbtt_btn_ext_img_url'            => '',
+			'arbtt_custom_icon_url'            => '',
 			'arbtt_bgc'                        => '#000',
 			'arbtt_bgc_hover'                  => '#fff',
 			'arbtt_clr'                        => '#fff',

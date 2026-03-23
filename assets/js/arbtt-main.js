@@ -134,9 +134,10 @@ jQuery(document).ready(function ($) {
         const $imgRow = $(".arbtt-image").closest("tr");
         const $imgUrlRow = $(".arbtt_btn_ext_img_url").closest("tr");
         const $extRow = $(".arbtt_btn_ext_img_url").closest("tr");
+        const $uploadRow = $("#arbtt_custom_icon_url").closest("tr");
         const displayIfBoth = $(".shown-if-both");
         const dimension = $(".arbtt_btndm").closest("tr");
-        $fiRow.add($txtRow).add($imgRow).add($imgUrlRow).hide();
+        $fiRow.add($txtRow).add($imgRow).add($imgUrlRow).add($uploadRow).hide();
         switch (val) {
             case "fa":
                 $fiRow.show("blind");
@@ -153,6 +154,10 @@ jQuery(document).ready(function ($) {
                 break;
             case "external":
                 $extRow.show("blind");
+                displayIfBoth.hide();
+                break;
+            case "upload":
+                $uploadRow.show("blind");
                 displayIfBoth.hide();
                 break;
             case "both":
@@ -205,6 +210,31 @@ jQuery(document).ready(function ($) {
 
     toggleDisplayPagesRow();
     $displayMode.on('change', toggleDisplayPagesRow);
+
+    // Custom Icon Upload via wp.media
+    $('#arbtt_upload_icon_btn').on('click', function(e) {
+        e.preventDefault();
+        var frame = wp.media({
+            title: 'Select Custom Icon',
+            button: { text: 'Use this icon' },
+            multiple: false,
+            library: { type: ['image', 'image/svg+xml'] }
+        });
+        frame.on('select', function() {
+            var attachment = frame.state().get('selection').first().toJSON();
+            $('#arbtt_custom_icon_url').val(attachment.url);
+            $('.arbtt-custom-icon-preview').attr('src', attachment.url).show();
+            $('#arbtt_remove_icon_btn').show();
+        });
+        frame.open();
+    });
+
+    $('#arbtt_remove_icon_btn').on('click', function(e) {
+        e.preventDefault();
+        $('#arbtt_custom_icon_url').val('');
+        $('.arbtt-custom-icon-preview').attr('src', '').hide();
+        $(this).hide();
+    });
 
     // Button Shape → Border Radius dependency
     const $btnShape      = $('#arbtt_btn_shape');
