@@ -96,6 +96,7 @@ final class AR_Back_To_Top {
 			'inc/class-ar-status.php',
 			'inc/class-ar-frontend.php',
 			'inc/class-ar-svg-icons.php',
+			'inc/class-ar-svg-sanitizer.php',
 			'inc/class-ar-assets.php',
 		);
 
@@ -124,6 +125,7 @@ final class AR_Back_To_Top {
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'add_action_links' ) );
 		add_filter( 'upload_mimes', array( $this, 'allow_svg_upload' ) );
 		add_filter( 'wp_check_filetype_and_ext', array( $this, 'fix_svg_mime_type' ), 10, 5 );
+		add_filter( 'wp_handle_upload_prefilter', array( $this, 'sanitize_svg_upload' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		// Textdomain is auto-loaded by WordPress since 4.6+.
 	}
@@ -1456,6 +1458,42 @@ final class AR_Back_To_Top {
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Sanitize SVG files on upload to remove dangerous content.
+	 *
+	 * @param array $file Upload data array with 'tmp_name', 'name', etc.
+	 * @return array Modified upload data. Sets 'error' on failure.
+	 */
+	public function sanitize_svg_upload( $file ) {
+		if ( ! isset( $file['name'] ) ) {
+			return $file;
+		}
+
+		$ext = strtolower( pathinfo( $file['name'], PATHINFO_EXTENSION ) );
+
+		if ( 'svg' !== $ext ) {
+			return $file;
+		}
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			$file['error'] = __( 'You are not allowed to upload SVG files.', 'ar-back-to-top' );
+			return $file;
+		}
+
+		if ( ! class_exists( 'AR_SVG_Sanitizer' ) ) {
+			$file['error'] = __( 'SVG sanitizer is not available.', 'ar-back-to-top' );
+			return $file;
+		}
+
+		$sanitized = AR_SVG_Sanitizer::sanitize_file( $file['tmp_name'] );
+
+		if ( ! $sanitized ) {
+			$file['error'] = __( 'This SVG file could not be sanitized and was rejected for security reasons.', 'ar-back-to-top' );
+		}
+
+		return $file;
 	}
 
 	public function sanitize_custom_css( string $css ): string {
