@@ -4,7 +4,7 @@ Tags: back to top, scroll to top, scroll top, scroll up, smooth top button
 Requires at least: 6.8
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,16 @@ AR Back To Top plugin will help them who don't wants to write code. For use this
 7. Find **AR Back To Top** in the list and click **Activate**.
 
 == Changelog ==
+
+= 3.0.1 =
+
+**Bug Fixes**
+* Fix color and breakpoint fields not saving — add fallback defaults to all render fields
+* Fix icon hover color inline default mismatch (#fff → #000)
+* Fix icon picker not updating the live sidebar preview immediately
+* Reduce default button offsets from 100px to 30px for better out-of-the-box positioning
+* Add autocomplete="off" to color picker inputs
+* Update screenshots and expand FAQ section
 
 = 3.0.0 =
 
@@ -170,15 +180,51 @@ There is no need to upgrade just yet.
 
 == Screenshots ==
 
-1. This screen shot to settings menu page corresponds to screenshot-1.(png|jpg|jpeg|gif).
-2. This screen shot to output corresponds to screenshot-2.(png|jpg|jpeg|gif).
+1. General settings tab with enable/disable toggle, async loading, and live preview panel.
+2. Appearance settings — choose from SVG Icon, Text Only, Image, Both, External URL, or Custom Upload.
+3. Visibility settings — control display mode, device-specific hiding, and custom breakpoints.
+4. Frontend output — the back-to-top button displayed on a live WordPress site.
 
 == Frequently Asked Questions ==
 
-**What does this do?**
-AR Back To Top will simply back you to top from bottom
+= What does this plugin do? =
+AR Back To Top adds a customizable "Back to Top" button to your WordPress site. When visitors scroll down the page, the button appears and smoothly scrolls them back to the top when clicked.
 
-**How do I customize the plugin**
-Go to AR Back To Top Setting from admin dashboard and choose your desire options.
+= How do I enable the button? =
+After activating the plugin, go to **Back To Top** in your WordPress admin menu. Toggle **Enable Back To Top** on the General tab and click **Save Changes**.
 
-For any questions, error reports and suggestions please email anisur2805@gmail.com
+= Can I use my own icon or image? =
+Yes. On the Appearance tab, set **Button Style** to "SVG Icon" to pick from 19 built-in icons, "Image Only" for bundled images, "External Image URL" for a remote image, or "Custom Upload" to upload your own PNG, JPG, GIF, or SVG icon from the media library.
+
+= How do I change the button colors? =
+Go to the **Colors & Style** tab. You can set background, text/icon, and border colors for both normal and hover states using the color picker.
+
+= Can I hide the button on mobile or tablet? =
+Yes. On the **Visibility** tab, toggle **Hide on Tablet** or **Hide on Mobile** and set the breakpoints to control at which screen widths the button is hidden.
+
+= Can I show the button only on specific pages? =
+Yes. On the **Visibility** tab, change the **Display Mode** to "Show only on selected pages" or "Hide on selected pages" and search for the pages/posts you want.
+
+= Does this plugin slow down my site? =
+No. The frontend uses zero jQuery — it is written in pure vanilla JavaScript with `requestAnimationFrame` throttling and passive event listeners. Assets are only loaded on pages where the button is displayed. You can also enable async script loading for additional performance.
+
+= Can I add a scroll progress indicator? =
+Yes. On the **Scroll Behavior** tab, enable **Scroll Progress** to display a circular progress ring around the button that fills as the user scrolls down the page.
+
+= How do I change the button position? =
+On the **Position & Size** tab, choose **left**, **right**, or **center** bottom placement. You can also adjust the bottom and side offsets in pixels, and set separate offsets for mobile devices.
+
+= Can I use this button in the WordPress admin area? =
+Yes. On the **General** tab, enable **Show in Admin Area** to display the back-to-top button inside the WordPress dashboard.
+
+= How do I reset all settings to defaults? =
+Click the **Reset to Defaults** button at the bottom of the settings page. A confirmation dialog will appear before resetting.
+
+= Is the plugin accessible? =
+Yes. The button uses a semantic `<button>` element with ARIA labels, screen reader text, and a `:focus-visible` outline for keyboard navigation.
+
+= Is this plugin compatible with my theme? =
+AR Back To Top is compatible with all standard WordPress themes. It uses high-specificity CSS selectors with `!important` to ensure the button displays correctly regardless of your theme's styles.
+
+= Where can I report bugs or suggest features? =
+Please email anisur2805@gmail.com for any questions, bug reports, or feature suggestions.
