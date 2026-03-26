@@ -5,6 +5,8 @@
  * @package AR_Back_To_Top
  */
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Settings Sub menu class
  */
@@ -21,7 +23,7 @@ class AR_Settings_Menu {
 	 * Constructor (private for singleton).
 	 */
 	public function __construct() {
-		add_action( 'admin_menu', array( $this, 'settings_page' ) );
+		add_action( 'admin_menu', array( $this, 'settings_page' ), 20 );
 		add_action( 'admin_init', array( $this, 'register_settings_init' ) );
 	}
 
@@ -77,7 +79,6 @@ class AR_Settings_Menu {
 		<div class="wrap ar-btt-wrap">
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 			<form action="options.php" method="post">
-				<input type="hidden" name="my_nonce" value="<?php echo esc_attr( wp_create_nonce( 'arbtt_setting_nonce' ) ); ?>">
 				<?php
 				settings_fields( 'arbtt_settings' );
 				do_settings_sections( 'arbttp_setting_sections' );
@@ -190,7 +191,7 @@ class AR_Settings_Menu {
 	public function word_count_callback() {
 		?>
 		<label class="ar-btt-toggle" for="arbtt_word_count">
-			<input type="checkbox" name="arbtt_word_count" id="arbtt_word_count" value="1"<?php checked( '1', esc_attr( get_option( 'arbtt_word_count' ) ) ); ?> class="ar-btt-toggle-checkbox">
+			<input type="checkbox" name="arbtt_word_count" id="arbtt_word_count" value="1"<?php checked( '1', get_option( 'arbtt_word_count' ) ); ?> class="ar-btt-toggle-checkbox">
 			<div class="ar-btt-toggle-switch"></div>
 		</label>
 		<?php
@@ -202,7 +203,7 @@ class AR_Settings_Menu {
 	public function characters_count_callback() {
 		?>
 		<label class="ar-btt-toggle" for="arbtt_char_counts">
-			<input type="checkbox" name="arbtt_char_counts" id="arbtt_char_counts" value="1"<?php checked( '1', esc_attr( get_option( 'arbtt_char_counts' ) ) ); ?> class="ar-btt-toggle-checkbox">
+			<input type="checkbox" name="arbtt_char_counts" id="arbtt_char_counts" value="1"<?php checked( '1', get_option( 'arbtt_char_counts' ) ); ?> class="ar-btt-toggle-checkbox">
 			<div class="ar-btt-toggle-switch"></div>
 		</label>
 		<?php
@@ -214,7 +215,7 @@ class AR_Settings_Menu {
 	public function read_time_callback() {
 		?>
 		<label class="ar-btt-toggle" for="arbtt_read_time">
-			<input type="checkbox" name="arbtt_read_time" id="arbtt_read_time" value="1"<?php checked( '1', esc_attr( get_option( 'arbtt_read_time' ) ) ); ?> class="ar-btt-toggle-checkbox">
+			<input type="checkbox" name="arbtt_read_time" id="arbtt_read_time" value="1"<?php checked( '1', get_option( 'arbtt_read_time' ) ); ?> class="ar-btt-toggle-checkbox">
 			<div class="ar-btt-toggle-switch"></div>
 		</label>
 		<?php
@@ -226,7 +227,7 @@ class AR_Settings_Menu {
 	public function view_post_callback() {
 		?>
 		<label class="ar-btt-toggle" for="arbtt_view_count">
-			<input type="checkbox" name="arbtt_view_count" id="arbtt_view_count" value="1"<?php checked( '1', esc_attr( get_option( 'arbtt_view_count' ) ) ); ?> class="ar-btt-toggle-checkbox">
+			<input type="checkbox" name="arbtt_view_count" id="arbtt_view_count" value="1"<?php checked( '1', get_option( 'arbtt_view_count' ) ); ?> class="ar-btt-toggle-checkbox">
 			<div class="ar-btt-toggle-switch"></div>
 		</label>
 		<?php
@@ -248,7 +249,7 @@ class AR_Settings_Menu {
 			printf(
 				'<option value="%s" %s>%s</option>',
 				esc_attr( $key ),
-				selected( $key, esc_attr( get_option( 'arbtt_meta_position' ) ), false ),
+				selected( $key, get_option( 'arbtt_meta_position' ), false ),
 				esc_html( $option )
 			);
 		}
@@ -263,7 +264,7 @@ class AR_Settings_Menu {
  *
  * @return void
  */
-function setting_kickoff() {
+function arbtt_setting_kickoff() {
 	AR_Settings_Menu::get_instance();
 }
-setting_kickoff();
+arbtt_setting_kickoff();

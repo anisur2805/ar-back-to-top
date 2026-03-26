@@ -1,6 +1,7 @@
+<?php defined( 'ABSPATH' ) || exit; ?>
 <style type="text/css">
 	#arbtt-container {
-		display: <?php echo esc_attr( $display ); ?>;
+		display: block;
 	}
 
 	.arbtt {
@@ -95,6 +96,10 @@
 	}
 	<?php endif; ?>
 
+	.arbtt.arbtt-visible {
+		display: flex;
+	}
+
 	.arbtt:hover {
 		opacity: 1;
 		cursor: pointer;
@@ -149,18 +154,18 @@
 	}
 
 	<?php
-	// Convert boolean flags and integer values
-	$hide_on_desktop = isset( $arbtt_hide_on_desktop ) ? $arbtt_hide_on_desktop === '1' : get_option( 'arbtt_hide_on_desktop' ) === '1';
-	$desktop_width   = isset( $arbtt_dwidth ) ? (int) $arbtt_dwidth : (int) get_option( 'arbtt_dwidth', 1025 );
-	$hide_on_tablet  = $arbtt_hide_on_tablet === '1';
-	$hide_on_phone   = $arbtt_hide_on_phone === '1';
-	$phone_width     = (int) $arbtt_pwidth;
-	$tablet_width    = (int) $arbtt_twidth;
+	// Convert boolean flags and integer values.
+	$arbtt_is_hide_desktop = $arbtt_hide_on_desktop === '1';
+	$arbtt_desktop_px      = (int) $arbtt_dwidth;
+	$arbtt_is_hide_tablet  = $arbtt_hide_on_tablet === '1';
+	$arbtt_is_hide_phone   = $arbtt_hide_on_phone === '1';
+	$arbtt_phone_px        = (int) $arbtt_pwidth;
+	$arbtt_tablet_px       = (int) $arbtt_twidth;
 
-	if ( $hide_on_desktop ) :
+	if ( $arbtt_is_hide_desktop ) :
 		?>
 		/* Hide on desktop screens */
-		@media (min-width: <?php echo esc_attr( $desktop_width ); ?>px) {
+		@media (min-width: <?php echo esc_attr( $arbtt_desktop_px ); ?>px) {
 			#arbtt-container {
 				display: none !important;
 			}
@@ -168,61 +173,57 @@
 		<?php
 	endif;
 
-	// Only output styles if at least one device type is selected for hiding
-	if ( $hide_on_tablet || $hide_on_phone ) :
-		// Create appropriate media queries based on selections
-		if ( $hide_on_tablet && $hide_on_phone ) {
-			// Both device types are selected - create two separate media queries
+	// Only output styles if at least one device type is selected for hiding.
+	if ( $arbtt_is_hide_tablet || $arbtt_is_hide_phone ) :
+		if ( $arbtt_is_hide_tablet && $arbtt_is_hide_phone ) {
 			?>
 			/* Hide on mobile devices up to the specified width */
-			@media (max-width: <?php echo esc_attr( $phone_width ); ?>px) {
+			@media (max-width: <?php echo esc_attr( $arbtt_phone_px ); ?>px) {
 				#arbtt-container {
 					display: none !important;
 				}
 			}
-			
-			/* Hide on tablet devices up to 768px */
-			@media (min-width: <?php echo esc_attr( $phone_width + 1 ); ?>px) and (max-width: <?php echo esc_attr( $tablet_width ); ?>px) {
-				#arbtt-container {
-					display: none !important;
-				}
-			}
-			<?php
-		} elseif ( $hide_on_phone ) {
-			// Only hide on mobile devices
-			?>
-			@media (max-width: <?php echo esc_attr( $phone_width ); ?>px) {
+
+			/* Hide on tablet devices */
+			@media (min-width: <?php echo esc_attr( $arbtt_phone_px + 1 ); ?>px) and (max-width: <?php echo esc_attr( $arbtt_tablet_px ); ?>px) {
 				#arbtt-container {
 					display: none !important;
 				}
 			}
 			<?php
-		} elseif ( $hide_on_tablet ) {
-			// Only hide on tablet devices
+		} elseif ( $arbtt_is_hide_phone ) {
 			?>
-			@media (max-width: <?php echo esc_attr( $tablet_width ); ?>px) and (min-width: <?php echo esc_attr( $phone_width + 1 ); ?>px) {
+			@media (max-width: <?php echo esc_attr( $arbtt_phone_px ); ?>px) {
+				#arbtt-container {
+					display: none !important;
+				}
+			}
+			<?php
+		} elseif ( $arbtt_is_hide_tablet ) {
+			?>
+			@media (max-width: <?php echo esc_attr( $arbtt_tablet_px ); ?>px) and (min-width: <?php echo esc_attr( $arbtt_phone_px + 1 ); ?>px) {
 				#arbtt-container {
 					display: none !important;
 				}
 			}
 			<?php
 		}
-endif;
+	endif;
 
-	// Mobile-specific positioning overrides
-	$mobile_offset_bottom = get_option( 'arbtt_mobile_offset_bottom', '' );
-	$mobile_offset_side   = get_option( 'arbtt_mobile_offset_side', '' );
+	// Mobile-specific positioning overrides.
+	$arbtt_mob_offset_bottom = get_option( 'arbtt_mobile_offset_bottom', '' );
+	$arbtt_mob_offset_side   = get_option( 'arbtt_mobile_offset_side', '' );
 
-	if ( '' !== $mobile_offset_bottom || '' !== $mobile_offset_side ) :
+	if ( '' !== $arbtt_mob_offset_bottom || '' !== $arbtt_mob_offset_side ) :
 		?>
 		/* Mobile positioning overrides */
-		@media (max-width: <?php echo esc_attr( $phone_width ); ?>px) {
+		@media (max-width: <?php echo esc_attr( $arbtt_phone_px ); ?>px) {
 			.arbtt {
-				<?php if ( '' !== $mobile_offset_bottom ) : ?>
-				bottom: <?php echo absint( $mobile_offset_bottom ); ?>px !important;
+				<?php if ( '' !== $arbtt_mob_offset_bottom ) : ?>
+				bottom: <?php echo absint( $arbtt_mob_offset_bottom ); ?>px !important;
 				<?php endif; ?>
-				<?php if ( '' !== $mobile_offset_side && 'center' !== $arbtt_btnps ) : ?>
-				<?php echo esc_attr( $arbtt_btnps ); ?>: <?php echo absint( $mobile_offset_side ); ?>px !important;
+				<?php if ( '' !== $arbtt_mob_offset_side && 'center' !== $arbtt_btnps ) : ?>
+				<?php echo esc_attr( $arbtt_btnps ); ?>: <?php echo absint( $arbtt_mob_offset_side ); ?>px !important;
 				<?php endif; ?>
 			}
 		}

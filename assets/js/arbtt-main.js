@@ -10,6 +10,9 @@ jQuery(document).ready(function ($) {
         });
     }
 
+    // SVG icon data passed from PHP via wp_localize_script.
+    var svgIcons = (typeof arbtt_svg_icons !== 'undefined') ? arbtt_svg_icons : [];
+
     // Live preview update
     function updatePreview() {
         var $btn = $('#arbtt-preview-btn');
@@ -136,9 +139,6 @@ jQuery(document).ready(function ($) {
         toggleRows();
         $checkbox.on("change", toggleRows);
     });
-    // SVG icon data passed from PHP via wp_localize_script.
-    var svgIcons = (typeof arbtt_svg_icons !== 'undefined') ? arbtt_svg_icons : [];
-
     function renderIconList(filter) {
         filter = filter || '';
         var $container = $(".arbtt-fa-icon-list").empty();
@@ -221,11 +221,6 @@ jQuery(document).ready(function ($) {
                 break;
         }
     }
-    handleButtonStyle($("#arbtt_btnst").val());
-    $("#arbtt_btnst").on("change", function () {
-        handleButtonStyle($(this).val());
-    });
-
     // Button Shape → Border Radius dependency (must be before handleProgressBarToggle)
     const $btnShape = $('#arbtt_btn_shape');
     const $bdrdRow  = $('#arbtt_bdrd').closest('tr');
@@ -259,6 +254,9 @@ jQuery(document).ready(function ($) {
         if (typeof toggleBorderRadiusRow === 'function') {
             toggleBorderRadiusRow();
         }
+
+        // Update live preview to reflect shape change.
+        updatePreview();
     }
 
     // Initial state on page load

@@ -5,6 +5,8 @@
  * @package AR_Back_To_Top
  */
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Status class
  */
@@ -21,7 +23,7 @@ final class AR_Status {
 	 * Constructor (private for singleton).
 	 */
 	public function __construct() {
-		add_action( 'admin_menu', array( $this, 'status_page' ) );
+		add_action( 'admin_menu', array( $this, 'status_page' ), 20 );
 	}
 
 	/**
@@ -185,8 +187,8 @@ final class AR_Status {
  *
  * @return void
  */
-function status_kickoff() {
+function arbtt_status_kickoff() {
 	AR_Status::get_instance();
 }
 
-status_kickoff();
+arbtt_status_kickoff();

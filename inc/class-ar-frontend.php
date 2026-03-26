@@ -5,6 +5,8 @@
  * @package ARBTT
  */
 
+defined( 'ABSPATH' ) || exit;
+
 class AR_Frontend {
 
 	/**
@@ -19,6 +21,23 @@ class AR_Frontend {
 	 */
 	public function __construct() {
 		add_filter( 'the_content', array( $this, 'arbtt_display_post_data' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_post_meta_styles' ) );
+	}
+
+	/**
+	 * Enqueue post meta inline styles on single posts.
+	 *
+	 * @return void
+	 */
+	public function enqueue_post_meta_styles() {
+		if ( ! is_single() ) {
+			return;
+		}
+
+		$arbtt_stats_css = '.arbtt-stats { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 14px; } .arbtt-stats strong { margin-right: 5px; }';
+		wp_register_style( 'arbtt-post-meta', false, array(), ARBTTOP_VERSION );
+		wp_enqueue_style( 'arbtt-post-meta' );
+		wp_add_inline_style( 'arbtt-post-meta', $arbtt_stats_css );
 	}
 
 	/**
@@ -67,27 +86,14 @@ class AR_Frontend {
 		ob_start();
 		?>
 		<div class="arbtt-post-data arbtt-stats">
-			<style>
-				.arbtt-stats {
-					display: flex;
-					align-items: center;
-					flex-wrap: wrap;
-					gap: 10px;
-					font-size: 14px;
-				}
-				.arbtt-stats strong {
-					margin-right: 5px;
-				}
-			</style>
-	
-			<?php if ( '1' === esc_attr( get_option( 'arbtt_word_count', '0' ) ) ) : ?>
+			<?php if ( '1' === get_option( 'arbtt_word_count', '0' ) ) : ?>
 				<span class="arbtt-word-count">
 					<strong><?php esc_html_e( 'Word Count', 'ar-back-to-top' ); ?>:</strong>
 					<?php echo esc_html( str_word_count( wp_strip_all_tags( $content ) ) ); ?>
 				</span>
 			<?php endif; ?>
 	
-			<?php if ( '1' === esc_attr( get_option( 'arbtt_char_counts', '0' ) ) ) : ?>
+			<?php if ( '1' === get_option( 'arbtt_char_counts', '0' ) ) : ?>
 				<span class="arbtt-char-count">
 					<strong><?php esc_html_e( 'Character Count', 'ar-back-to-top' ); ?>:</strong>
 					<?php echo esc_html( mb_strlen( wp_strip_all_tags( $content ) ) ); ?>
@@ -95,7 +101,7 @@ class AR_Frontend {
 			<?php endif; ?>
 	
 			<?php
-			if ( '1' === esc_attr( get_option( 'arbtt_read_time', '0' ) ) ) :
+			if ( '1' === get_option( 'arbtt_read_time', '0' ) ) :
 				$words   = str_word_count( wp_strip_all_tags( $content ) );
 				$minutes = ceil( $words / 200 );
 				$unit    = ( 1 === $minutes ) ? esc_html__( 'minute', 'ar-back-to-top' ) : esc_html__( 'minutes', 'ar-back-to-top' );
@@ -106,7 +112,7 @@ class AR_Frontend {
 				</span>
 			<?php endif; ?>
 	
-			<?php if ( '1' === esc_attr( get_option( 'arbtt_view_count', '0' ) ) ) : ?>
+			<?php if ( '1' === get_option( 'arbtt_view_count', '0' ) ) : ?>
 				<span class="arbtt-view-count">
 					<strong><?php esc_html_e( 'Total Views', 'ar-back-to-top' ); ?>:</strong>
 					<?php echo esc_html( (int) get_post_meta( get_the_ID(), '_arbtt_post_views', true ) ); ?>
@@ -117,7 +123,7 @@ class AR_Frontend {
 		$meta_output = ob_get_clean();
 
 		// Return based on position setting.
-		switch ( esc_attr( $meta_position ) ) {
+		switch ( $meta_position ) {
 			case 'bottom':
 				return $content . $meta_output;
 
@@ -150,7 +156,7 @@ class AR_Frontend {
 /**
  * Kickstart the frontend logic.
  */
-function frontend_kickoff() {
+function arbtt_frontend_kickoff() {
 	AR_Frontend::get_instance();
 }
-frontend_kickoff();
+arbtt_frontend_kickoff();

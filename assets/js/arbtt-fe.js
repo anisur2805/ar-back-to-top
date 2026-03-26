@@ -64,6 +64,20 @@
 	var hideTimer    = null;
 
 	/**
+	 * Show the button.
+	 */
+	function showButton() {
+		btn.classList.add( 'arbtt-visible' );
+	}
+
+	/**
+	 * Hide the button.
+	 */
+	function hideButton() {
+		btn.classList.remove( 'arbtt-visible' );
+	}
+
+	/**
 	 * Reset the auto-hide timer.
 	 */
 	function resetAutoHideTimer() {
@@ -74,9 +88,7 @@
 			clearTimeout( hideTimer );
 		}
 		hideTimer = setTimeout( function() {
-			if ( btn.style.display !== 'none' ) {
-				btn.style.display = 'none';
-			}
+			hideButton();
 		}, autoHideAfter );
 	}
 
@@ -87,11 +99,10 @@
 		if ( ! ticking ) {
 			window.requestAnimationFrame( function() {
 				if ( window.scrollY > visibleAfter ) {
-					btn.style.display = 'flex';
-					btn.style.opacity = '';
+					showButton();
 					resetAutoHideTimer();
 				} else {
-					btn.style.display = 'none';
+					hideButton();
 					if ( hideTimer ) {
 						clearTimeout( hideTimer );
 					}

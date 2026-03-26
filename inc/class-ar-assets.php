@@ -1,16 +1,16 @@
 <?php
-
 /**
  * Main Assets class for enqueue admin and frontend assets.
  *
  * @package AR_Back_To_Top
  */
 
+defined( 'ABSPATH' ) || exit;
+
 class AR_Assets {
 	public function __construct() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'frontend_enqueue' ) );
-		add_filter( 'script_loader_tag', array( $this, 'script_loader_tag' ), 10, 3 );
 	}
 
 	public function admin_enqueue( $hook ) {
@@ -20,10 +20,10 @@ class AR_Assets {
 
 		if ( 'toplevel_page_arbtt' === $hook ) {
 			wp_enqueue_style( 'jquery_minicolors', ARBTTOP_ASSETS . '/minicolors/jquery.minicolors.css', array(), '1.0', 'all' );
-			wp_enqueue_style( 'select2-css', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', array(), '4.1.0', 'all' );
+			wp_enqueue_style( 'select2-css', ARBTTOP_ASSETS . '/select2/select2.min.css', array(), '4.1.0', 'all' );
 
 			wp_enqueue_script( 'arbtt_minucolor_js', ARBTTOP_ASSETS . '/minicolors/jquery.minicolors.min.js', array( 'jquery' ), '1.0', true );
-			wp_enqueue_script( 'select2-js', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', array( 'jquery' ), '4.1.0', true );
+			wp_enqueue_script( 'select2-js', ARBTTOP_ASSETS . '/select2/select2.min.js', array( 'jquery' ), '4.1.0', true );
 			wp_enqueue_media();
 			wp_enqueue_script( 'arbtt_custom_js', ARBTTOP_ASSETS . '/js/arbtt-main.js', array( 'jquery', 'select2-js' ), ARBTTOP_VERSION, true );
 
@@ -41,27 +41,11 @@ class AR_Assets {
 	}
 
 	/**
-	 * Script loader tag
-	 *
-	 * @param string $tag    The HTML script tag.
-	 * @param string $handle The script's handle.
-	 * @param string $src    The script's source URL.
-	 *
-	 * @return string
-	 */
-	public function script_loader_tag( $tag, $handle, $src ) {
-		if ( 'arbtt_custom_js' === $handle && 'on' === get_option( 'arbtt_is_async' ) ) {
-			return '<script src="' . esc_url( $src ) . '" defer></script>';
-		}
-		return $tag;
-	}
-
-	/**
 	 * Check if the button should display on the current page.
 	 *
 	 * @return bool
 	 */
-	private static function should_display() {
+	public static function should_display() {
 		$display_mode  = get_option( 'arbtt_display_mode', 'all' );
 		$display_pages = get_option( 'arbtt_display_pages', array() );
 
@@ -103,6 +87,10 @@ class AR_Assets {
 		// No Font Awesome needed on frontend — icons are inline SVGs.
 
 		wp_enqueue_script( 'arbtt_custom_js', ARBTTOP_ASSETS . '/js/arbtt-fe.js', array(), ARBTTOP_VERSION, true );
+
+		if ( '1' === get_option( 'arbtt_is_async' ) ) {
+			wp_script_add_data( 'arbtt_custom_js', 'strategy', 'defer' );
+		}
 
 		$btn_visible_after = ( get_option( 'arbtt_btnapr' ) ) ? (int) get_option( 'arbtt_btnapr' ) : 100;
 		$fade_in           = ( get_option( 'arbtt_fadein' ) ) ? (int) get_option( 'arbtt_fadein' ) : 950;
