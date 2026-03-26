@@ -165,6 +165,7 @@ jQuery(document).ready(function ($) {
         $(".arbtt-preview-icon").html(selectedSvg);
         $("#arbtt-fa-icon-modal").fadeOut();
         $("body").removeClass("arbtt-modal-open");
+        updatePreview();
     });
     $(document).on("keydown", function (e) {
         if (e.key === "Escape") {

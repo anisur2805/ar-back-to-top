@@ -455,7 +455,7 @@ final class AR_Back_To_Top {
 	 */
 	public function render_bgc_field() {
 		?>
-		<input type="text" name="arbtt_bgc" class="arcs ar-btt-color" id="arbtt_bgc" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bgc' ) ); ?>"/>
+		<input type="text" autocomplete="off" name="arbtt_bgc" class="arcs ar-btt-color" id="arbtt_bgc" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bgc' ) ?: '#000' ); ?>"/>
 		<?php
 	}
 
@@ -466,7 +466,7 @@ final class AR_Back_To_Top {
 	 */
 	public function render_bgc_hover_field() {
 		?>
-		<input type="text" name="arbtt_bgc_hover" class="arcs ar-btt-color" id="arbtt_bgc_hover" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bgc_hover' ) ); ?>"/>
+		<input type="text" autocomplete="off" name="arbtt_bgc_hover" class="arcs ar-btt-color" id="arbtt_bgc_hover" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bgc_hover' ) ?: '#fff' ); ?>"/>
 		<?php
 	}
 
@@ -477,7 +477,7 @@ final class AR_Back_To_Top {
 	 */
 	public function render_clr_field() {
 		?>
-		<input type="text" name="arbtt_clr" class="arcs ar-btt-color" id="arbtt_clr" placeholder="#f5f5f5" value="<?php echo esc_attr( get_option( 'arbtt_clr' ) ); ?>"/>
+		<input type="text" name="arbtt_clr" autocomplete="off" class="arcs ar-btt-color" id="arbtt_clr" placeholder="#f5f5f5" value="<?php echo esc_attr( get_option( 'arbtt_clr' ) ?: '#fff' ); ?>"/>
 		<?php
 	}
 
@@ -488,7 +488,7 @@ final class AR_Back_To_Top {
 	 */
 	public function render_clr_hover_field() {
 		?>
-		<input type="text" name="arbtt_clr_hover" class="arcs ar-btt-color" id="arbtt_clr_hover" placeholder="#000000" value="<?php echo esc_attr( get_option( 'arbtt_clr_hover' ) ); ?>"/>
+		<input type="text" name="arbtt_clr_hover" autocomplete="off" class="arcs ar-btt-color" id="arbtt_clr_hover" placeholder="#000000" value="<?php echo esc_attr( get_option( 'arbtt_clr_hover' ) ?: '#000000' ); ?>"/>
 		<?php
 	}
 
@@ -511,7 +511,7 @@ final class AR_Back_To_Top {
 	 */
 	public function render_bdr_color_field() {
 		?>
-		<input type="text" name="arbtt_bdr_color" class="arcs ar-btt-color" id="arbtt_bdr_color" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bdr_color' ) ); ?>"/>
+		<input type="text" name="arbtt_bdr_color" class="arcs ar-btt-color" autocomplete="off" id="arbtt_bdr_color" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bdr_color' ) ?: '#fff' ); ?>"/>
 		<?php
 	}
 
@@ -522,7 +522,7 @@ final class AR_Back_To_Top {
 	 */
 	public function render_bdr_color_hover_field() {
 		?>
-		<input type="text" name="arbtt_bdr_color_hover" class="arcs ar-btt-color" id="arbtt_bdr_color_hover" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bdr_color_hover' ) ); ?>"/>
+		<input type="text" name="arbtt_bdr_color_hover" class="arcs ar-btt-color" autocomplete="off" id="arbtt_bdr_color_hover" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bdr_color_hover' ) ?: '#fff' ); ?>"/>
 		<?php
 	}
 
@@ -665,7 +665,7 @@ final class AR_Back_To_Top {
 	 */
 	public function render_btnoc_field() {
 		?>
-		<input type="text" name="arbtt_btnoc" class="aras arbtt_btnoc" id="arbtt_btnoc" placeholder="0.6" value="<?php echo esc_attr( get_option( 'arbtt_btnoc' ) ); ?>"/>
+		<input type="text" name="arbtt_btnoc" autocomplete="off" class="aras arbtt_btnoc" id="arbtt_btnoc" placeholder="0.6" value="<?php echo esc_attr( get_option( 'arbtt_btnoc' ) ); ?>"/>
 		<span class="description"><?php echo esc_html__( 'Min 0 - Max 1', 'ar-back-to-top' ); ?></span>
 		<?php
 	}
@@ -901,7 +901,7 @@ final class AR_Back_To_Top {
 	 */
 	public function render_pwidth_field() {
 		?>
-		<input type="number" name="arbtt_pwidth" class="aras arbtt_pwidth" id="arbtt_pwidth" placeholder="767" value="<?php echo esc_attr( get_option( 'arbtt_pwidth' ) ); ?>"/>
+		<input type="number" name="arbtt_pwidth" class="aras arbtt_pwidth" id="arbtt_pwidth" placeholder="767" value="<?php echo esc_attr( get_option( 'arbtt_pwidth' ) ?: '767' ); ?>"/>
 		<span class="description"><?php echo esc_html__( 'px', 'ar-back-to-top' ); ?></span>
 		<p><?php echo esc_html__( 'Enter the width of the screen at which the button will be hidden on mobile devices.', 'ar-back-to-top' ); ?></p>
 		<?php
@@ -940,7 +940,7 @@ final class AR_Back_To_Top {
 	 */
 	public function render_twidth_field() {
 		?>
-		<input type="number" name="arbtt_twidth" class="aras arbtt_twidth" id="arbtt_twidth" placeholder="1024" value="<?php echo esc_attr( get_option( 'arbtt_twidth' ) ); ?>"/>
+		<input type="number" name="arbtt_twidth" class="aras arbtt_twidth" id="arbtt_twidth" placeholder="1024" value="<?php echo esc_attr( get_option( 'arbtt_twidth' ) ?: '1024' ); ?>"/>
 		<span class="description"><?php echo esc_html__( 'px', 'ar-back-to-top' ); ?></span>
 		<p><?php echo esc_html__( 'Enter the width of the screen at which the button will be hidden on tablet devices.', 'ar-back-to-top' ); ?></p>
 		<?php
@@ -1123,9 +1123,9 @@ final class AR_Back_To_Top {
 		$current = get_option( 'arbtt_btnst' );
 		?>
 		<select name="arbtt_btnst" id="arbtt_btnst">
-			<option value="" selected="selected"><?php echo esc_html__( 'Select Option', 'ar-back-to-top' ); ?></option>
+			<option value=""><?php echo esc_html__( 'Select Option', 'ar-back-to-top' ); ?></option>
 			<option value="fa"<?php selected( 'fa', $current ); ?>><?php esc_html_e( 'SVG Icon', 'ar-back-to-top' ); ?></option>
-			<option value="txt"<?php selected( 'txt', $current ); ?>><?php echo esc_html__( 'Text Only', 'ar-back-to-top' ); ?></option>
+			<option value="txt"<?php selected( 'txt', $current ); ?> selected="selected"><?php echo esc_html__( 'Text Only', 'ar-back-to-top' ); ?></option>
 			<option value="img"<?php selected( 'img', $current ); ?>><?php echo esc_html__( 'Image Only', 'ar-back-to-top' ); ?></option>
 			<option value="both"<?php selected( 'both', $current ); ?>><?php echo esc_html__( 'Both', 'ar-back-to-top' ); ?></option>
 			<option value="external"<?php selected( 'external', $current ); ?>><?php esc_html_e( 'External Image URL', 'ar-back-to-top' ); ?></option>
@@ -1157,14 +1157,14 @@ final class AR_Back_To_Top {
 			'bdr'                    => '2',
 			'bdr_color'              => '#fff',
 			'bgc_hover'              => '#fff',
-			'clr_hover'              => '#fff',
+			'clr_hover'              => '#000',
 			'enable_scroll_progress' => '0',
 			'hotablet'               => '0',
 			'pwidth'                 => '767',
 			'twidth'                 => '1024',
-			'btn_offset_bottom'      => '100',
-			'btn_offset_right'       => '100',
-			'btn_offset_left'        => '100',
+			'btn_offset_bottom'      => '30',
+			'btn_offset_right'       => '30',
+			'btn_offset_left'        => '30',
 			'bdr_color_hover'        => '#fff',
 			'custom_css'             => '',
 			'progress_color'         => '#ff0',
