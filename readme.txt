@@ -4,7 +4,7 @@ Tags: back to top, scroll to top, scroll top, scroll up, smooth top button
 Requires at least: 6.8
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 3.0.1
+Stable tag: 3.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,12 @@ AR Back To Top plugin will help them who don't wants to write code. For use this
 7. Find **AR Back To Top** in the list and click **Activate**.
 
 == Changelog ==
+
+= 3.0.2 =
+
+**Bug Fixes**
+* Fix stable tag for WordPress.org plugin directory
+* All fixes from 3.0.1 included
 
 = 3.0.1 =
 
