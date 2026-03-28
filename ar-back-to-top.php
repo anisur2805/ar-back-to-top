@@ -4,10 +4,10 @@
  * Plugin URI: https://github.com/anisur2805/ar-back-to-top
  * Description: AR Back To Top is a standard WordPress plugin for smooth back to top. AR Back To Top plugin will help those who don't want to write code. To use this plugin, simply download or add it from the WordPress plugin directory.
  * Tags: back to top, scroll to top, scroll top, scroll up, smooth top button
- * Version: 3.0.2
+ * Version: 3.0.3
  * Author: Anisur Rahman
  * Author URI: https://github.com/anisur2805
- * Requires at least: 6.8
+ * Requires at least: 4.8
  * Tested up to: 6.9
  * Requires PHP: 7.4
  * License: GPLv2 or later
@@ -83,7 +83,7 @@ final class AR_Back_To_Top {
 	 * @return void
 	 */
 	public function define_constants() {
-		define( 'ARBTTOP_VERSION', '3.0.2' );
+		define( 'ARBTTOP_VERSION', '3.0.3' );
 		define( 'ARBTTOP_FILE', __FILE__ );
 		define( 'ARBTTOP_PATH', __DIR__ );
 		define( 'ARBTTOP_URL', plugins_url( '', __FILE__ ) );
@@ -119,6 +119,7 @@ final class AR_Back_To_Top {
 		add_action( 'wp_footer', array( $this, 'render_back_to_top' ) );
 		add_action( 'admin_footer', array( $this, 'render_back_to_top_admin' ) );
 		add_action( 'admin_init', array( $this, 'handle_reset_defaults' ) );
+		add_action( 'admin_init', array( $this, 'maybe_upgrade' ) );
 
 		register_uninstall_hook( __FILE__, array( __CLASS__, 'plugin_uninstall' ) );
 
@@ -1367,6 +1368,33 @@ final class AR_Back_To_Top {
 		}
 
 		add_settings_error( 'arbtt_ssection_id', 'arbtt_reset', __( 'All settings have been reset to defaults.', 'ar-back-to-top' ), 'updated' );
+	}
+
+	/**
+	 * Run upgrade routine when plugin version changes.
+	 *
+	 * Populates missing option defaults for users upgrading from older versions
+	 * so their button continues working after the update.
+	 *
+	 * @return void
+	 */
+	public function maybe_upgrade() {
+		$stored_version = get_option( 'arbtt_plugin_version', '0' );
+
+		if ( version_compare( $stored_version, ARBTTOP_VERSION, '>=' ) ) {
+			return;
+		}
+
+		$defaults = self::get_default_options();
+
+		foreach ( $defaults as $key => $value ) {
+			// Only set the default if the option does not exist yet.
+			if ( false === get_option( $key, false ) ) {
+				update_option( $key, $value );
+			}
+		}
+
+		update_option( 'arbtt_plugin_version', ARBTTOP_VERSION );
 	}
 
 	/**

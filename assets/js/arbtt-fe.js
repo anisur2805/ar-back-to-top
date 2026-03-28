@@ -125,7 +125,7 @@
 	window.addEventListener( 'scroll', onScroll, { passive: true } );
 
 	/* ----- Scroll Progress Indicator ----- */
-	var progressPath = document.querySelector( '.progress-svg path' );
+	var progressPath = document.querySelector( '.arbtt-container .progress-svg path' );
 
 	if ( progressPath && typeof progressPath.getTotalLength === 'function' ) {
 		var pathLength = progressPath.getTotalLength();

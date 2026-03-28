@@ -78,7 +78,7 @@
 	<?php endif; ?>
 
 	<?php if ( 'both' !== $arbtt_btnst && '1' === $arbtt_enable_scroll_progress ) : ?>
-	.progress-svg {
+	.arbtt-container .progress-svg {
 		position: absolute;
 		top: -<?php echo esc_attr( $arbtt_bdr + 1 ); ?>px;
 		left: -<?php echo esc_attr( $arbtt_bdr + 1 ); ?>px;
@@ -87,7 +87,7 @@
 		pointer-events: none;
 		overflow: visible;
 	}
-	.progress-svg path {
+	.arbtt-container .progress-svg path {
 		stroke: <?php echo esc_attr( $arbtt_progress_color ); ?>;
 		stroke-width: <?php echo esc_attr( $arbtt_enable_scroll_progress_size ); ?>;
 		fill: none;
