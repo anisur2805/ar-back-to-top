@@ -173,9 +173,9 @@ class AR_SVG_Sanitizer {
 		$prev_value = libxml_disable_entity_loader( true ); // phpcs:ignore PHPCompatibility.FunctionUse.RemovedFunctions.libxml_disable_entity_loaderDeprecated
 		libxml_use_internal_errors( true );
 
-		$dom = new DOMDocument();
-		$dom->formatOutput      = false;
-		$dom->preserveWhiteSpace = true;
+		$dom                      = new DOMDocument();
+		$dom->formatOutput        = false;
+		$dom->preserveWhiteSpace  = true;
 		$dom->strictErrorChecking = false;
 
 		$loaded = $dom->loadXML( $svg_content, LIBXML_NONET | LIBXML_NOENT );

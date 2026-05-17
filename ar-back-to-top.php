@@ -3,8 +3,8 @@
  * Plugin Name: AR Back To Top
  * Plugin URI: https://github.com/anisur2805/ar-back-to-top
  * Description: AR Back To Top is a standard WordPress plugin for smooth back to top. AR Back To Top plugin will help those who don't want to write code. To use this plugin, simply download or add it from the WordPress plugin directory.
- * Tags: back to top, scroll to top, scroll top, scroll up, smooth top button
- * Version: 3.0.3
+ * Tags: back to top, scroll to top button, scroll progress, smooth scroll, floating button
+ * Version: 3.1.0
  * Author: Anisur Rahman
  * Author URI: https://github.com/anisur2805
  * Requires at least: 4.8
@@ -18,7 +18,7 @@
  * @package AR_Back_To_Top
  */
 
-defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
+defined( 'ABSPATH' ) || die( 'No script kiddies please!' );
 
 /**
  * Class AR_Back_To_Top
@@ -83,7 +83,7 @@ final class AR_Back_To_Top {
 	 * @return void
 	 */
 	public function define_constants() {
-		define( 'ARBTTOP_VERSION', '3.0.3' );
+		define( 'ARBTTOP_VERSION', '3.1.0' );
 		define( 'ARBTTOP_FILE', __FILE__ );
 		define( 'ARBTTOP_PATH', __DIR__ );
 		define( 'ARBTTOP_URL', plugins_url( '', __FILE__ ) );
@@ -128,6 +128,9 @@ final class AR_Back_To_Top {
 		add_filter( 'wp_check_filetype_and_ext', array( $this, 'fix_svg_mime_type' ), 10, 5 );
 		add_filter( 'wp_handle_upload_prefilter', array( $this, 'sanitize_svg_upload' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
+		add_shortcode( 'ar_back_to_top', array( $this, 'render_shortcode' ) );
+		add_action( 'wp_ajax_arbtt_track_click', array( $this, 'track_button_click' ) );
+		add_action( 'wp_ajax_nopriv_arbtt_track_click', array( $this, 'track_button_click' ) );
 		// Textdomain is auto-loaded by WordPress since 4.6+.
 	}
 
@@ -273,6 +276,10 @@ final class AR_Back_To_Top {
 		$this->register_field( 'arbtt_enable', __( 'Enable Back To Top', 'ar-back-to-top' ), 'arbtt_general', array( $this, 'render_enable_field' ), 'arbtt_section_general' );
 		$this->register_field( 'arbtt_is_async', __( 'Enable Async', 'ar-back-to-top' ), 'arbtt_general', array( $this, 'render_is_async_field' ), 'arbtt_section_general' );
 		$this->register_field( 'arbtt_show_in_admin', __( 'Show in Admin Area', 'ar-back-to-top' ), 'arbtt_general', array( $this, 'render_show_in_admin_field' ), 'arbtt_section_general' );
+		$this->register_field( 'arbtt_enable_scroll_to_bottom', __( 'Enable Scroll To Bottom', 'ar-back-to-top' ), 'arbtt_general', array( $this, 'render_enable_scroll_to_bottom_field' ), 'arbtt_section_general' );
+		$this->register_field( 'arbtt_enable_analytics', __( 'Enable Click Tracking', 'ar-back-to-top' ), 'arbtt_general', array( $this, 'render_enable_analytics_field' ), 'arbtt_section_general' );
+		$this->register_field( 'arbtt_enable_keyboard', __( 'Keyboard Shortcut', 'ar-back-to-top' ), 'arbtt_general', array( $this, 'render_enable_keyboard_field' ), 'arbtt_section_general' );
+		$this->register_field( 'arbtt_enable_touch', __( 'Touch Gesture', 'ar-back-to-top' ), 'arbtt_general', array( $this, 'render_enable_touch_field' ), 'arbtt_section_general' );
 
 		// Tab 2: Appearance.
 		$this->register_field( 'arbtt_btnst', __( 'Button Style', 'ar-back-to-top' ), 'arbtt_appearance', array( $this, 'render_btnst_field' ), 'arbtt_section_appearance' );
@@ -284,6 +291,7 @@ final class AR_Back_To_Top {
 		$this->register_field( 'arbtt_custom_icon_url', __( 'Upload Custom Icon', 'ar-back-to-top' ), 'arbtt_appearance', array( $this, 'render_custom_icon_upload_field' ), 'arbtt_section_appearance' );
 		$this->register_field( 'arbtt_fz', __( 'Icon / Image Size', 'ar-back-to-top' ), 'arbtt_appearance', array( $this, 'render_fz_field' ), 'arbtt_section_appearance' );
 		$this->register_field( 'arbtt_tooltip_text', __( 'Tooltip Text', 'ar-back-to-top' ), 'arbtt_appearance', array( $this, 'render_tooltip_text_field' ), 'arbtt_section_appearance' );
+		$this->register_field( 'arbtt_button_animation', __( 'Button Animation', 'ar-back-to-top' ), 'arbtt_appearance', array( $this, 'render_button_animation_field' ), 'arbtt_section_appearance' );
 
 		// Tab 3: Colors & Style.
 		$this->register_field( 'arbtt_bgc', __( 'Background Color', 'ar-back-to-top' ), 'arbtt_colors', array( $this, 'render_bgc_field' ), 'arbtt_section_colors' );
@@ -315,6 +323,9 @@ final class AR_Back_To_Top {
 		$this->register_field( 'arbtt_enable_scroll_progress', __( 'Scroll Progress', 'ar-back-to-top' ), 'arbtt_scroll', array( $this, 'render_enable_scroll_progress_field' ), 'arbtt_section_scroll' );
 		$this->register_field( 'arbtt_enable_scroll_progress_size', __( 'Progress Size', 'ar-back-to-top' ), 'arbtt_scroll', array( $this, 'render_enable_scroll_progress_size_field' ), 'arbtt_section_scroll' );
 		$this->register_field( 'arbtt_progress_color', __( 'Progress Color', 'ar-back-to-top' ), 'arbtt_scroll', array( $this, 'render_progress_color_field' ), 'arbtt_section_scroll' );
+		$this->register_field( 'arbtt_enable_reading_progress', __( 'Reading Progress Bar', 'ar-back-to-top' ), 'arbtt_scroll', array( $this, 'render_enable_reading_progress_field' ), 'arbtt_section_scroll' );
+		$this->register_field( 'arbtt_reading_progress_color', __( 'Progress Bar Color', 'ar-back-to-top' ), 'arbtt_scroll', array( $this, 'render_reading_progress_color_field' ), 'arbtt_section_scroll' );
+		$this->register_field( 'arbtt_reading_progress_height', __( 'Progress Bar Height', 'ar-back-to-top' ), 'arbtt_scroll', array( $this, 'render_reading_progress_height_field' ), 'arbtt_section_scroll' );
 
 		// Tab 6: Visibility.
 		$this->register_field( 'arbtt_display_mode', __( 'Display Mode', 'ar-back-to-top' ), 'arbtt_visibility', array( $this, 'render_display_mode_field' ), 'arbtt_section_visibility' );
@@ -327,6 +338,8 @@ final class AR_Back_To_Top {
 		$this->register_field( 'arbtt_pwidth', __( 'Mobile Breakpoint', 'ar-back-to-top' ), 'arbtt_visibility', array( $this, 'render_pwidth_field' ), 'arbtt_section_visibility' );
 		$this->register_field( 'arbtt_mobile_offset_bottom', __( 'Mobile Offset Bottom', 'ar-back-to-top' ), 'arbtt_visibility', array( $this, 'render_mobile_offset_bottom_field' ), 'arbtt_section_visibility' );
 		$this->register_field( 'arbtt_mobile_offset_side', __( 'Mobile Offset Side', 'ar-back-to-top' ), 'arbtt_visibility', array( $this, 'render_mobile_offset_side_field' ), 'arbtt_section_visibility' );
+		$this->register_field( 'arbtt_smart_visibility', __( 'Smart Show/Hide', 'ar-back-to-top' ), 'arbtt_visibility', array( $this, 'render_smart_visibility_field' ), 'arbtt_section_visibility' );
+		$this->register_field( 'arbtt_hide_on_woo', __( 'Hide on WooCommerce Pages', 'ar-back-to-top' ), 'arbtt_visibility', array( $this, 'render_hide_on_woo_field' ), 'arbtt_section_visibility' );
 
 		// Tab 7: Advanced.
 		$this->register_field( 'arbtt_custom_css', __( 'Custom CSS', 'ar-back-to-top' ), 'arbtt_advanced', array( $this, 'render_custom_css_field' ), 'arbtt_section_advanced', array( $this, 'sanitize_custom_css' ) );
@@ -339,7 +352,7 @@ final class AR_Back_To_Top {
 	 * @param string   $text          The field label text.
 	 * @param string   $slug          The menu slug the settings field belongs to.
 	 * @param callable $callback      The function used to render the field.
-	 * @param string   $register_id   The settings section ID.
+	 * @param string   $section_id    The settings section ID.
 	 * @param callable $sanitize_cb   (Optional) Sanitization callback for the setting.
 	 */
 	private function register_field( $id, $text, $slug, $callback, $section_id, $sanitize_cb = 'sanitize_text_field' ) {
@@ -456,7 +469,7 @@ final class AR_Back_To_Top {
 	 */
 	public function render_bgc_field() {
 		?>
-		<input type="text" autocomplete="off" name="arbtt_bgc" class="arcs ar-btt-color" id="arbtt_bgc" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bgc' ) ?: '#000' ); ?>"/>
+		<input type="text" autocomplete="off" name="arbtt_bgc" class="arcs ar-btt-color" id="arbtt_bgc" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bgc', '#000' ) ); ?>"/>
 		<?php
 	}
 
@@ -467,7 +480,7 @@ final class AR_Back_To_Top {
 	 */
 	public function render_bgc_hover_field() {
 		?>
-		<input type="text" autocomplete="off" name="arbtt_bgc_hover" class="arcs ar-btt-color" id="arbtt_bgc_hover" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bgc_hover' ) ?: '#fff' ); ?>"/>
+		<input type="text" autocomplete="off" name="arbtt_bgc_hover" class="arcs ar-btt-color" id="arbtt_bgc_hover" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bgc_hover', '#fff' ) ); ?>"/>
 		<?php
 	}
 
@@ -478,7 +491,7 @@ final class AR_Back_To_Top {
 	 */
 	public function render_clr_field() {
 		?>
-		<input type="text" name="arbtt_clr" autocomplete="off" class="arcs ar-btt-color" id="arbtt_clr" placeholder="#f5f5f5" value="<?php echo esc_attr( get_option( 'arbtt_clr' ) ?: '#fff' ); ?>"/>
+		<input type="text" name="arbtt_clr" autocomplete="off" class="arcs ar-btt-color" id="arbtt_clr" placeholder="#f5f5f5" value="<?php echo esc_attr( get_option( 'arbtt_clr', '#fff' ) ); ?>"/>
 		<?php
 	}
 
@@ -489,7 +502,7 @@ final class AR_Back_To_Top {
 	 */
 	public function render_clr_hover_field() {
 		?>
-		<input type="text" name="arbtt_clr_hover" autocomplete="off" class="arcs ar-btt-color" id="arbtt_clr_hover" placeholder="#000000" value="<?php echo esc_attr( get_option( 'arbtt_clr_hover' ) ?: '#000000' ); ?>"/>
+		<input type="text" name="arbtt_clr_hover" autocomplete="off" class="arcs ar-btt-color" id="arbtt_clr_hover" placeholder="#000000" value="<?php echo esc_attr( get_option( 'arbtt_clr_hover', '#000000' ) ); ?>"/>
 		<?php
 	}
 
@@ -512,7 +525,7 @@ final class AR_Back_To_Top {
 	 */
 	public function render_bdr_color_field() {
 		?>
-		<input type="text" name="arbtt_bdr_color" class="arcs ar-btt-color" autocomplete="off" id="arbtt_bdr_color" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bdr_color' ) ?: '#fff' ); ?>"/>
+		<input type="text" name="arbtt_bdr_color" class="arcs ar-btt-color" autocomplete="off" id="arbtt_bdr_color" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bdr_color', '#fff' ) ); ?>"/>
 		<?php
 	}
 
@@ -523,7 +536,7 @@ final class AR_Back_To_Top {
 	 */
 	public function render_bdr_color_hover_field() {
 		?>
-		<input type="text" name="arbtt_bdr_color_hover" class="arcs ar-btt-color" autocomplete="off" id="arbtt_bdr_color_hover" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bdr_color_hover' ) ?: '#fff' ); ?>"/>
+		<input type="text" name="arbtt_bdr_color_hover" class="arcs ar-btt-color" autocomplete="off" id="arbtt_bdr_color_hover" placeholder="#000" value="<?php echo esc_attr( get_option( 'arbtt_bdr_color_hover', '#fff' ) ); ?>"/>
 		<?php
 	}
 
@@ -902,7 +915,7 @@ final class AR_Back_To_Top {
 	 */
 	public function render_pwidth_field() {
 		?>
-		<input type="number" name="arbtt_pwidth" class="aras arbtt_pwidth" id="arbtt_pwidth" placeholder="767" value="<?php echo esc_attr( get_option( 'arbtt_pwidth' ) ?: '767' ); ?>"/>
+		<input type="number" name="arbtt_pwidth" class="aras arbtt_pwidth" id="arbtt_pwidth" placeholder="767" value="<?php echo esc_attr( get_option( 'arbtt_pwidth', '767' ) ); ?>"/>
 		<span class="description"><?php echo esc_html__( 'px', 'ar-back-to-top' ); ?></span>
 		<p><?php echo esc_html__( 'Enter the width of the screen at which the button will be hidden on mobile devices.', 'ar-back-to-top' ); ?></p>
 		<?php
@@ -941,7 +954,7 @@ final class AR_Back_To_Top {
 	 */
 	public function render_twidth_field() {
 		?>
-		<input type="number" name="arbtt_twidth" class="aras arbtt_twidth" id="arbtt_twidth" placeholder="1024" value="<?php echo esc_attr( get_option( 'arbtt_twidth' ) ?: '1024' ); ?>"/>
+		<input type="number" name="arbtt_twidth" class="aras arbtt_twidth" id="arbtt_twidth" placeholder="1024" value="<?php echo esc_attr( get_option( 'arbtt_twidth', '1024' ) ); ?>"/>
 		<span class="description"><?php echo esc_html__( 'px', 'ar-back-to-top' ); ?></span>
 		<p><?php echo esc_html__( 'Enter the width of the screen at which the button will be hidden on tablet devices.', 'ar-back-to-top' ); ?></p>
 		<?php
@@ -1044,6 +1057,175 @@ final class AR_Back_To_Top {
 		?>
 		<input type="text" name="arbtt_tooltip_text" class="regular-text" id="arbtt_tooltip_text" placeholder="<?php esc_attr_e( 'Scroll to top', 'ar-back-to-top' ); ?>" value="<?php echo esc_attr( $value ); ?>"/>
 		<p class="description"><?php esc_html_e( 'Text shown on hover. Leave empty to disable tooltip.', 'ar-back-to-top' ); ?></p>
+		<?php
+	}
+
+	/**
+	 * Render button animation field.
+	 *
+	 * @return void
+	 */
+	public function render_button_animation_field() {
+		$value = get_option( 'arbtt_button_animation', 'none' );
+		?>
+		<select name="arbtt_button_animation" id="arbtt_button_animation" class="ars">
+			<option value="none"<?php selected( $value, 'none' ); ?>><?php esc_html_e( 'None', 'ar-back-to-top' ); ?></option>
+			<option value="fade-in"<?php selected( $value, 'fade-in' ); ?>><?php esc_html_e( 'Fade In', 'ar-back-to-top' ); ?></option>
+			<option value="bounce"<?php selected( $value, 'bounce' ); ?>><?php esc_html_e( 'Bounce', 'ar-back-to-top' ); ?></option>
+			<option value="scale"<?php selected( $value, 'scale' ); ?>><?php esc_html_e( 'Scale', 'ar-back-to-top' ); ?></option>
+		</select>
+		<p class="description"><?php esc_html_e( 'Animation when the button appears on scroll.', 'ar-back-to-top' ); ?></p>
+		<?php
+	}
+
+	/**
+	 * Render scroll-to-bottom enable field.
+	 *
+	 * @return void
+	 */
+	public function render_enable_scroll_to_bottom_field() {
+		?>
+		<label class="ar-btt-toggle" for="arbtt_enable_scroll_to_bottom">
+			<input type="checkbox" name="arbtt_enable_scroll_to_bottom" id="arbtt_enable_scroll_to_bottom" value="1"<?php checked( '1', get_option( 'arbtt_enable_scroll_to_bottom' ) ); ?> class="ar-btt-toggle-checkbox">
+			<div class="ar-btt-toggle-switch"></div>
+		</label>
+		<p class="description"><?php esc_html_e( 'Shows a second button that scrolls to the bottom of the page.', 'ar-back-to-top' ); ?></p>
+		<?php
+	}
+
+	/**
+	 * Render analytics enable field.
+	 *
+	 * @return void
+	 */
+	public function render_enable_analytics_field() {
+		?>
+		<label class="ar-btt-toggle" for="arbtt_enable_analytics">
+			<input type="checkbox" name="arbtt_enable_analytics" id="arbtt_enable_analytics" value="1"<?php checked( '1', get_option( 'arbtt_enable_analytics' ) ); ?> class="ar-btt-toggle-checkbox">
+			<div class="ar-btt-toggle-switch"></div>
+		</label>
+		<p class="description"><?php esc_html_e( 'Track how many times the button is clicked. Count is shown below.', 'ar-back-to-top' ); ?></p>
+		<?php
+		$click_count = get_option( 'arbtt_click_count', 0 );
+		if ( $click_count > 0 ) {
+			printf(
+				'<p class="description"><strong>%s</strong> %s</p>',
+				esc_html( number_format_i18n( $click_count ) ),
+				esc_html__( 'total clicks recorded.', 'ar-back-to-top' )
+			);
+		}
+	}
+
+	/**
+	 * Handle AJAX click tracking request.
+	 *
+	 * @return void
+	 */
+	public function track_button_click() {
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'arbtt_track_click' ) ) {
+			wp_send_json_error( 'Invalid nonce', 403 );
+		}
+
+		$count = (int) get_option( 'arbtt_click_count', 0 );
+		update_option( 'arbtt_click_count', $count + 1 );
+		wp_send_json_success();
+	}
+
+	/**
+	 * Render keyboard shortcut enable field.
+	 *
+	 * @return void
+	 */
+	public function render_enable_keyboard_field() {
+		?>
+		<label class="ar-btt-toggle" for="arbtt_enable_keyboard">
+			<input type="checkbox" name="arbtt_enable_keyboard" id="arbtt_enable_keyboard" value="1"<?php checked( '1', get_option( 'arbtt_enable_keyboard' ) ); ?> class="ar-btt-toggle-checkbox">
+			<div class="ar-btt-toggle-switch"></div>
+		</label>
+		<p class="description"><?php esc_html_e( 'Allow pressing the Home key to scroll to top when the button is visible.', 'ar-back-to-top' ); ?></p>
+		<?php
+	}
+
+	/**
+	 * Render touch gesture enable field.
+	 *
+	 * @return void
+	 */
+	public function render_enable_touch_field() {
+		?>
+		<label class="ar-btt-toggle" for="arbtt_enable_touch">
+			<input type="checkbox" name="arbtt_enable_touch" id="arbtt_enable_touch" value="1"<?php checked( '1', get_option( 'arbtt_enable_touch' ) ); ?> class="ar-btt-toggle-checkbox">
+			<div class="ar-btt-toggle-switch"></div>
+		</label>
+		<p class="description"><?php esc_html_e( 'Detect swipe-up gesture on touch devices to scroll to top.', 'ar-back-to-top' ); ?></p>
+		<?php
+	}
+
+	/**
+	 * Render smart visibility field.
+	 *
+	 * @return void
+	 */
+	public function render_smart_visibility_field() {
+		?>
+		<label class="ar-btt-toggle" for="arbtt_smart_visibility">
+			<input type="checkbox" name="arbtt_smart_visibility" id="arbtt_smart_visibility" value="1"<?php checked( '1', get_option( 'arbtt_smart_visibility' ) ); ?> class="ar-btt-toggle-checkbox">
+			<div class="ar-btt-toggle-switch"></div>
+		</label>
+		<p class="description"><?php esc_html_e( 'Hide the button when scrolling up and show it when scrolling down.', 'ar-back-to-top' ); ?></p>
+		<?php
+	}
+
+	/**
+	 * Render hide on WooCommerce field.
+	 *
+	 * @return void
+	 */
+	public function render_hide_on_woo_field() {
+		?>
+		<label class="ar-btt-toggle" for="arbtt_hide_on_woo">
+			<input type="checkbox" name="arbtt_hide_on_woo" id="arbtt_hide_on_woo" value="1"<?php checked( '1', get_option( 'arbtt_hide_on_woo' ) ); ?> class="ar-btt-toggle-checkbox">
+			<div class="ar-btt-toggle-switch"></div>
+		</label>
+		<p class="description"><?php esc_html_e( 'Hide the button on WooCommerce shop, product, cart, and checkout pages.', 'ar-back-to-top' ); ?></p>
+		<?php
+	}
+
+	/**
+	 * Render reading progress bar enable field.
+	 *
+	 * @return void
+	 */
+	public function render_enable_reading_progress_field() {
+		?>
+		<label class="ar-btt-toggle" for="arbtt_enable_reading_progress">
+			<input type="checkbox" name="arbtt_enable_reading_progress" id="arbtt_enable_reading_progress" value="1"<?php checked( '1', get_option( 'arbtt_enable_reading_progress' ) ); ?> class="ar-btt-toggle-checkbox">
+			<div class="ar-btt-toggle-switch"></div>
+		</label>
+		<p class="description"><?php esc_html_e( 'Shows a horizontal progress bar at the top of the page indicating how far the visitor has scrolled.', 'ar-back-to-top' ); ?></p>
+		<?php
+	}
+
+	/**
+	 * Render reading progress bar color field.
+	 *
+	 * @return void
+	 */
+	public function render_reading_progress_color_field() {
+		?>
+		<input type="text" name="arbtt_reading_progress_color" id="arbtt_reading_progress_color" value="<?php echo esc_attr( get_option( 'arbtt_reading_progress_color', '#4caf50' ) ); ?>" class="arcs ar-btt-color"/>
+		<?php
+	}
+
+	/**
+	 * Render reading progress bar height field.
+	 *
+	 * @return void
+	 */
+	public function render_reading_progress_height_field() {
+		?>
+		<input type="number" name="arbtt_reading_progress_height" class="aras" id="arbtt_reading_progress_height" min="1" max="20" placeholder="4" value="<?php echo esc_attr( get_option( 'arbtt_reading_progress_height', '4' ) ); ?>"/>
+		<span class="description"><?php echo esc_html__( 'px', 'ar-back-to-top' ); ?></span>
 		<?php
 	}
 
@@ -1172,6 +1354,16 @@ final class AR_Back_To_Top {
 			'enable_scroll_progress_size' => '4',
 			'arbtt_btn_img_position' => 'right',
 		);
+
+		// Reading progress bar — renders independently of the back-to-top button.
+		$arbtt_enable_reading_progress = get_option( 'arbtt_enable_reading_progress', '0' );
+		if ( '1' === $arbtt_enable_reading_progress ) {
+			$arbtt_reading_progress_color  = get_option( 'arbtt_reading_progress_color', '#4caf50' );
+			$arbtt_reading_progress_height = get_option( 'arbtt_reading_progress_height', '4' );
+			?>
+			<div id="arbtt-reading-progress" style="position:fixed;top:0;left:0;width:0;height:<?php echo esc_attr( $arbtt_reading_progress_height ); ?>px;background-color:<?php echo esc_attr( $arbtt_reading_progress_color ); ?>;z-index:99999;transition:width 0.1s ease;"></div>
+			<?php
+		}
 
 		// Early exit if plugin is disabled.
 		$arbtt_enable = get_option( 'arbtt_enable', $defaults['enable'] );

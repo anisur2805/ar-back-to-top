@@ -266,6 +266,20 @@ jQuery(document).ready(function ($) {
     // Bind change event
     $progressBar.on("change", handleProgressBarToggle);
 
+    // === Reading progress bar field toggle ===
+    const $readingProgressToggle = $("input[name='arbtt_enable_reading_progress']");
+    const $readingProgressColorRow = $("input[name='arbtt_reading_progress_color']").closest("tr");
+    const $readingProgressHeightRow = $("input[name='arbtt_reading_progress_height']").closest("tr");
+
+    function handleReadingProgressToggle() {
+        const isEnabled = $readingProgressToggle.is(":checked");
+        $readingProgressColorRow.toggle(isEnabled);
+        $readingProgressHeightRow.toggle(isEnabled);
+    }
+
+    handleReadingProgressToggle();
+    $readingProgressToggle.on("change", handleReadingProgressToggle);
+
     function toggleImagePositionRow() {
         const selectedStyle = $buttonStyleSelect.val();
         $imgPositionRow.toggle(selectedStyle == 'both');
@@ -342,15 +356,15 @@ jQuery(document).ready(function ($) {
         $('.arbtt-tab-content').removeClass('arbtt-tab-active');
         $('#' + tabId).addClass('arbtt-tab-active');
 
-        // Save active tab to localStorage
-        if (window.localStorage) {
-            localStorage.setItem('arbtt_active_tab', tabId);
+        // Save active tab to sessionStorage (persists across reloads, clears on browser close).
+        if (window.sessionStorage) {
+            sessionStorage.setItem('arbtt_active_tab', tabId);
         }
     });
 
-    // Restore last active tab
-    if (window.localStorage) {
-        var savedTab = localStorage.getItem('arbtt_active_tab');
+    // Restore active tab after form save (page reload).
+    if (window.sessionStorage) {
+        var savedTab = sessionStorage.getItem('arbtt_active_tab');
         if (savedTab && $('#' + savedTab).length) {
             $('.arbtt-tabs .nav-tab').removeClass('nav-tab-active');
             $('.arbtt-tabs .nav-tab[data-tab="' + savedTab + '"]').addClass('nav-tab-active');

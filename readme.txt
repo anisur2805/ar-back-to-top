@@ -1,18 +1,20 @@
 === AR Back To Top ===
 Contributors: anisur8294
-Tags: back to top, scroll to top, scroll top, scroll up, smooth top button
+Tags: back to top, scroll to top button, scroll progress, smooth scroll, floating button
 Requires at least: 4.8
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 3.0.3
+Stable tag: 3.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-AR Back To Top is a standard WordPress plugin for back to top.
+Add a lightweight, fully customizable scroll to top button with smooth animation, scroll progress indicator, and mobile-friendly positioning.
 
 == Description ==
 
-AR Back To Top plugin will help them who don't wants to write code. For use this plugin simply download or add new plugin from WordPress plugin directory.
+AR Back To Top adds a beautiful, customizable scroll to top button to your WordPress site — no coding required. Install it in seconds from the WordPress plugin directory and configure everything through a modern settings panel with live preview.
+
+Perfect for blogs, business sites, portfolios, and WooCommerce stores. The button appears when visitors scroll down and smoothly returns them to the top with a single click. Includes a scroll progress indicator, device-specific positioning, page-level visibility controls, and 19 built-in icons — all powered by lightweight vanilla JavaScript with zero jQuery dependency.
 
 == AR Back To Top Features ==
 
@@ -31,9 +33,18 @@ AR Back To Top plugin will help them who don't wants to write code. For use this
 - Adjustable **scroll duration** for a smoother UX.
 - **Auto-hide** button after configurable seconds of inactivity.
 - **Scroll progress indicator** — circular SVG progress ring around the button.
+- **Reading progress bar** — horizontal bar at the top of the page showing how far the visitor has scrolled, with configurable color and height.
+- **Scroll to bottom button** — optional second button that scrolls to the bottom of the page, with the same easing and styling.
+- **Button entrance animations** — fade-in, bounce, or scale animation when the button appears on scroll.
+- **Smart show/hide** — hide the button when scrolling up, show when scrolling down for a cleaner UX.
+- **Click analytics** — track how many times the button is clicked, viewable in the admin settings.
+- **Keyboard shortcut** — press Home key to scroll to top (when enabled).
+- **WooCommerce integration** — hide the button on shop, product, cart, and checkout pages.
+- **Touch gesture support** — swipe up on mobile devices to scroll to top.
 - **Page/post display filter** — show or hide on specific pages/posts with Select2 search.
 - **Device visibility** — hide on desktop, tablet, or mobile with custom breakpoints.
 - **Show in WP admin area** — enable the button in the WordPress dashboard.
+- **Shortcode support** — use `[ar_back_to_top]` to place the button anywhere in your content.
 - Enable or disable the button with a single click.
 - **Font Awesome version control** — choose FA 6, FA 5, or skip loading if already enqueued.
 - Supports **custom CSS** for advanced styling with CSS hook hints.
@@ -197,6 +208,9 @@ There is no need to upgrade just yet.
 2. Appearance settings — choose from SVG Icon, Text Only, Image, Both, External URL, or Custom Upload.
 3. Visibility settings — control display mode, device-specific hiding, and custom breakpoints.
 4. Frontend output — the back-to-top button displayed on a live WordPress site.
+5. Reading progress bar — horizontal scroll indicator at the top of the page.
+6. Scroll behavior settings — configure scroll easing, progress ring, auto-hide, and reading progress bar.
+7. Shortcode usage — place the button anywhere with `[ar_back_to_top]`.
 
 == Frequently Asked Questions ==
 
@@ -238,6 +252,24 @@ Yes. The button uses a semantic `<button>` element with ARIA labels, screen read
 
 = Is this plugin compatible with my theme? =
 AR Back To Top is compatible with all standard WordPress themes. It uses high-specificity CSS selectors with `!important` to ensure the button displays correctly regardless of your theme's styles.
+
+= Is this a lightweight back to top plugin? =
+Yes. AR Back To Top is one of the lightest scroll to top plugins available. The frontend JavaScript is under 5KB and uses zero jQuery. It uses `requestAnimationFrame` throttling and passive event listeners for optimal scroll performance. CSS and JS are only loaded on pages where the button is visible.
+
+= Does this plugin work with Elementor, Divi, or other page builders? =
+Yes. AR Back To Top works with all WordPress themes and page builders including Elementor, Divi, Beaver Builder, and the block editor. The button is rendered in the footer and does not interfere with page builder content.
+
+= Can I add a scroll progress bar to my WordPress site? =
+Yes. AR Back To Top includes a scroll progress indicator that displays as a circular ring around the button, showing how far the visitor has scrolled down the page. Enable it on the **Scroll Behavior** tab.
+
+= Will this plugin slow down my WordPress site? =
+No. Unlike many back to top plugins that load jQuery and Font Awesome from a CDN, AR Back To Top uses inline SVG icons and vanilla JavaScript. No external requests are made. Assets are conditionally loaded only on pages where the button is displayed.
+
+= Does this plugin support WooCommerce? =
+Yes. AR Back To Top works on all WordPress pages including WooCommerce shop, product, and cart pages. You can use the page visibility settings to show or hide the button on specific WooCommerce pages.
+
+= Can I use a shortcode to place the back to top button? =
+Yes. Use the `[ar_back_to_top]` shortcode to place the button anywhere in your content. The shortcode bypasses visibility settings, so the button always appears where you place it. The automatic footer button still works alongside the shortcode.
 
 = Where can I report bugs or suggest features? =
 Please email anisur2805@gmail.com for any questions, bug reports, or feature suggestions.

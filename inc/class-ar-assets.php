@@ -46,6 +46,13 @@ class AR_Assets {
 	 * @return bool
 	 */
 	public static function should_display() {
+		// Hide on WooCommerce pages if enabled.
+		if ( '1' === get_option( 'arbtt_hide_on_woo' ) && function_exists( 'is_woocommerce' ) ) {
+			if ( is_shop() || is_product() || is_cart() || is_checkout() || is_account_page() ) {
+				return false;
+			}
+		}
+
 		$display_mode  = get_option( 'arbtt_display_mode', 'all' );
 		$display_pages = get_option( 'arbtt_display_pages', array() );
 
@@ -72,13 +79,18 @@ class AR_Assets {
 	 * @return void
 	 */
 	public static function frontend_enqueue() {
-		$extension_enabled = get_option( 'arbtt_enable', false );
+		$extension_enabled       = get_option( 'arbtt_enable', false );
+		$reading_progress_enabled = get_option( 'arbtt_enable_reading_progress', false );
 
-		if ( ! $extension_enabled ) {
+		if ( ! $extension_enabled && ! $reading_progress_enabled ) {
 			return;
 		}
 
-		if ( ! self::should_display() ) {
+		// Skip page display check if the shortcode is used on the current page.
+		$post          = get_post();
+		$has_shortcode = $post && has_shortcode( $post->post_content, 'ar_back_to_top' );
+
+		if ( ! $has_shortcode && ! self::should_display() ) {
 			return;
 		}
 
@@ -109,6 +121,14 @@ class AR_Assets {
 			'auto_hide'         => $auto_hide,
 			'auto_hide_after'   => $auto_hide_after,
 			'scroll_easing'     => $scroll_easing,
+			'scroll_duration'   => (int) get_option( 'arbtt_transition_time', 950 ),
+			'button_animation'  => get_option( 'arbtt_button_animation', 'none' ),
+			'smart_visibility'  => get_option( 'arbtt_smart_visibility', '0' ),
+			'enable_analytics'  => get_option( 'arbtt_enable_analytics', '0' ),
+			'enable_keyboard'   => get_option( 'arbtt_enable_keyboard', '0' ),
+			'enable_touch'      => get_option( 'arbtt_enable_touch', '0' ),
+			'ajax_url'          => admin_url( 'admin-ajax.php' ),
+			'track_nonce'       => wp_create_nonce( 'arbtt_track_click' ),
 		);
 
 		wp_localize_script( 'arbtt_custom_js', 'arbtt_obj', $arobj_array );

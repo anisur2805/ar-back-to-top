@@ -21,7 +21,7 @@
 		left: 50%;
 		transform: translateX(-50%);
 		<?php else : ?>
-		<?php echo esc_attr( $arbtt_btnps ); ?>: <?php echo esc_attr( 'left' === $arbtt_btnps ? $arbtt_btn_offset_left : $arbtt_btn_offset_right ); ?>px;
+			<?php echo esc_attr( $arbtt_btnps ); ?>: <?php echo esc_attr( 'left' === $arbtt_btnps ? $arbtt_btn_offset_left : $arbtt_btn_offset_right ); ?>px;
 		<?php endif; ?>
 		display: none;
 		align-items: center;
@@ -99,6 +99,49 @@
 	.arbtt.arbtt-visible {
 		display: flex;
 	}
+
+	<?php
+	$arbtt_button_animation = get_option( 'arbtt_button_animation', 'none' );
+	if ( 'none' !== $arbtt_button_animation ) :
+		?>
+	/* Button entrance animations */
+	@keyframes arbtt-fade-in {
+		from { opacity: 0; }
+		to { opacity: <?php echo esc_attr( $arbtt_btnoc ); ?>; }
+	}
+
+	@keyframes arbtt-bounce {
+		0% { transform: translateY(20px); opacity: 0; }
+		50% { transform: translateY(-8px); }
+		70% { transform: translateY(4px); }
+		100% { transform: translateY(0); opacity: <?php echo esc_attr( $arbtt_btnoc ); ?>; }
+	}
+
+	@keyframes arbtt-scale {
+		from { transform: scale(0); opacity: 0; }
+		to { transform: scale(1); opacity: <?php echo esc_attr( $arbtt_btnoc ); ?>; }
+	}
+
+		<?php if ( 'center' !== $arbtt_btnps ) : ?>
+	@keyframes arbtt-bounce {
+		0% { transform: translateY(20px); opacity: 0; }
+		50% { transform: translateY(-8px); }
+		70% { transform: translateY(4px); }
+		100% { transform: translateY(0); opacity: <?php echo esc_attr( $arbtt_btnoc ); ?>; }
+	}
+	<?php else : ?>
+	@keyframes arbtt-bounce {
+		0% { transform: translate(-50%, 20px); opacity: 0; }
+		50% { transform: translate(-50%, -8px); }
+		70% { transform: translate(-50%, 4px); }
+		100% { transform: translate(-50%, 0); opacity: <?php echo esc_attr( $arbtt_btnoc ); ?>; }
+	}
+	<?php endif; ?>
+
+	.arbtt.arbtt-animate-<?php echo esc_attr( $arbtt_button_animation ); ?> {
+		animation: arbtt-<?php echo esc_attr( $arbtt_button_animation ); ?> 0.4s ease forwards;
+	}
+	<?php endif; ?>
 
 	.arbtt:hover {
 		opacity: 1;
@@ -223,10 +266,34 @@
 				bottom: <?php echo absint( $arbtt_mob_offset_bottom ); ?>px !important;
 				<?php endif; ?>
 				<?php if ( '' !== $arbtt_mob_offset_side && 'center' !== $arbtt_btnps ) : ?>
-				<?php echo esc_attr( $arbtt_btnps ); ?>: <?php echo absint( $arbtt_mob_offset_side ); ?>px !important;
+					<?php echo esc_attr( $arbtt_btnps ); ?>: <?php echo absint( $arbtt_mob_offset_side ); ?>px !important;
 				<?php endif; ?>
 			}
 		}
+		<?php
+	endif;
+
+	// Scroll-to-bottom button styles.
+	$arbtt_enable_scroll_to_bottom = get_option( 'arbtt_enable_scroll_to_bottom', '0' );
+	if ( '1' === $arbtt_enable_scroll_to_bottom ) :
+		$arbtt_bottom_offset = (int) $arbtt_btn_offset_bottom + (int) $btnheight + 15;
+		?>
+	.arbtt-bottom-container {
+		display: block;
+	}
+
+	.arbtt-bottom {
+		bottom: <?php echo esc_attr( $arbtt_bottom_offset ); ?>px !important;
+	}
+
+	.arbtt-bottom.arbtt-bottom-visible {
+		display: flex;
+	}
+
+	.arbtt-bottom-icon {
+		transform: rotate(180deg);
+	}
+
 		<?php
 	endif;
 	?>
