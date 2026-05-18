@@ -196,8 +196,11 @@ final class AR_Back_To_Top {
 		);
 		?>
 		<div class="wrap ar-btt-wrap">
+			<h1 style="display:none;"><?php esc_html_e( 'Back To Top', 'ar-back-to-top' ); ?></h1>
+			<?php settings_errors(); ?>
+
 			<div class="arbtt-header">
-				<h1><?php esc_html_e( 'Back To Top', 'ar-back-to-top' ); ?></h1>
+				<h2><?php esc_html_e( 'Back To Top', 'ar-back-to-top' ); ?></h2>
 				<p class="arbtt-version"><?php echo esc_html( 'v' . ARBTTOP_VERSION ); ?></p>
 			</div>
 
