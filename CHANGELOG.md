@@ -2,6 +2,11 @@
 
 All notable changes to AR Back To Top are documented here.
 
+## 3.1.1
+
+**Bug Fix**
+- Fix admin notices from other plugins (e.g. Elementor) injecting inside the plugin header and breaking layout
+
 ## 3.0.3
 
 **Compatibility Fix**
