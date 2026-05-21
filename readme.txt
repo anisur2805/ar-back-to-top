@@ -2,9 +2,9 @@
 Contributors: anisur8294
 Tags: back to top, scroll to top button, scroll progress, smooth scroll, floating button
 Requires at least: 4.8
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 3.1.1
+Stable tag: 3.1.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,32 @@ Perfect for blogs, business sites, portfolios, and WooCommerce stores. The butto
 7. Find **AR Back To Top** in the list and click **Activate**.
 
 == Changelog ==
+
+= 3.1.2 =
+
+**Compatibility & Fixes**
+* Tested up to WordPress 7.0
+* Fix upgrade routine running on every admin page load due to version constant mismatch
+* Add 20 missing default options — prevents broken features for users upgrading from older versions
+* Add one-time "What's new" admin notice after each update
+
+= 3.1.1 =
+
+**Bug Fix**
+* Fix admin notices from other plugins injecting inside the plugin header and breaking layout
+
+= 3.1.0 =
+
+**New Features**
+* Scroll-to-bottom button option
+* Reading progress bar below admin bar
+* Button entrance animations (fade, bounce, scale)
+* Smart show/hide (direction-aware visibility)
+* Click analytics tracking
+* Keyboard shortcut (Home key)
+* Touch gesture support (swipe-up)
+* WooCommerce-specific visibility controls
+* [ar_back_to_top] shortcode support
 
 = 3.0.3 =
 

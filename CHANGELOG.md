@@ -2,6 +2,14 @@
 
 All notable changes to AR Back To Top are documented here.
 
+## 3.1.2
+
+**Compatibility & Fixes**
+- Tested up to WordPress 7.0
+- Fix upgrade routine running on every admin page load due to version constant mismatch
+- Add 20 missing default options — prevents broken features for users upgrading from older versions
+- Add one-time "What's new" admin notice after each update
+
 ## 3.1.1
 
 **Bug Fix**

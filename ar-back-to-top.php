@@ -4,11 +4,11 @@
  * Plugin URI: https://github.com/anisur2805/ar-back-to-top
  * Description: AR Back To Top is a standard WordPress plugin for smooth back to top. AR Back To Top plugin will help those who don't want to write code. To use this plugin, simply download or add it from the WordPress plugin directory.
  * Tags: back to top, scroll to top button, scroll progress, smooth scroll, floating button
- * Version: 3.1.1
+ * Version: 3.1.2
  * Author: Anisur Rahman
  * Author URI: https://github.com/anisur2805
  * Requires at least: 4.8
- * Tested up to: 6.9
+ * Tested up to: 7.0
  * Requires PHP: 7.4
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -83,7 +83,7 @@ final class AR_Back_To_Top {
 	 * @return void
 	 */
 	public function define_constants() {
-		define( 'ARBTTOP_VERSION', '3.1.0' );
+		define( 'ARBTTOP_VERSION', '3.1.2' );
 		define( 'ARBTTOP_FILE', __FILE__ );
 		define( 'ARBTTOP_PATH', __DIR__ );
 		define( 'ARBTTOP_URL', plugins_url( '', __FILE__ ) );
@@ -120,6 +120,7 @@ final class AR_Back_To_Top {
 		add_action( 'admin_footer', array( $this, 'render_back_to_top_admin' ) );
 		add_action( 'admin_init', array( $this, 'handle_reset_defaults' ) );
 		add_action( 'admin_init', array( $this, 'maybe_upgrade' ) );
+		add_action( 'admin_notices', array( $this, 'show_update_notice' ) );
 
 		register_uninstall_hook( __FILE__, array( __CLASS__, 'plugin_uninstall' ) );
 
@@ -1487,11 +1488,15 @@ final class AR_Back_To_Top {
 	 */
 	public static function get_default_options() {
 		return array(
+			// General.
 			'arbtt_enable'                     => '0',
-			'arbtt_enable_scroll_progress'     => '0',
-			'arbtt_enable_scroll_progress_size' => '4',
-			'arbtt_progress_color'             => '#ff0',
 			'arbtt_is_async'                   => '',
+			'arbtt_show_in_admin'              => '0',
+			'arbtt_enable_scroll_to_bottom'    => '0',
+			'arbtt_enable_analytics'           => '0',
+			'arbtt_enable_keyboard'            => '0',
+			'arbtt_enable_touch'               => '0',
+			// Appearance.
 			'arbtt_btnst'                      => 'txt',
 			'arbtt_fi'                         => 'angle-up',
 			'arbtt_btntx'                      => 'Top',
@@ -1499,6 +1504,10 @@ final class AR_Back_To_Top {
 			'arbtt_btn_img_position'           => 'right',
 			'arbtt_btn_ext_img_url'            => '',
 			'arbtt_custom_icon_url'            => '',
+			'arbtt_fz'                         => '20',
+			'arbtt_tooltip_text'               => '',
+			'arbtt_button_animation'           => 'none',
+			// Colors & Style.
 			'arbtt_bgc'                        => '#000',
 			'arbtt_bgc_hover'                  => '#fff',
 			'arbtt_clr'                        => '#fff',
@@ -1508,33 +1517,51 @@ final class AR_Back_To_Top {
 			'arbtt_bdr'                        => '2',
 			'arbtt_bdr_color'                  => '#fff',
 			'arbtt_bdr_color_hover'            => '#fff',
+			'arbtt_btnoc'                      => '0.5',
+			// Position & Size.
+			'arbtt_btndm'                      => array( 'w' => 40, 'h' => 40 ),
+			'arbtt_btn_padding'                => '10',
 			'arbtt_btnps'                      => 'right',
 			'arbtt_btn_offset_bottom'          => '100',
 			'arbtt_btn_offset_right'           => '100',
 			'arbtt_btn_offset_left'            => '100',
+			'arbtt_zindex'                     => '9999',
+			// Scroll Behavior.
 			'arbtt_btnapr'                     => '100',
-			'arbtt_btndm'                      => array( 'w' => 40, 'h' => 40 ),
-			'arbtt_btn_padding'                => '10',
-			'arbtt_btnoc'                      => '0.5',
 			'arbtt_fadein'                     => '950',
-			'arbtt_fz'                         => '20',
+			'arbtt_transition_time'            => '950',
+			'arbtt_scroll_easing'              => 'ease-in-out',
+			'arbtt_auto_hide'                  => '0',
+			'arbtt_auto_hide_after'            => '3',
+			'arbtt_enable_scroll_progress'     => '0',
+			'arbtt_enable_scroll_progress_size' => '4',
+			'arbtt_progress_color'             => '#ff0',
+			'arbtt_enable_reading_progress'    => '0',
+			'arbtt_reading_progress_color'     => '#4caf50',
+			'arbtt_reading_progress_height'    => '4',
+			// Visibility.
+			'arbtt_display_mode'               => 'all',
+			'arbtt_display_pages'              => array(),
 			'arbtt_hide_on_desktop'            => '0',
 			'arbtt_dwidth'                     => '1025',
 			'arbtt_hide_on_tablet'             => '0',
 			'arbtt_twidth'                     => '1024',
 			'arbtt_hide_on_phone'              => '0',
 			'arbtt_pwidth'                     => '767',
-			'arbtt_custom_css'                 => '',
-			'arbtt_display_mode'               => 'all',
-			'arbtt_display_pages'              => array(),
-			'arbtt_tooltip_text'               => '',
-			'arbtt_zindex'                     => '9999',
 			'arbtt_mobile_offset_bottom'       => '',
 			'arbtt_mobile_offset_side'         => '',
-			'arbtt_scroll_easing'              => 'ease-in-out',
-			'arbtt_show_in_admin'              => '0',
-			'arbtt_auto_hide'                  => '0',
-			'arbtt_auto_hide_after'            => '3',
+			'arbtt_smart_visibility'           => '0',
+			'arbtt_hide_on_woo'                => '0',
+			// Advanced.
+			'arbtt_custom_css'                 => '',
+			// Status bar.
+			'arbtt_word_count'                 => '0',
+			'arbtt_char_counts'                => '0',
+			'arbtt_read_time'                  => '0',
+			'arbtt_view_count'                 => '0',
+			'arbtt_meta_position'              => 'bottom',
+			'arbtt_btnwidth'                   => '40',
+			'arbtt_btnheight'                  => '40',
 		);
 	}
 
@@ -1590,6 +1617,28 @@ final class AR_Back_To_Top {
 		}
 
 		update_option( 'arbtt_plugin_version', ARBTTOP_VERSION );
+
+		// Show update notice once.
+		set_transient( 'arbtt_show_update_notice', true, 0 );
+	}
+
+	/**
+	 * Display a one-time admin notice after plugin update.
+	 *
+	 * @return void
+	 */
+	public function show_update_notice() {
+		if ( ! get_transient( 'arbtt_show_update_notice' ) ) {
+			return;
+		}
+
+		delete_transient( 'arbtt_show_update_notice' );
+
+		printf(
+			'<div class="notice notice-success is-dismissible"><p><strong>%s</strong> %s</p></div>',
+			esc_html__( 'AR Back To Top updated to v' . ARBTTOP_VERSION . '!', 'ar-back-to-top' ),
+			esc_html__( 'New: scroll-to-bottom button, reading progress bar, button animations, smart visibility, click analytics, keyboard shortcuts, and touch gestures.', 'ar-back-to-top' )
+		);
 	}
 
 	/**
