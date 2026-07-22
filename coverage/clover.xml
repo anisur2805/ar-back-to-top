@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1780159025741" clover="3.2.0">
+  <project timestamp="1780159025741" name="All files">
+    <metrics statements="9" coveredstatements="9" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="3" elements="18" coveredelements="18" complexity="0" loc="9" ncloc="9" packages="1" files="1" classes="1"/>
+    <file name="back-to-top.js" path="/Users/anisurrahman/Local Sites/playground/app/public/wp-content/plugins/ar-back-to-top/src/back-to-top.js">
+      <metrics statements="9" coveredstatements="9" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="3"/>
+      <line num="8" count="6" type="stmt"/>
+      <line num="19" count="6" type="stmt"/>
+      <line num="20" count="6" type="cond" truecount="2" falsecount="0"/>
+      <line num="21" count="4" type="stmt"/>
+      <line num="30" count="7" type="stmt"/>
+      <line num="31" count="7" type="stmt"/>
+      <line num="32" count="7" type="stmt"/>
+      <line num="33" count="7" type="stmt"/>
+      <line num="34" count="7" type="stmt"/>
+    </file>
+  </project>
+</coverage>

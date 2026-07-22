@@ -1,0 +1,6 @@
+# wp-release per-plugin config (managed by wp-release-setup.sh)
+# Safe to commit — contains no secrets.
+slug=ar-back-to-top
+main_file=ar-back-to-top.php
+svn_dir=/Users/anisurrahman/Documents/wporg/btt
+assets_src=

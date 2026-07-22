@@ -100,6 +100,15 @@ class AR_Assets {
 
 		wp_enqueue_script( 'arbtt_custom_js', ARBTTOP_ASSETS . '/js/arbtt-fe.js', array(), ARBTTOP_VERSION, true );
 
+
+		wp_enqueue_script(
+			'ar-back-to-top-fet',
+			 ARBTTOP_ASSETS . '/js/arbtt-fet.js',
+			array(),
+			ARBTTOP_VERSION,
+			true
+		);
+
 		if ( '1' === get_option( 'arbtt_is_async' ) ) {
 			wp_script_add_data( 'arbtt_custom_js', 'strategy', 'defer' );
 		}
