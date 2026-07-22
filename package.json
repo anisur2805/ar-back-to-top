@@ -1,0 +1,32 @@
+{
+  "name": "ar-back-to-top",
+  "version": "1.0.0",
+  "description": "![WordPress Plugin Version](https://img.shields.io/wordpress/plugin/v/ar-back-to-top?label=Version) ![WordPress Plugin Active Installs](https://img.shields.io/wordpress/plugin/installs/ar-back-to-top?label=Active+Installs) ![WordPress Plugin Rating](https://img.shields.io/wordpress/plugin/rating/ar-back-to-top?label=Rating) ![WordPress Tested Up To](https://img.shields.io/wordpress/plugin/tested/ar-back-to-top?label=WordPress) ![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-8892BF) ![License](https://img.shields.io/github/license/anisur2805/ar-back-to-top)",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anisur2805/ar-back-to-top.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anisur2805/ar-back-to-top/issues"
+  },
+  "homepage": "https://github.com/anisur2805/ar-back-to-top#readme",
+  "devDependencies": {
+    "@babel/core": "^7.29.7",
+    "@babel/preset-env": "^7.29.7",
+    "@testing-library/jest-dom": "^6.9.1",
+    "babel-jest": "^30.4.1",
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1"
+  }
+}
