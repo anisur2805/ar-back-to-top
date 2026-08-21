@@ -4,11 +4,11 @@
  * Plugin URI: https://github.com/anisur2805/ar-back-to-top
  * Description: AR Back To Top is a standard WordPress plugin for smooth back to top. AR Back To Top plugin will help those who don't want to write code. To use this plugin, simply download or add it from the WordPress plugin directory.
  * Tags: back to top, scroll to top button, scroll progress, smooth scroll, floating button
- * Version: 3.1.2
+ * Version: 3.1.3
  * Author: Anisur Rahman
  * Author URI: https://github.com/anisur2805
  * Requires at least: 4.8
- * Tested up to: 7.0
+ * Tested up to: 7.1
  * Requires PHP: 7.4
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -39,6 +39,26 @@ final class AR_Back_To_Top {
 	 * @var bool
 	 */
 	private $is_admin_render = false;
+
+	/**
+	 * Flag set once the button markup has been output on the current request.
+	 *
+	 * Prevents the automatic footer output from duplicating the button when the
+	 * [ar_back_to_top] shortcode has already rendered it.
+	 *
+	 * @var bool
+	 */
+	private $rendered = false;
+
+	/**
+	 * Flag set once the reading progress bar has been output on the current request.
+	 *
+	 * Tracked separately from $rendered because the bar renders independently of
+	 * the button.
+	 *
+	 * @var bool
+	 */
+	private $progress_rendered = false;
 
 	/**
 	 * Get singleton instance
@@ -83,7 +103,7 @@ final class AR_Back_To_Top {
 	 * @return void
 	 */
 	public function define_constants() {
-		define( 'ARBTTOP_VERSION', '3.1.2' );
+		define( 'ARBTTOP_VERSION', '3.1.3' );
 		define( 'ARBTTOP_FILE', __FILE__ );
 		define( 'ARBTTOP_PATH', __DIR__ );
 		define( 'ARBTTOP_URL', plugins_url( '', __FILE__ ) );
@@ -1328,6 +1348,11 @@ final class AR_Back_To_Top {
 	 * @return void
 	 */
 	public function render_back_to_top() {
+		// Already output once on this request (e.g. by the shortcode).
+		if ( $this->rendered ) {
+			return;
+		}
+
 		$defaults = array(
 			'bgc'                    => '#000',
 			'fz'                     => '20',
@@ -1361,7 +1386,8 @@ final class AR_Back_To_Top {
 
 		// Reading progress bar — renders independently of the back-to-top button.
 		$arbtt_enable_reading_progress = get_option( 'arbtt_enable_reading_progress', '0' );
-		if ( '1' === $arbtt_enable_reading_progress ) {
+		if ( '1' === $arbtt_enable_reading_progress && ! $this->progress_rendered ) {
+			$this->progress_rendered       = true;
 			$arbtt_reading_progress_color  = get_option( 'arbtt_reading_progress_color', '#4caf50' );
 			$arbtt_reading_progress_height = get_option( 'arbtt_reading_progress_height', '4' );
 			?>
@@ -1424,6 +1450,8 @@ final class AR_Back_To_Top {
 			return;
 		}
 
+		$this->rendered = true;
+
 		require ARBTTOP_PATH . '/inc/dynamic-style.css.php';
 
 		?>
@@ -1479,6 +1507,50 @@ final class AR_Back_To_Top {
 			</button>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Render the button via the [ar_back_to_top] shortcode.
+	 *
+	 * Bypasses the page/post visibility filter so the button always appears
+	 * where the shortcode is placed. Marks the button as rendered so the
+	 * automatic footer output does not duplicate it on the same request.
+	 *
+	 * @return string Button markup, or an empty string when the plugin is disabled.
+	 */
+	public function render_shortcode() {
+		if ( $this->rendered ) {
+			return '';
+		}
+
+		// Nothing to render when the button is disabled — leave the footer hook
+		// free to output the reading progress bar on its own.
+		if ( '1' !== get_option( 'arbtt_enable' ) ) {
+			return '';
+		}
+
+		// Skip non-visual contexts (feeds, REST, admin) so the footer button is
+		// not suppressed by a shortcode parsed outside the page being viewed.
+		// wp_is_json_request() only exists on WP 5.0+; this plugin supports 4.8+.
+		if ( is_admin() || is_feed() || ( function_exists( 'wp_is_json_request' ) && wp_is_json_request() ) ) {
+			return '';
+		}
+
+		// The asset loader skips pages excluded by the visibility settings, so make
+		// sure the button's CSS/JS are present wherever the shortcode renders it.
+		AR_Assets::frontend_enqueue( true );
+
+		$this->is_admin_render = true;
+
+		try {
+			ob_start();
+			$this->render_back_to_top();
+			$markup = ob_get_clean();
+		} finally {
+			$this->is_admin_render = false;
+		}
+
+		return ( false === $markup ) ? '' : $markup;
 	}
 
 	/**
@@ -1636,7 +1708,13 @@ final class AR_Back_To_Top {
 
 		printf(
 			'<div class="notice notice-success is-dismissible"><p><strong>%s</strong> %s</p></div>',
-			esc_html__( 'AR Back To Top updated to v' . ARBTTOP_VERSION . '!', 'ar-back-to-top' ),
+			esc_html(
+				sprintf(
+					/* translators: %s: plugin version number. */
+					__( 'AR Back To Top updated to v%s!', 'ar-back-to-top' ),
+					ARBTTOP_VERSION
+				)
+			),
 			esc_html__( 'New: scroll-to-bottom button, reading progress bar, button animations, smart visibility, click analytics, keyboard shortcuts, and touch gestures.', 'ar-back-to-top' )
 		);
 	}

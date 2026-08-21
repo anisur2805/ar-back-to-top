@@ -76,10 +76,12 @@ class AR_Assets {
 	/**
 	 * Enqueue frontend assets
 	 *
+	 * @param bool $force Skip the page visibility check. Used when the shortcode
+	 *                    renders the button on a page the filters would exclude.
 	 * @return void
 	 */
-	public static function frontend_enqueue() {
-		$extension_enabled       = get_option( 'arbtt_enable', false );
+	public static function frontend_enqueue( $force = false ) {
+		$extension_enabled        = get_option( 'arbtt_enable', false );
 		$reading_progress_enabled = get_option( 'arbtt_enable_reading_progress', false );
 
 		if ( ! $extension_enabled && ! $reading_progress_enabled ) {
@@ -90,7 +92,7 @@ class AR_Assets {
 		$post          = get_post();
 		$has_shortcode = $post && has_shortcode( $post->post_content, 'ar_back_to_top' );
 
-		if ( ! $has_shortcode && ! self::should_display() ) {
+		if ( ! $force && ! $has_shortcode && ! self::should_display() ) {
 			return;
 		}
 
@@ -99,15 +101,6 @@ class AR_Assets {
 		// No Font Awesome needed on frontend — icons are inline SVGs.
 
 		wp_enqueue_script( 'arbtt_custom_js', ARBTTOP_ASSETS . '/js/arbtt-fe.js', array(), ARBTTOP_VERSION, true );
-
-
-		wp_enqueue_script(
-			'ar-back-to-top-fet',
-			 ARBTTOP_ASSETS . '/js/arbtt-fet.js',
-			array(),
-			ARBTTOP_VERSION,
-			true
-		);
 
 		if ( '1' === get_option( 'arbtt_is_async' ) ) {
 			wp_script_add_data( 'arbtt_custom_js', 'strategy', 'defer' );

@@ -2,9 +2,9 @@
 Contributors: anisur8294
 Tags: back to top, scroll to top button, scroll progress, smooth scroll, floating button
 Requires at least: 4.8
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.1.2
+Stable tag: 3.1.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,14 @@ Perfect for blogs, business sites, portfolios, and WooCommerce stores. The butto
 7. Find **AR Back To Top** in the list and click **Activate**.
 
 == Changelog ==
+
+= 3.1.3 =
+
+**Compatibility & Fixes**
+* Tested up to WordPress 7.1
+* Fix the `[ar_back_to_top]` shortcode producing no output — the registered callback was missing
+* Load the button CSS and JavaScript on pages where only the shortcode places the button
+* Prevent the shortcode and the automatic footer button rendering twice on the same page
 
 = 3.1.2 =
 

@@ -2,22 +2,22 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: AR Back To Top 3.0.0\n"
+"Project-Id-Version: AR Back To Top 3.1.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ar-back-to-top\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-26T05:31:26+00:00\n"
+"POT-Creation-Date: 2026-08-21T05:57:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: ar-back-to-top\n"
 
 #. Plugin Name of the plugin
 #: ar-back-to-top.php
-#: ar-back-to-top.php:157
-#: ar-back-to-top.php:168
+#: ar-back-to-top.php:174
+#: ar-back-to-top.php:185
 msgid "AR Back To Top"
 msgstr ""
 
@@ -41,511 +41,627 @@ msgstr ""
 msgid "https://github.com/anisur2805"
 msgstr ""
 
-#: ar-back-to-top.php:158
-#: ar-back-to-top.php:194
+#: ar-back-to-top.php:175
+#: ar-back-to-top.php:210
+#: ar-back-to-top.php:214
 msgid "Back To Top"
 msgstr ""
 
-#: ar-back-to-top.php:169
+#: ar-back-to-top.php:186
 msgid "Dashboard"
 msgstr ""
 
-#: ar-back-to-top.php:183
+#: ar-back-to-top.php:200
 msgid "General"
 msgstr ""
 
-#: ar-back-to-top.php:184
+#: ar-back-to-top.php:201
 msgid "Appearance"
 msgstr ""
 
-#: ar-back-to-top.php:185
+#: ar-back-to-top.php:202
 msgid "Colors & Style"
 msgstr ""
 
-#: ar-back-to-top.php:186
+#: ar-back-to-top.php:203
 msgid "Position & Size"
 msgstr ""
 
-#: ar-back-to-top.php:187
+#: ar-back-to-top.php:204
 msgid "Scroll Behavior"
 msgstr ""
 
-#: ar-back-to-top.php:188
+#: ar-back-to-top.php:205
 msgid "Visibility"
 msgstr ""
 
-#: ar-back-to-top.php:189
+#: ar-back-to-top.php:206
 msgid "Advanced"
 msgstr ""
 
-#: ar-back-to-top.php:220
+#: ar-back-to-top.php:240
 msgid "Save Changes"
 msgstr ""
 
-#: ar-back-to-top.php:221
+#: ar-back-to-top.php:241
 msgid "Are you sure you want to reset all settings to defaults?"
 msgstr ""
 
-#: ar-back-to-top.php:221
+#: ar-back-to-top.php:241
 msgid "Reset to Defaults"
 msgstr ""
 
-#: ar-back-to-top.php:233
+#: ar-back-to-top.php:253
 msgid "Preview"
 msgstr ""
 
-#: ar-back-to-top.php:255
+#: ar-back-to-top.php:275
 msgid "Live preview. Save to apply on frontend."
 msgstr ""
 
-#: ar-back-to-top.php:270
+#: ar-back-to-top.php:290
 msgid "Enable Back To Top"
 msgstr ""
 
-#: ar-back-to-top.php:271
+#: ar-back-to-top.php:291
 msgid "Enable Async"
 msgstr ""
 
-#: ar-back-to-top.php:272
+#: ar-back-to-top.php:292
 msgid "Show in Admin Area"
 msgstr ""
 
-#: ar-back-to-top.php:275
-msgid "Button Style"
-msgstr ""
-
-#: ar-back-to-top.php:276
-#: ar-back-to-top.php:695
-msgid "Choose Icon"
-msgstr ""
-
-#: ar-back-to-top.php:277
-msgid "Button Text"
-msgstr ""
-
-#: ar-back-to-top.php:278
-msgid "Choose Button Image"
-msgstr ""
-
-#: ar-back-to-top.php:279
-msgid "Image Position"
-msgstr ""
-
-#: ar-back-to-top.php:280
-#: ar-back-to-top.php:727
-#: ar-back-to-top.php:1129
-msgid "External Image URL"
-msgstr ""
-
-#: ar-back-to-top.php:281
-msgid "Upload Custom Icon"
-msgstr ""
-
-#: ar-back-to-top.php:282
-msgid "Icon / Image Size"
-msgstr ""
-
-#: ar-back-to-top.php:283
-msgid "Tooltip Text"
-msgstr ""
-
-#: ar-back-to-top.php:286
-msgid "Background Color"
-msgstr ""
-
-#: ar-back-to-top.php:287
-msgid "Background Hover"
-msgstr ""
-
-#: ar-back-to-top.php:288
-msgid "Icon / Text Color"
-msgstr ""
-
-#: ar-back-to-top.php:289
-msgid "Icon / Text Hover"
-msgstr ""
-
-#: ar-back-to-top.php:290
-msgid "Button Shape"
-msgstr ""
-
-#: ar-back-to-top.php:291
-msgid "Border Radius"
-msgstr ""
-
-#: ar-back-to-top.php:292
-msgid "Border Width"
-msgstr ""
-
 #: ar-back-to-top.php:293
-msgid "Border Color"
+msgid "Enable Scroll To Bottom"
 msgstr ""
 
 #: ar-back-to-top.php:294
-msgid "Border Hover Color"
+msgid "Enable Click Tracking"
 msgstr ""
 
 #: ar-back-to-top.php:295
-msgid "Opacity"
+msgid "Keyboard Shortcut"
 msgstr ""
 
-#: ar-back-to-top.php:298
-msgid "Button Dimension"
+#: ar-back-to-top.php:296
+msgid "Touch Gesture"
 msgstr ""
 
 #: ar-back-to-top.php:299
-msgid "Button Padding"
+msgid "Button Style"
 msgstr ""
 
 #: ar-back-to-top.php:300
-msgid "Position"
+#: ar-back-to-top.php:725
+msgid "Choose Icon"
 msgstr ""
 
 #: ar-back-to-top.php:301
-msgid "Offset Bottom"
+msgid "Button Text"
 msgstr ""
 
 #: ar-back-to-top.php:302
-msgid "Offset Right"
+msgid "Choose Button Image"
 msgstr ""
 
 #: ar-back-to-top.php:303
-msgid "Offset Left"
+msgid "Image Position"
 msgstr ""
 
 #: ar-back-to-top.php:304
-msgid "Z-Index"
+#: ar-back-to-top.php:757
+#: ar-back-to-top.php:1328
+msgid "External Image URL"
+msgstr ""
+
+#: ar-back-to-top.php:305
+msgid "Upload Custom Icon"
+msgstr ""
+
+#: ar-back-to-top.php:306
+msgid "Icon / Image Size"
 msgstr ""
 
 #: ar-back-to-top.php:307
-msgid "Appear After Scroll"
+msgid "Tooltip Text"
 msgstr ""
 
 #: ar-back-to-top.php:308
-msgid "Scroll Duration"
-msgstr ""
-
-#: ar-back-to-top.php:309
-msgid "Easing Effect"
-msgstr ""
-
-#: ar-back-to-top.php:310
-msgid "Auto Hide"
+msgid "Button Animation"
 msgstr ""
 
 #: ar-back-to-top.php:311
-msgid "Auto Hide After"
+msgid "Background Color"
 msgstr ""
 
 #: ar-back-to-top.php:312
-msgid "Scroll Progress"
+msgid "Background Hover"
 msgstr ""
 
 #: ar-back-to-top.php:313
-msgid "Progress Size"
+msgid "Icon / Text Color"
 msgstr ""
 
 #: ar-back-to-top.php:314
-msgid "Progress Color"
+msgid "Icon / Text Hover"
+msgstr ""
+
+#: ar-back-to-top.php:315
+msgid "Button Shape"
+msgstr ""
+
+#: ar-back-to-top.php:316
+msgid "Border Radius"
 msgstr ""
 
 #: ar-back-to-top.php:317
-msgid "Display Mode"
+msgid "Border Width"
 msgstr ""
 
 #: ar-back-to-top.php:318
-msgid "Select Pages"
+msgid "Border Color"
 msgstr ""
 
 #: ar-back-to-top.php:319
-msgid "Hide on Desktop"
+msgid "Border Hover Color"
 msgstr ""
 
 #: ar-back-to-top.php:320
-msgid "Desktop Breakpoint"
-msgstr ""
-
-#: ar-back-to-top.php:321
-msgid "Hide on Tablet"
-msgstr ""
-
-#: ar-back-to-top.php:322
-msgid "Tablet Breakpoint"
+msgid "Opacity"
 msgstr ""
 
 #: ar-back-to-top.php:323
-msgid "Hide on Mobile"
+msgid "Button Dimension"
 msgstr ""
 
 #: ar-back-to-top.php:324
-msgid "Mobile Breakpoint"
+msgid "Button Padding"
 msgstr ""
 
 #: ar-back-to-top.php:325
-msgid "Mobile Offset Bottom"
+msgid "Position"
 msgstr ""
 
 #: ar-back-to-top.php:326
-msgid "Mobile Offset Side"
+msgid "Offset Bottom"
+msgstr ""
+
+#: ar-back-to-top.php:327
+msgid "Offset Right"
+msgstr ""
+
+#: ar-back-to-top.php:328
+msgid "Offset Left"
 msgstr ""
 
 #: ar-back-to-top.php:329
+msgid "Z-Index"
+msgstr ""
+
+#: ar-back-to-top.php:332
+msgid "Appear After Scroll"
+msgstr ""
+
+#: ar-back-to-top.php:333
+msgid "Scroll Duration"
+msgstr ""
+
+#: ar-back-to-top.php:334
+msgid "Easing Effect"
+msgstr ""
+
+#: ar-back-to-top.php:335
+msgid "Auto Hide"
+msgstr ""
+
+#: ar-back-to-top.php:336
+msgid "Auto Hide After"
+msgstr ""
+
+#: ar-back-to-top.php:337
+msgid "Scroll Progress"
+msgstr ""
+
+#: ar-back-to-top.php:338
+msgid "Progress Size"
+msgstr ""
+
+#: ar-back-to-top.php:339
+msgid "Progress Color"
+msgstr ""
+
+#: ar-back-to-top.php:340
+msgid "Reading Progress Bar"
+msgstr ""
+
+#: ar-back-to-top.php:341
+msgid "Progress Bar Color"
+msgstr ""
+
+#: ar-back-to-top.php:342
+msgid "Progress Bar Height"
+msgstr ""
+
+#: ar-back-to-top.php:345
+msgid "Display Mode"
+msgstr ""
+
+#: ar-back-to-top.php:346
+msgid "Select Pages"
+msgstr ""
+
+#: ar-back-to-top.php:347
+msgid "Hide on Desktop"
+msgstr ""
+
+#: ar-back-to-top.php:348
+msgid "Desktop Breakpoint"
+msgstr ""
+
+#: ar-back-to-top.php:349
+msgid "Hide on Tablet"
+msgstr ""
+
+#: ar-back-to-top.php:350
+msgid "Tablet Breakpoint"
+msgstr ""
+
+#: ar-back-to-top.php:351
+msgid "Hide on Mobile"
+msgstr ""
+
+#: ar-back-to-top.php:352
+msgid "Mobile Breakpoint"
+msgstr ""
+
+#: ar-back-to-top.php:353
+msgid "Mobile Offset Bottom"
+msgstr ""
+
+#: ar-back-to-top.php:354
+msgid "Mobile Offset Side"
+msgstr ""
+
+#: ar-back-to-top.php:355
+msgid "Smart Show/Hide"
+msgstr ""
+
+#: ar-back-to-top.php:356
+msgid "Hide on WooCommerce Pages"
+msgstr ""
+
+#: ar-back-to-top.php:359
 msgid "Custom CSS"
 msgstr ""
 
-#: ar-back-to-top.php:419
+#: ar-back-to-top.php:449
 msgid "Enabling scroll progress will force the button shape to circle. The \"Both\" button style does not support scroll progress."
 msgstr ""
 
-#: ar-back-to-top.php:445
+#: ar-back-to-top.php:475
 msgid "Enable this option to improve site performance by loading scripts asynchronously."
 msgstr ""
 
-#: ar-back-to-top.php:445
+#: ar-back-to-top.php:475
 msgid "Disable only if it causes compatibility issues with other plugins or scripts."
 msgstr ""
 
-#: ar-back-to-top.php:501
-#: ar-back-to-top.php:552
-#: ar-back-to-top.php:579
-#: ar-back-to-top.php:586
-#: ar-back-to-top.php:593
-#: ar-back-to-top.php:605
-#: ar-back-to-top.php:833
-#: ar-back-to-top.php:875
-#: ar-back-to-top.php:903
-#: ar-back-to-top.php:916
-#: ar-back-to-top.php:929
-#: ar-back-to-top.php:942
+#: ar-back-to-top.php:531
+#: ar-back-to-top.php:582
+#: ar-back-to-top.php:609
+#: ar-back-to-top.php:616
+#: ar-back-to-top.php:623
+#: ar-back-to-top.php:635
+#: ar-back-to-top.php:863
+#: ar-back-to-top.php:905
+#: ar-back-to-top.php:933
+#: ar-back-to-top.php:946
+#: ar-back-to-top.php:959
+#: ar-back-to-top.php:972
+#: ar-back-to-top.php:1242
 msgid "px"
 msgstr ""
 
-#: ar-back-to-top.php:536
+#: ar-back-to-top.php:566
 msgid "Circle"
 msgstr ""
 
-#: ar-back-to-top.php:537
+#: ar-back-to-top.php:567
 msgid "Square"
 msgstr ""
 
-#: ar-back-to-top.php:538
+#: ar-back-to-top.php:568
 msgid "Rounded Square"
 msgstr ""
 
-#: ar-back-to-top.php:539
+#: ar-back-to-top.php:569
 msgid "Custom (set below)"
 msgstr ""
 
-#: ar-back-to-top.php:564
-#: ar-back-to-top.php:806
+#: ar-back-to-top.php:594
+#: ar-back-to-top.php:836
 msgid "Left Side"
 msgstr ""
 
-#: ar-back-to-top.php:565
-#: ar-back-to-top.php:807
+#: ar-back-to-top.php:595
+#: ar-back-to-top.php:837
 msgid "Right Side"
 msgstr ""
 
-#: ar-back-to-top.php:566
+#: ar-back-to-top.php:596
 msgid "Center Bottom"
 msgstr ""
 
-#: ar-back-to-top.php:606
+#: ar-back-to-top.php:636
 msgid "Specify the number of pixels a user must scroll before the button becomes visible."
 msgstr ""
 
-#: ar-back-to-top.php:621
+#: ar-back-to-top.php:651
 msgid "Width & Height (px)"
 msgstr ""
 
-#: ar-back-to-top.php:655
+#: ar-back-to-top.php:685
 msgid "(px)"
 msgstr ""
 
-#: ar-back-to-top.php:667
+#: ar-back-to-top.php:697
 msgid "Min 0 - Max 1"
 msgstr ""
 
-#: ar-back-to-top.php:696
+#: ar-back-to-top.php:726
 msgid "Close"
 msgstr ""
 
-#: ar-back-to-top.php:698
+#: ar-back-to-top.php:728
 msgid "Search icon..."
 msgstr ""
 
-#: ar-back-to-top.php:725
+#: ar-back-to-top.php:755
 msgid "Enter external image URL here"
 msgstr ""
 
-#: ar-back-to-top.php:726
+#: ar-back-to-top.php:756
 msgid "Preview Image"
 msgstr ""
 
-#: ar-back-to-top.php:740
+#: ar-back-to-top.php:770
 msgid "Select or upload an icon"
 msgstr ""
 
-#: ar-back-to-top.php:741
+#: ar-back-to-top.php:771
 msgid "Upload Icon"
 msgstr ""
 
-#: ar-back-to-top.php:742
+#: ar-back-to-top.php:772
 msgid "Remove"
 msgstr ""
 
-#: ar-back-to-top.php:746
+#: ar-back-to-top.php:776
 msgid "Custom icon preview"
 msgstr ""
 
-#: ar-back-to-top.php:753
+#: ar-back-to-top.php:783
 msgid "Upload a PNG, JPG, GIF, or SVG file from your media library."
 msgstr ""
 
-#: ar-back-to-top.php:820
+#: ar-back-to-top.php:850
 msgid "ms"
 msgstr ""
 
-#: ar-back-to-top.php:821
+#: ar-back-to-top.php:851
 msgid "Enter the duration of the scroll-to-top animation in milliseconds"
 msgstr ""
 
-#: ar-back-to-top.php:847
+#: ar-back-to-top.php:877
 msgid "Checked for hide icon on mobile"
 msgstr ""
 
-#: ar-back-to-top.php:862
+#: ar-back-to-top.php:892
 msgid "Hide button on desktop screens"
 msgstr ""
 
-#: ar-back-to-top.php:876
+#: ar-back-to-top.php:906
 msgid "Hide on screens wider than this value."
 msgstr ""
 
-#: ar-back-to-top.php:890
+#: ar-back-to-top.php:920
 msgid "Checked for hide icon on tablet"
 msgstr ""
 
-#: ar-back-to-top.php:904
+#: ar-back-to-top.php:934
 msgid "Enter the width of the screen at which the button will be hidden on mobile devices."
 msgstr ""
 
-#: ar-back-to-top.php:917
+#: ar-back-to-top.php:947
 msgid "Leave empty to use the desktop value."
 msgstr ""
 
-#: ar-back-to-top.php:930
+#: ar-back-to-top.php:960
 msgid "Left/right offset on mobile. Leave empty to use the desktop value."
 msgstr ""
 
-#: ar-back-to-top.php:943
+#: ar-back-to-top.php:973
 msgid "Enter the width of the screen at which the button will be hidden on tablet devices."
 msgstr ""
 
-#: ar-back-to-top.php:956
+#: ar-back-to-top.php:986
 msgid "Linear"
 msgstr ""
 
-#: ar-back-to-top.php:957
+#: ar-back-to-top.php:987
 msgid "Ease In"
 msgstr ""
 
-#: ar-back-to-top.php:958
+#: ar-back-to-top.php:988
 msgid "Ease Out"
 msgstr ""
 
-#: ar-back-to-top.php:959
+#: ar-back-to-top.php:989
 msgid "Ease In-Out"
 msgstr ""
 
-#: ar-back-to-top.php:961
+#: ar-back-to-top.php:991
 msgid "Controls the acceleration curve of the scroll animation."
 msgstr ""
 
-#: ar-back-to-top.php:974
+#: ar-back-to-top.php:1004
 msgid "Show on all pages"
 msgstr ""
 
-#: ar-back-to-top.php:975
+#: ar-back-to-top.php:1005
 msgid "Show only on selected pages"
 msgstr ""
 
-#: ar-back-to-top.php:976
+#: ar-back-to-top.php:1006
 msgid "Hide on selected pages"
 msgstr ""
 
-#: ar-back-to-top.php:1002
+#: ar-back-to-top.php:1032
 msgid "Pages"
 msgstr ""
 
-#: ar-back-to-top.php:1009
+#: ar-back-to-top.php:1039
 msgid "Posts"
 msgstr ""
 
-#: ar-back-to-top.php:1017
+#: ar-back-to-top.php:1047
 msgid "Hold Ctrl/Cmd to select multiple pages/posts."
 msgstr ""
 
-#: ar-back-to-top.php:1042
-#: ar-back-to-top.php:1232
-#: ar-back-to-top.php:1233
+#: ar-back-to-top.php:1072
+#: ar-back-to-top.php:1448
+#: ar-back-to-top.php:1449
 msgid "Scroll to top"
 msgstr ""
 
-#: ar-back-to-top.php:1043
+#: ar-back-to-top.php:1073
 msgid "Text shown on hover. Leave empty to disable tooltip."
 msgstr ""
 
-#: ar-back-to-top.php:1056
-msgid "Controls stacking order. Increase if the button is hidden behind other elements."
+#: ar-back-to-top.php:1086
+msgid "None"
 msgstr ""
 
-#: ar-back-to-top.php:1070
-msgid "Display the back-to-top button in the WordPress admin dashboard"
+#: ar-back-to-top.php:1087
+msgid "Fade In"
 msgstr ""
 
-#: ar-back-to-top.php:1085
-msgid "Automatically hide button after a period of inactivity"
+#: ar-back-to-top.php:1088
+msgid "Bounce"
 msgstr ""
 
-#: ar-back-to-top.php:1099
-msgid "seconds"
+#: ar-back-to-top.php:1089
+msgid "Scale"
 msgstr ""
 
-#: ar-back-to-top.php:1111
-msgid "CSS hooks:"
+#: ar-back-to-top.php:1091
+msgid "Animation when the button appears on scroll."
 msgstr ""
 
-#: ar-back-to-top.php:1124
-msgid "Select Option"
+#: ar-back-to-top.php:1106
+msgid "Shows a second button that scrolls to the bottom of the page."
 msgstr ""
 
-#: ar-back-to-top.php:1125
-msgid "SVG Icon"
-msgstr ""
-
-#: ar-back-to-top.php:1126
-msgid "Text Only"
-msgstr ""
-
-#: ar-back-to-top.php:1127
-msgid "Image Only"
+#: ar-back-to-top.php:1121
+msgid "Track how many times the button is clicked. Count is shown below."
 msgstr ""
 
 #: ar-back-to-top.php:1128
+msgid "total clicks recorded."
+msgstr ""
+
+#: ar-back-to-top.php:1159
+msgid "Allow pressing the Home key to scroll to top when the button is visible."
+msgstr ""
+
+#: ar-back-to-top.php:1174
+msgid "Detect swipe-up gesture on touch devices to scroll to top."
+msgstr ""
+
+#: ar-back-to-top.php:1189
+msgid "Hide the button when scrolling up and show it when scrolling down."
+msgstr ""
+
+#: ar-back-to-top.php:1204
+msgid "Hide the button on WooCommerce shop, product, cart, and checkout pages."
+msgstr ""
+
+#: ar-back-to-top.php:1219
+msgid "Shows a horizontal progress bar at the top of the page indicating how far the visitor has scrolled."
+msgstr ""
+
+#: ar-back-to-top.php:1255
+msgid "Controls stacking order. Increase if the button is hidden behind other elements."
+msgstr ""
+
+#: ar-back-to-top.php:1269
+msgid "Display the back-to-top button in the WordPress admin dashboard"
+msgstr ""
+
+#: ar-back-to-top.php:1284
+msgid "Automatically hide button after a period of inactivity"
+msgstr ""
+
+#: ar-back-to-top.php:1298
+msgid "seconds"
+msgstr ""
+
+#: ar-back-to-top.php:1310
+msgid "CSS hooks:"
+msgstr ""
+
+#: ar-back-to-top.php:1323
+msgid "Select Option"
+msgstr ""
+
+#: ar-back-to-top.php:1324
+msgid "SVG Icon"
+msgstr ""
+
+#: ar-back-to-top.php:1325
+msgid "Text Only"
+msgstr ""
+
+#: ar-back-to-top.php:1326
+msgid "Image Only"
+msgstr ""
+
+#: ar-back-to-top.php:1327
 msgid "Both"
 msgstr ""
 
-#: ar-back-to-top.php:1130
+#: ar-back-to-top.php:1329
 msgid "Custom Upload"
 msgstr ""
 
-#: ar-back-to-top.php:1132
+#: ar-back-to-top.php:1331
 msgid "If selected both, then progress will be unsupported."
 msgstr ""
 
-#: ar-back-to-top.php:1367
+#: ar-back-to-top.php:1646
 msgid "All settings have been reset to defaults."
+msgstr ""
+
+#. translators: %s: plugin version number.
+#: ar-back-to-top.php:1696
+#, php-format
+msgid "AR Back To Top updated to v%s!"
+msgstr ""
+
+#: ar-back-to-top.php:1700
+msgid "New: scroll-to-bottom button, reading progress bar, button animations, smart visibility, click analytics, keyboard shortcuts, and touch gestures."
+msgstr ""
+
+#: ar-back-to-top.php:1813
+msgid "You are not allowed to upload SVG files."
+msgstr ""
+
+#: ar-back-to-top.php:1818
+msgid "SVG sanitizer is not available."
+msgstr ""
+
+#: ar-back-to-top.php:1825
+msgid "This SVG file could not be sanitized and was rejected for security reasons."
 msgstr ""
 
 #: inc/class-ar-frontend.php:91

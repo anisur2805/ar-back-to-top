@@ -2,6 +2,15 @@
 
 All notable changes to AR Back To Top are documented here.
 
+## 3.1.3
+
+**Compatibility & Fixes**
+- Tested up to WordPress 7.1
+- Fix the `[ar_back_to_top]` shortcode producing no output — the registered callback was missing
+- Load the button CSS and JavaScript on pages where only the shortcode places the button
+- Prevent the shortcode and the automatic footer button rendering twice on the same page
+- Remove the enqueue of `assets/js/arbtt-fet.js`, an unshipped ES-module dev artifact (never part of a released build)
+
 ## 3.1.2
 
 **Compatibility & Fixes**
