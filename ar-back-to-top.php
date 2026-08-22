@@ -718,7 +718,7 @@ final class AR_Back_To_Top {
 		<?php
 		$selected_icon = get_option( 'arbtt_fi', 'angle-up' );
 		// Migrate old FA class values to SVG icon IDs.
-		if ( strpos( $selected_icon, 'fa' ) !== false ) {
+		if ( 0 === strpos( $selected_icon, 'fa-' ) || false !== strpos( $selected_icon, ' fa-' ) ) {
 			$selected_icon = AR_SVG_Icons::fa_class_to_id( $selected_icon );
 			update_option( 'arbtt_fi', $selected_icon );
 		}
@@ -1332,7 +1332,7 @@ final class AR_Back_To_Top {
 		<select name="arbtt_btnst" id="arbtt_btnst">
 			<option value=""><?php echo esc_html__( 'Select Option', 'ar-back-to-top' ); ?></option>
 			<option value="fa"<?php selected( 'fa', $current ); ?>><?php esc_html_e( 'SVG Icon', 'ar-back-to-top' ); ?></option>
-			<option value="txt"<?php selected( 'txt', $current ); ?> selected="selected"><?php echo esc_html__( 'Text Only', 'ar-back-to-top' ); ?></option>
+			<option value="txt"<?php selected( 'txt', $current ); ?>><?php echo esc_html__( 'Text Only', 'ar-back-to-top' ); ?></option>
 			<option value="img"<?php selected( 'img', $current ); ?>><?php echo esc_html__( 'Image Only', 'ar-back-to-top' ); ?></option>
 			<option value="both"<?php selected( 'both', $current ); ?>><?php echo esc_html__( 'Both', 'ar-back-to-top' ); ?></option>
 			<option value="external"<?php selected( 'external', $current ); ?>><?php esc_html_e( 'External Image URL', 'ar-back-to-top' ); ?></option>
