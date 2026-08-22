@@ -1880,6 +1880,11 @@ final class AR_Back_To_Top {
 		foreach ( array_keys( $defaults ) as $option_key ) {
 			delete_option( $option_key );
 		}
+
+		// Delete options not tracked in defaults.
+		delete_option( 'arbtt_plugin_version' );
+		delete_option( 'arbtt_click_count' );
+		delete_transient( 'arbtt_show_update_notice' );
 	}
 
 	/**
