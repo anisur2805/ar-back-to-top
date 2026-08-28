@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/anisur2805/ar-back-to-top
  * Description: AR Back To Top is a standard WordPress plugin for smooth back to top. AR Back To Top plugin will help those who don't want to write code. To use this plugin, simply download or add it from the WordPress plugin directory.
  * Tags: back to top, scroll to top button, scroll progress, smooth scroll, floating button
- * Version: 3.1.3
+ * Version: 3.1.4
  * Author: Anisur Rahman
  * Author URI: https://github.com/anisur2805
  * Requires at least: 4.8
@@ -103,7 +103,7 @@ final class AR_Back_To_Top {
 	 * @return void
 	 */
 	public function define_constants() {
-		define( 'ARBTTOP_VERSION', '3.1.3' );
+		define( 'ARBTTOP_VERSION', '3.1.4' );
 		define( 'ARBTTOP_FILE', __FILE__ );
 		define( 'ARBTTOP_PATH', __DIR__ );
 		define( 'ARBTTOP_URL', plugins_url( '', __FILE__ ) );
@@ -1384,6 +1384,23 @@ final class AR_Back_To_Top {
 			'arbtt_btn_img_position' => 'right',
 		);
 
+		// Early exit if plugin is disabled.
+		$arbtt_enable = get_option( 'arbtt_enable', $defaults['enable'] );
+
+		if ( '1' !== $arbtt_enable ) {
+			// Still render the reading progress bar if it's enabled independently.
+			$arbtt_enable_reading_progress = get_option( 'arbtt_enable_reading_progress', '0' );
+			if ( '1' === $arbtt_enable_reading_progress && ! $this->progress_rendered ) {
+				$this->progress_rendered       = true;
+				$arbtt_reading_progress_color  = get_option( 'arbtt_reading_progress_color', '#4caf50' );
+				$arbtt_reading_progress_height = get_option( 'arbtt_reading_progress_height', '4' );
+				?>
+				<div id="arbtt-reading-progress" style="position:fixed;top:0;left:0;width:0;height:<?php echo esc_attr( $arbtt_reading_progress_height ); ?>px;background-color:<?php echo esc_attr( $arbtt_reading_progress_color ); ?>;z-index:99999;transition:width 0.1s ease;"></div>
+				<?php
+			}
+			return;
+		}
+
 		// Reading progress bar — renders independently of the back-to-top button.
 		$arbtt_enable_reading_progress = get_option( 'arbtt_enable_reading_progress', '0' );
 		if ( '1' === $arbtt_enable_reading_progress && ! $this->progress_rendered ) {
@@ -1393,13 +1410,6 @@ final class AR_Back_To_Top {
 			?>
 			<div id="arbtt-reading-progress" style="position:fixed;top:0;left:0;width:0;height:<?php echo esc_attr( $arbtt_reading_progress_height ); ?>px;background-color:<?php echo esc_attr( $arbtt_reading_progress_color ); ?>;z-index:99999;transition:width 0.1s ease;"></div>
 			<?php
-		}
-
-		// Early exit if plugin is disabled.
-		$arbtt_enable = get_option( 'arbtt_enable', $defaults['enable'] );
-
-		if ( '1' !== $arbtt_enable ) {
-			return;
 		}
 
 		// Get scalar options with fallback.

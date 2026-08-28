@@ -123,7 +123,7 @@ class AR_Assets {
 			'auto_hide'         => $auto_hide,
 			'auto_hide_after'   => $auto_hide_after,
 			'scroll_easing'     => $scroll_easing,
-			'scroll_duration'   => (int) get_option( 'arbtt_transition_time', 950 ),
+			'scroll_duration'   => (int) get_option( 'arbtt_fadein', 950 ),
 			'button_animation'  => get_option( 'arbtt_button_animation', 'none' ),
 			'smart_visibility'  => get_option( 'arbtt_smart_visibility', '0' ),
 			'enable_analytics'  => get_option( 'arbtt_enable_analytics', '0' ),

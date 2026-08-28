@@ -4,7 +4,7 @@ Tags: back to top, scroll to top button, scroll progress, smooth scroll, floatin
 Requires at least: 4.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.1.3
+Stable tag: 3.1.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,14 @@ Perfect for blogs, business sites, portfolios, and WooCommerce stores. The butto
 7. Find **AR Back To Top** in the list and click **Activate**.
 
 == Changelog ==
+
+= 3.1.4 =
+
+**Bug Fixes**
+* Restore backward compatibility for sites upgrading from v3.0.x: guard frontend asset options against missing localized data so older settings no longer cause silent JS failures
+* Fix duplicate `@keyframes arbtt-bounce` in dynamic CSS output, which could cause animation conflicts
+* Fix incorrect `arbtt_transition_time` option reference in asset localization; now correctly reads `arbtt_fadein`
+* Ensure reading progress bar still renders when the main plugin is disabled but the progress feature is independently enabled
 
 = 3.1.3 =
 

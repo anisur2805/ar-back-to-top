@@ -6,13 +6,16 @@
 ( function() {
 	'use strict';
 
-	var visibleAfter   = parseInt( arbtt_obj.btn_visible_after, 10 ) || 100;
-	var fadeDuration   = parseInt( arbtt_obj.fade_in, 10 ) || 950;
-	var autoHide       = arbtt_obj.auto_hide || false;
-	var autoHideAfter  = ( parseInt( arbtt_obj.auto_hide_after, 10 ) || 3 ) * 1000;
-	var scrollEasing   = arbtt_obj.scroll_easing || 'ease-in-out';
-	var btnAnimation    = arbtt_obj.button_animation || 'none';
-	var smartVisibility = arbtt_obj.smart_visibility === '1' || arbtt_obj.smart_visibility === true;
+	var visibleAfter   = parseInt( ( arbtt_obj && arbtt_obj.btn_visible_after ) || 100, 10 );
+	var fadeDuration   = parseInt( ( arbtt_obj && arbtt_obj.fade_in ) || 950, 10 );
+	var autoHide       = ( arbtt_obj && arbtt_obj.auto_hide ) || false;
+	var autoHideAfter  = ( parseInt( ( arbtt_obj && arbtt_obj.auto_hide_after ) || 3, 10 ) ) * 1000;
+	var scrollEasing   = ( arbtt_obj && arbtt_obj.scroll_easing ) || 'ease-in-out';
+	var btnAnimation   = ( arbtt_obj && arbtt_obj.button_animation ) || 'none';
+	var smartVisibility = ( arbtt_obj && ( arbtt_obj.smart_visibility === '1' || arbtt_obj.smart_visibility === true ) ) || false;
+	var enableAnalytics = ( arbtt_obj && ( arbtt_obj.enable_analytics === '1' || arbtt_obj.enable_analytics === true ) ) || false;
+	var enableKeyboard  = ( arbtt_obj && ( arbtt_obj.enable_keyboard === '1' || arbtt_obj.enable_keyboard === true ) ) || false;
+	var enableTouch     = ( arbtt_obj && ( arbtt_obj.enable_touch === '1' || arbtt_obj.enable_touch === true ) ) || false;
 	var btn             = document.querySelector( '.arbtt' );
 
 	/**
@@ -187,7 +190,7 @@
 	 * Track button click via AJAX.
 	 */
 	function trackClick() {
-		if ( arbtt_obj.enable_analytics === '1' || arbtt_obj.enable_analytics === true ) {
+		if ( ! enableAnalytics ) {
 			var data = new FormData();
 			data.append( 'action', 'arbtt_track_click' );
 			data.append( 'nonce', arbtt_obj.track_nonce );
@@ -212,7 +215,7 @@
 	window.addEventListener( 'scroll', onScroll, { passive: true } );
 
 	/* ----- Keyboard Shortcut (Home key) ----- */
-	if ( arbtt_obj.enable_keyboard === '1' || arbtt_obj.enable_keyboard === true ) {
+	if ( enableKeyboard ) {
 		document.addEventListener( 'keydown', function( e ) {
 			if ( e.key === 'Home' && ! e.ctrlKey && ! e.altKey && ! e.shiftKey && ! e.metaKey ) {
 				var target = e.target.tagName.toLowerCase();
@@ -229,7 +232,7 @@
 	}
 
 	/* ----- Touch Gesture (Swipe Up) ----- */
-	if ( arbtt_obj.enable_touch === '1' || arbtt_obj.enable_touch === true ) {
+	if ( enableTouch ) {
 		var touchStartY = 0;
 		var touchStartX = 0;
 		var swipeThreshold = 100;

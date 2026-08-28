@@ -2,6 +2,14 @@
 
 All notable changes to AR Back To Top are documented here.
 
+## 3.1.4
+
+**Bug Fixes**
+- Restore backward compatibility for sites upgrading from v3.0.x: guard frontend asset options against missing localized data so older settings no longer cause silent JS failures
+- Fix duplicate `@keyframes arbtt-bounce` in dynamic CSS output, which could cause animation conflicts
+- Fix incorrect `arbtt_transition_time` option reference in asset localization; now correctly reads `arbtt_fadein`
+- Ensure reading progress bar still renders when the main plugin is disabled but the progress feature is independently enabled
+
 ## 3.1.3
 
 **Compatibility & Fixes**

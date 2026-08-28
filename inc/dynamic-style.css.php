@@ -110,18 +110,6 @@
 		to { opacity: <?php echo esc_attr( $arbtt_btnoc ); ?>; }
 	}
 
-	@keyframes arbtt-bounce {
-		0% { transform: translateY(20px); opacity: 0; }
-		50% { transform: translateY(-8px); }
-		70% { transform: translateY(4px); }
-		100% { transform: translateY(0); opacity: <?php echo esc_attr( $arbtt_btnoc ); ?>; }
-	}
-
-	@keyframes arbtt-scale {
-		from { transform: scale(0); opacity: 0; }
-		to { transform: scale(1); opacity: <?php echo esc_attr( $arbtt_btnoc ); ?>; }
-	}
-
 		<?php if ( 'center' !== $arbtt_btnps ) : ?>
 	@keyframes arbtt-bounce {
 		0% { transform: translateY(20px); opacity: 0; }
@@ -137,6 +125,11 @@
 		100% { transform: translate(-50%, 0); opacity: <?php echo esc_attr( $arbtt_btnoc ); ?>; }
 	}
 	<?php endif; ?>
+
+	@keyframes arbtt-scale {
+		from { transform: scale(0); opacity: 0; }
+		to { transform: scale(1); opacity: <?php echo esc_attr( $arbtt_btnoc ); ?>; }
+	}
 
 	.arbtt.arbtt-animate-<?php echo esc_attr( $arbtt_button_animation ); ?> {
 		animation: arbtt-<?php echo esc_attr( $arbtt_button_animation ); ?> 0.4s ease forwards;
