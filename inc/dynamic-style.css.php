@@ -11,6 +11,7 @@
 		<?php endif; ?>
 		line-height: <?php echo esc_attr( $btnheight ); ?>px;
 		padding: <?php echo esc_attr( $btnpadding ); ?>px;
+		font-size: <?php echo esc_attr( $arbtt_fz ); ?>px;
 		text-align: center;
 		font-weight: bold;
 		color: <?php echo esc_attr( $arbtt_clr ); ?> !important;
