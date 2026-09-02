@@ -25,4 +25,4 @@ dist-ssr
 
 node_modules
 composer.json
-composer.lock
+composer.lockpnpm-lock.yaml
