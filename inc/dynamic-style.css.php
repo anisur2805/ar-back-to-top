@@ -155,10 +155,10 @@
 
 	<?php
 	// Convert boolean flags and integer values
-	$hide_on_desktop = isset( $arbtt_hide_on_desktop ) ? $arbtt_hide_on_desktop === '1' : get_option( 'arbtt_hide_on_desktop' ) === '1';
+	$hide_on_desktop = isset( $arbtt_hide_on_desktop ) ? '1' === $arbtt_hide_on_desktop : get_option( 'arbtt_hide_on_desktop' ) === '1';
 	$desktop_width   = isset( $arbtt_dwidth ) ? (int) $arbtt_dwidth : (int) get_option( 'arbtt_dwidth', 1025 );
-	$hide_on_tablet  = $arbtt_hide_on_tablet === '1';
-	$hide_on_phone   = $arbtt_hide_on_phone === '1';
+	$hide_on_tablet  = '1' === $arbtt_hide_on_tablet;
+	$hide_on_phone   = '1' === $arbtt_hide_on_phone;
 	$phone_width     = (int) $arbtt_pwidth;
 	$tablet_width    = (int) $arbtt_twidth;
 

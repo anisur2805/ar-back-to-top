@@ -99,7 +99,7 @@ final class AR_Status {
 		$debug_mode     = defined( 'WP_DEBUG' ) && WP_DEBUG ? 'Yes' : 'No';
 		$site_url       = home_url();
 		$wp_version_val = get_bloginfo( 'version' );
-		$php_version    = phpversion();
+		$php_version    = current_user_can( 'manage_options' ) ? phpversion() : 'N/A';
 		$mysql_version  = $GLOBALS['wpdb']->db_version();
 
 		// --- FIX: Unslash and Sanitize $_SERVER variable ---

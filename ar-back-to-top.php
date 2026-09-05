@@ -10,7 +10,7 @@
  * Requires at least: 6.8
  * Tested up to: 6.8
  * Requires PHP: 7.4
- * License: GPLv2 or later
+ * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: ar-back-to-top
  * Domain Path: /languages
@@ -170,7 +170,7 @@ final class AR_Back_To_Top {
 		add_action( 'admin_init', array( $this, 'handle_reset_defaults' ) );
 
 		register_activation_hook( __FILE__, array( $this, 'plugin_activation' ) );
-		register_uninstall_hook( __FILE__, array( __CLASS__, 'plugin_uninstall' ) );
+		register_deactivation_hook( __FILE__, array( $this, 'plugin_deactivation' ) );
 
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'add_action_links' ) );
 		add_filter( 'upload_mimes', array( $this, 'allow_svg_upload' ) );
@@ -791,7 +791,7 @@ final class AR_Back_To_Top {
 		$img_url          = $external_img_url ? $external_img_url : $default_img_url;
 		?>
 		<input type="text" name="arbtt_btn_ext_img_url" class="aras arbtt_btn_ext_img_url" id="arbtt_btn_ext_img_url" placeholder="<?php echo esc_attr__( 'Enter external image URL here', 'ar-back-to-top' ); ?>" value="<?php echo esc_url( $external_img_url ); ?>" />
-		<img src="<?php echo esc_url( $img_url ); ?>" width="25" height="25" class="arbtt-preview-img" alt="<?php esc_attr_e( 'Preview Image', 'ar-back-to-top' ); ?>" /><br />
+		<img src="<?php echo esc_url( $img_url ); ?>" width="25" height="25" class="arbtt-preview-img" alt="<?php esc_attr_e( 'Preview of selected back to top button image', 'ar-back-to-top' ); ?>" /><br />
 		<span class="description"><?php esc_html_e( 'External Image URL', 'ar-back-to-top' ); ?></span>
 		<?php
 	}
@@ -811,11 +811,11 @@ final class AR_Back_To_Top {
 		</div>
 		<?php if ( ! empty( $icon_url ) ) : ?>
 			<div class="arbtt-custom-icon-preview" style="margin-top:8px;">
-				<img src="<?php echo esc_url( $icon_url ); ?>" alt="<?php esc_attr_e( 'Custom icon preview', 'ar-back-to-top' ); ?>" />
+				<img src="<?php echo esc_url( $icon_url ); ?>" alt="<?php esc_attr_e( 'Preview of uploaded custom icon', 'ar-back-to-top' ); ?>" />
 			</div>
 		<?php else : ?>
 			<div class="arbtt-custom-icon-preview" style="margin-top:8px;display:none;">
-				<img src="" alt="" />
+				<img src="" alt="<?php esc_attr_e( 'Preview area for custom back to top icon', 'ar-back-to-top' ); ?>" />
 			</div>
 		<?php endif; ?>
 		<p class="description"><?php esc_html_e( 'Upload a PNG, JPG, GIF, or SVG file from your media library.', 'ar-back-to-top' ); ?></p>
@@ -856,7 +856,7 @@ final class AR_Back_To_Top {
 						value="<?php echo esc_attr( $image_value ); ?>"
 						<?php checked( $image_value, $option_val ); ?>
 					/>
-					<img width="25" height="25" src="<?php echo esc_url( $image_url ); ?>" alt="" />
+					<img width="25" height="25" src="<?php echo esc_url( $image_url ); ?>" alt="<?php esc_attr_e( 'Back to top button image preview', 'ar-back-to-top' ); ?>" />
 				</label>
 			</div>
 			<?php
@@ -1306,19 +1306,19 @@ final class AR_Back_To_Top {
 					<?php echo esc_html( $arbtt_btntx ); ?>
 
 				<?php elseif ( 'img' === $arbtt_btnst ) : ?>
-					<img src="<?php echo esc_url( ARBTTOP_ASSETS . '/images/' . basename( $arbtt_btn_img ) ); ?>" alt="" />
+					<img src="<?php echo esc_url( ARBTTOP_ASSETS . '/images/' . basename( $arbtt_btn_img ) ); ?>" alt="<?php esc_attr_e( 'Back to top button image', 'ar-back-to-top' ); ?>" />
 
 				<?php elseif ( 'both' === $arbtt_btnst ) : ?>
-					<img class="both-img" src="<?php echo esc_url( ARBTTOP_ASSETS . '/images/' . basename( $arbtt_btn_img ) ); ?>" alt="" />
+					<img class="both-img" src="<?php echo esc_url( ARBTTOP_ASSETS . '/images/' . basename( $arbtt_btn_img ) ); ?>" alt="<?php esc_attr_e( 'Back to top button image', 'ar-back-to-top' ); ?>" />
 					<?php echo esc_html( $arbtt_btntx ); ?>
 
 				<?php elseif ( 'external' === $arbtt_btnst ) : ?>
-					<img src="<?php echo esc_url( $external_img_url ); ?>" alt="" />
+					<img src="<?php echo esc_url( $external_img_url ); ?>" alt="<?php esc_attr_e( 'Custom back to top button image', 'ar-back-to-top' ); ?>" />
 
 				<?php elseif ( 'upload' === $arbtt_btnst ) : ?>
 					<?php $custom_icon_url = get_option( 'arbtt_custom_icon_url', '' ); ?>
 					<?php if ( ! empty( $custom_icon_url ) ) : ?>
-						<img src="<?php echo esc_url( $custom_icon_url ); ?>" alt="" />
+						<img src="<?php echo esc_url( $custom_icon_url ); ?>" alt="<?php esc_attr_e( 'Custom back to top icon', 'ar-back-to-top' ); ?>" />
 					<?php endif; ?>
 				<?php endif; ?>
 
@@ -1501,12 +1501,12 @@ final class AR_Back_To_Top {
 	 * @param array $mimes Allowed MIME types.
 	 * @return array
 	 */
-	public function allow_svg_upload( $mimes ) {
+	public function allow_svg_upload( $_mimes ) {
 		if ( current_user_can( 'manage_options' ) ) {
-			$mimes['svg']  = 'image/svg+xml';
-			$mimes['svgz'] = 'image/svg+xml';
+			$_mimes['svg']  = 'image/svg+xml';
+			$_mimes['svgz'] = 'image/svg+xml';
 		}
-		return $mimes;
+		return $_mimes;
 	}
 
 	/**
@@ -1552,6 +1552,15 @@ final class AR_Back_To_Top {
 		if ( get_option( 'arbtt_do_activation_redirect', false ) ) {
 			delete_option( 'arbtt_do_activation_redirect' );
 		}
+	}
+
+	/**
+	 * Plugin deactivation cleanup
+	 *
+	 * @return void
+	 */
+	public function plugin_deactivation() {
+		// Placeholder for future cleanup logic.
 	}
 
 	private function sanitize_custom_css( string $css ): string {
