@@ -26,3 +26,6 @@ dist-ssr
 node_modules
 composer.json
 composer.lock
+
+# Local dev artifacts
+.claude/

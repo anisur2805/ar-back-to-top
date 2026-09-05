@@ -8,7 +8,7 @@
  * Author: Anisur Rahman
  * Author URI: https://github.com/anisur2805
  * Requires at least: 6.8
- * Tested up to: 6.8
+ * Tested up to: 7.1
  * Requires PHP: 7.4
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -1613,9 +1613,9 @@ final class AR_Back_To_Top {
  *
  * @return \AR_Back_To_Top
  */
-function kick_off() {
+function arbtt_kick_off() {
 	// Initialize the plugin
 	AR_Back_To_Top::get_instance();
 }
 
-kick_off();
+arbtt_kick_off();

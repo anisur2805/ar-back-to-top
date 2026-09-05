@@ -1,4 +1,6 @@
 <?php
+defined( 'ABSPATH' ) || exit;
+
 
 /**
  * Main Assets class for enqueue admin and frontend assets.
@@ -20,12 +22,12 @@ class AR_Assets {
 
 		if ( 'toplevel_page_arbtt' === $hook ) {
 			wp_enqueue_style( 'jquery_minicolors', ARBTTOP_ASSETS . '/minicolors/jquery.minicolors.css', array(), '1.0', 'all' );
-			wp_enqueue_style( 'select2-css', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', array(), '4.1.0', 'all' );
+			wp_enqueue_style( 'select2-css', ARBTTOP_ASSETS . '/select2/select2.min.css', array(), '4.1.0', 'all' );
 
 			self::enqueue_font_awesome();
 
 			wp_enqueue_script( 'arbtt_minucolor_js', ARBTTOP_ASSETS . '/minicolors/jquery.minicolors.min.js', array( 'jquery' ), '1.0', true );
-			wp_enqueue_script( 'select2-js', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', array( 'jquery' ), '4.1.0', true );
+			wp_enqueue_script( 'select2-js', ARBTTOP_ASSETS . '/select2/select2.min.js', array( 'jquery' ), '4.1.0', true );
 			wp_enqueue_media();
 			wp_enqueue_script( 'arbtt_custom_js', ARBTTOP_ASSETS . '/js/arbtt-main.js', array( 'jquery', 'select2-js' ), ARBTTOP_VERSION, true );
 		}

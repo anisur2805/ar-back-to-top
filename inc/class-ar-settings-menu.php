@@ -1,4 +1,6 @@
 <?php
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Settings Page
  *
@@ -263,7 +265,7 @@ class AR_Settings_Menu {
  *
  * @return void
  */
-function setting_kickoff() {
+function arbtt_setting_kickoff() {
 	AR_Settings_Menu::get_instance();
 }
-setting_kickoff();
+arbtt_setting_kickoff();

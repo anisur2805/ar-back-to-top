@@ -1,4 +1,6 @@
 <?php
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Status Page
  *
@@ -185,8 +187,8 @@ final class AR_Status {
  *
  * @return void
  */
-function status_kickoff() {
+function arbtt_status_kickoff() {
 	AR_Status::get_instance();
 }
 
-status_kickoff();
+arbtt_status_kickoff();

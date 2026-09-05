@@ -1,4 +1,6 @@
 <?php
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Frontend display handler for ARBTT.
  *
@@ -150,7 +152,7 @@ class AR_Frontend {
 /**
  * Kickstart the frontend logic.
  */
-function frontend_kickoff() {
+function arbtt_frontend_kickoff() {
 	AR_Frontend::get_instance();
 }
-frontend_kickoff();
+arbtt_frontend_kickoff();
