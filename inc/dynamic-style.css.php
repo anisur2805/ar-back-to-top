@@ -1,4 +1,6 @@
-<?php defined( 'ABSPATH' ) || exit; ?>
+<?php
+defined( 'ABSPATH' ) || exit;
+?>
 <style type="text/css">
 	#arbtt-container {
 		display: block;
@@ -192,10 +194,10 @@
 
 	<?php
 	// Convert boolean flags and integer values.
-	$arbtt_is_hide_desktop = $arbtt_hide_on_desktop === '1';
+	$arbtt_is_hide_desktop = '1' === $arbtt_hide_on_desktop;
 	$arbtt_desktop_px      = (int) $arbtt_dwidth;
-	$arbtt_is_hide_tablet  = $arbtt_hide_on_tablet === '1';
-	$arbtt_is_hide_phone   = $arbtt_hide_on_phone === '1';
+	$arbtt_is_hide_tablet  = '1' === $arbtt_hide_on_tablet;
+	$arbtt_is_hide_phone   = '1' === $arbtt_hide_on_phone;
 	$arbtt_phone_px        = (int) $arbtt_pwidth;
 	$arbtt_tablet_px       = (int) $arbtt_twidth;
 

@@ -133,7 +133,23 @@ class AR_SVG_Sanitizer {
 	 * @return bool True if sanitized successfully, false on failure.
 	 */
 	public static function sanitize_file( $file_path ) {
-		$svg_content = file_get_contents( $file_path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		global $wp_filesystem;
+
+		if ( ! function_exists( 'WP_Filesystem' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+		}
+
+		WP_Filesystem();
+
+		if ( ! $wp_filesystem ) {
+			return false;
+		}
+
+		if ( ! $wp_filesystem->exists( $file_path ) ) {
+			return false;
+		}
+
+		$svg_content = $wp_filesystem->get_contents( $file_path );
 
 		if ( false === $svg_content || empty( $svg_content ) ) {
 			return false;
@@ -145,7 +161,7 @@ class AR_SVG_Sanitizer {
 			return false;
 		}
 
-		file_put_contents( $file_path, $clean_svg ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
+		$wp_filesystem->put_contents( $file_path, $clean_svg, FS_CHMOD_FILE );
 
 		return true;
 	}

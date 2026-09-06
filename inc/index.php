@@ -1,1 +1,2 @@
-<?php // silence is golden
+<?php
+defined( 'ABSPATH' ) || exit;

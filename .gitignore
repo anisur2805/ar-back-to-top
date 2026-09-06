@@ -26,3 +26,8 @@ dist-ssr
 node_modules
 composer.json
 composer.lockpnpm-lock.yaml
+
+composer.lock
+
+# Local dev artifacts
+.claude/

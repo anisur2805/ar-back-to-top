@@ -87,7 +87,7 @@ See [readme.txt](readme.txt) or the [WordPress.org changelog](https://wordpress.
 
 ## License
 
-GPLv2 or later. See [LICENSE](https://www.gnu.org/licenses/gpl-2.0.html) for details.
+GPL-2.0-or-later. See [LICENSE](https://www.gnu.org/licenses/gpl-2.0.html) for details.
 
 ## Author
 

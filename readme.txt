@@ -5,7 +5,7 @@ Requires at least: 4.8
 Tested up to: 7.1
 Requires PHP: 7.4
 Stable tag: 3.1.4
-License: GPLv2 or later
+License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Add a lightweight, fully customizable scroll to top button with smooth animation, scroll progress indicator, and mobile-friendly positioning.

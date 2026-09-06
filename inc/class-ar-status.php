@@ -100,9 +100,9 @@ final class AR_Status {
 		$wp_cache       = defined( 'WP_CACHE' ) && WP_CACHE ? 'Yes' : 'No';
 		$debug_mode     = defined( 'WP_DEBUG' ) && WP_DEBUG ? 'Yes' : 'No';
 		$site_url       = home_url();
-		$wp_version_val = get_bloginfo( 'version' );
-		$php_version    = phpversion();
-		$mysql_version  = $GLOBALS['wpdb']->db_version();
+		$wp_version_val = current_user_can( 'manage_options' ) ? get_bloginfo( 'version' ) : 'N/A';
+		$php_version    = current_user_can( 'manage_options' ) ? phpversion() : 'N/A';
+		$mysql_version  = current_user_can( 'manage_options' ) ? $GLOBALS['wpdb']->db_version() : 'N/A';
 
 		// --- FIX: Unslash and Sanitize $_SERVER variable ---
 		$web_server = isset( $_SERVER['SERVER_SOFTWARE'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ) : 'Unknown';
