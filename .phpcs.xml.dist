@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ruleset name="AR Back To Top">
+	<description>WordPress coding standards for AR Back To Top plugin.</description>
+	<arg name="standard" value="WordPress"/>
+	<file>.</file>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+
+	<rule ref="WordPress.NamingConventions.ValidVariableName.PropertyNameNotSnakeCase">
+		<exclude-pattern>inc/class-ar-svg-sanitizer.php</exclude-pattern>
+	</rule>
+</ruleset>

@@ -4,7 +4,7 @@ Tags: back to top, scroll to top button, scroll progress, smooth scroll, floatin
 Requires at least: 4.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.1.4
+Stable tag: 3.1.5
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,25 @@ Perfect for blogs, business sites, portfolios, and WooCommerce stores. The butto
 7. Find **AR Back To Top** in the list and click **Activate**.
 
 == Changelog ==
+
+= 3.1.5 =
+
+**Security & Standards**
+* Capability-check WordPress, PHP, and MySQL version disclosure on the status page
+* Replace direct file operations with WP_Filesystem in the SVG sanitizer
+* Apply Yoda conditions to dynamic CSS boolean flags
+* Prefix unused `$mimes` parameter with underscore in `allow_svg_upload()`
+* Correct SPDX license identifier to `GPL-2.0-or-later`
+
+**Accessibility**
+* Add descriptive alt text to all button preview images
+
+**Code Quality**
+* Add missing `register_deactivation_hook()`
+* Add docblocks to all classes and public methods
+* Fix snake_case variable naming across status page
+* Auto-fix array alignment via PHPCS
+* Rename `dynamic-style.css.php` to `dynamic-style-css.php` for WP naming compliance
 
 = 3.1.4 =
 

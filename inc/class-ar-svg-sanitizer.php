@@ -7,6 +7,9 @@
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Sanitize uploaded SVG files by removing dangerous elements and attributes.
+ */
 class AR_SVG_Sanitizer {
 
 	/**
@@ -173,32 +176,23 @@ class AR_SVG_Sanitizer {
 	 * @return string|false Sanitized SVG or false on failure.
 	 */
 	public static function sanitize( $svg_content ) {
-		// Remove XML processing instructions.
 		$svg_content = preg_replace( '/<\?xml.*?\?>/si', '', $svg_content );
-
-		// Remove DOCTYPE declarations.
 		$svg_content = preg_replace( '/<!DOCTYPE[^>]*>/si', '', $svg_content );
-
-		// Remove CDATA sections.
 		$svg_content = preg_replace( '/<!\[CDATA\[.*?\]\]>/s', '', $svg_content );
-
-		// Remove comments.
 		$svg_content = preg_replace( '/<!--.*?-->/s', '', $svg_content );
 
-		// Disable external entity loading.
-		$prev_value = libxml_disable_entity_loader( true ); // phpcs:ignore PHPCompatibility.FunctionUse.RemovedFunctions.libxml_disable_entity_loaderDeprecated
+		$prev_value = libxml_disable_entity_loader( true );
 		libxml_use_internal_errors( true );
 
-		$dom                      = new DOMDocument();
-		$dom->formatOutput        = false;
-		$dom->preserveWhiteSpace  = true;
-		$dom->strictErrorChecking = false;
+		$dom = new DOMDocument();
+		$dom->formatOutput        = false; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.PropertyNameNotSnakeCase
+		$dom->preserveWhiteSpace  = true; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.PropertyNameNotSnakeCase
+		$dom->strictErrorChecking = false; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.PropertyNameNotSnakeCase
 
 		$loaded = $dom->loadXML( $svg_content, LIBXML_NONET | LIBXML_NOENT );
 
-		// Restore previous state.
 		if ( function_exists( 'libxml_disable_entity_loader' ) ) {
-			libxml_disable_entity_loader( $prev_value ); // phpcs:ignore PHPCompatibility.FunctionUse.RemovedFunctions.libxml_disable_entity_loaderDeprecated
+			libxml_disable_entity_loader( $prev_value );
 		}
 		libxml_clear_errors();
 
@@ -206,13 +200,11 @@ class AR_SVG_Sanitizer {
 			return false;
 		}
 
-		// Verify root element is <svg>.
 		$root = $dom->documentElement;
 		if ( ! $root || 'svg' !== strtolower( $root->nodeName ) ) {
 			return false;
 		}
 
-		// Recursively sanitize all nodes.
 		self::sanitize_node( $root );
 
 		$clean = $dom->saveXML( $root );
@@ -230,7 +222,6 @@ class AR_SVG_Sanitizer {
 	 * @param DOMNode $node The node to sanitize.
 	 */
 	private static function sanitize_node( $node ) {
-		// Collect child nodes to remove (can't modify while iterating).
 		$nodes_to_remove = array();
 
 		if ( $node->hasChildNodes() ) {
@@ -238,16 +229,12 @@ class AR_SVG_Sanitizer {
 				if ( XML_ELEMENT_NODE === $child->nodeType ) {
 					$tag_name = strtolower( $child->nodeName );
 
-					// Remove disallowed elements entirely.
 					if ( ! in_array( $tag_name, self::$allowed_elements, true ) ) {
 						$nodes_to_remove[] = $child;
 						continue;
 					}
 
-					// Sanitize attributes of allowed elements.
 					self::sanitize_attributes( $child );
-
-					// Recurse into children.
 					self::sanitize_node( $child );
 				}
 			}
@@ -274,19 +261,16 @@ class AR_SVG_Sanitizer {
 			$attr_name  = strtolower( $attr->nodeName );
 			$attr_value = $attr->nodeValue;
 
-			// Remove event handler attributes (onclick, onload, etc.).
 			if ( 0 === strpos( $attr_name, 'on' ) ) {
 				$attrs_to_remove[] = $attr->nodeName;
 				continue;
 			}
 
-			// Remove attributes not in the allowlist.
 			if ( ! in_array( $attr_name, self::$allowed_attributes, true ) ) {
 				$attrs_to_remove[] = $attr->nodeName;
 				continue;
 			}
 
-			// Check attribute values for dangerous content.
 			if ( self::has_dangerous_value( $attr_value ) ) {
 				$attrs_to_remove[] = $attr->nodeName;
 				continue;
@@ -305,9 +289,7 @@ class AR_SVG_Sanitizer {
 	 * @return bool True if dangerous.
 	 */
 	private static function has_dangerous_value( $value ) {
-		$value = strtolower( trim( $value ) );
-
-		// Remove whitespace between characters to catch obfuscation.
+		$value      = strtolower( trim( $value ) );
 		$compressed = preg_replace( '/\s+/', '', $value );
 
 		$dangerous_patterns = array(

@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/anisur2805/ar-back-to-top
  * Description: AR Back To Top is a standard WordPress plugin for smooth back to top. AR Back To Top plugin will help those who don't want to write code. To use this plugin, simply download or add it from the WordPress plugin directory.
  * Tags: back to top, scroll to top button, scroll progress, smooth scroll, floating button
- * Version: 3.1.4
+ * Version: 3.1.5
  * Author: Anisur Rahman
  * Author URI: https://github.com/anisur2805
  * Requires at least: 4.8
@@ -103,7 +103,7 @@ final class AR_Back_To_Top {
 	 * @return void
 	 */
 	public function define_constants() {
-		define( 'ARBTTOP_VERSION', '3.1.4' );
+		define( 'ARBTTOP_VERSION', '3.1.5' );
 		define( 'ARBTTOP_FILE', __FILE__ );
 		define( 'ARBTTOP_PATH', __DIR__ );
 		define( 'ARBTTOP_URL', plugins_url( '', __FILE__ ) );
@@ -747,7 +747,7 @@ final class AR_Back_To_Top {
 	 * Render button text field
 	 *
 	 * @return void
-	*/
+	 */
 	public function render_btntx_field() {
 		echo '<input type="text" name="arbtt_btntx" class="aras arbtt_btntx" id="arbtt_btntx" placeholder="Top" value="' . esc_attr( get_option( 'arbtt_btntx' ) ) . '"/>';
 	}
@@ -1316,7 +1316,7 @@ final class AR_Back_To_Top {
 	 */
 	public function render_custom_css_field() {
 		?>
-		<textarea name="arbtt_custom_css" id="arbtt_custom_css" rows="10" cols="50" placeholder="<?php echo esc_attr( ".arbtt { /* your custom styles */ }" ); ?>"><?php echo esc_textarea( get_option( 'arbtt_custom_css' ) ); ?></textarea>
+		<textarea name="arbtt_custom_css" id="arbtt_custom_css" rows="10" cols="50" placeholder="<?php echo esc_attr( '.arbtt { /* your custom styles */ }' ); ?>"><?php echo esc_textarea( get_option( 'arbtt_custom_css' ) ); ?></textarea>
 		<p class="description"><?php echo esc_html__( 'CSS hooks:', 'ar-back-to-top' ); ?> <code>.arbtt-container</code>, <code>.arbtt</code>, <code>.progress-svg</code></p>
 		<?php
 	}
@@ -1354,34 +1354,34 @@ final class AR_Back_To_Top {
 		}
 
 		$defaults = array(
-			'bgc'                    => '#000',
-			'fz'                     => '20',
-			'clr'                    => '#fff',
-			'btnps'                  => 'right',
-			'btnoc'                  => '0.5',
-			'bdrd'                   => '5',
-			'btntx'                  => 'Top',
-			'fi'                     => 'angle-up',
-			'btnst'                  => 'txt',
-			'btnimg'                 => 'arbtt6.png',
-			'enable'                 => '0',
-			'hophone'                => '0',
-			'bdr'                    => '2',
-			'bdr_color'              => '#fff',
-			'bgc_hover'              => '#fff',
-			'clr_hover'              => '#000',
-			'enable_scroll_progress' => '0',
-			'hotablet'               => '0',
-			'pwidth'                 => '767',
-			'twidth'                 => '1024',
-			'btn_offset_bottom'      => '30',
-			'btn_offset_right'       => '30',
-			'btn_offset_left'        => '30',
-			'bdr_color_hover'        => '#fff',
-			'custom_css'             => '',
-			'progress_color'         => '#ff0',
+			'bgc'                         => '#000',
+			'fz'                          => '20',
+			'clr'                         => '#fff',
+			'btnps'                       => 'right',
+			'btnoc'                       => '0.5',
+			'bdrd'                        => '5',
+			'btntx'                       => 'Top',
+			'fi'                          => 'angle-up',
+			'btnst'                       => 'txt',
+			'btnimg'                      => 'arbtt6.png',
+			'enable'                      => '0',
+			'hophone'                     => '0',
+			'bdr'                         => '2',
+			'bdr_color'                   => '#fff',
+			'bgc_hover'                   => '#fff',
+			'clr_hover'                   => '#000',
+			'enable_scroll_progress'      => '0',
+			'hotablet'                    => '0',
+			'pwidth'                      => '767',
+			'twidth'                      => '1024',
+			'btn_offset_bottom'           => '30',
+			'btn_offset_right'            => '30',
+			'btn_offset_left'             => '30',
+			'bdr_color_hover'             => '#fff',
+			'custom_css'                  => '',
+			'progress_color'              => '#ff0',
 			'enable_scroll_progress_size' => '4',
-			'arbtt_btn_img_position' => 'right',
+			'arbtt_btn_img_position'      => 'right',
 		);
 
 		// Early exit if plugin is disabled.
@@ -1413,38 +1413,38 @@ final class AR_Back_To_Top {
 		}
 
 		// Get scalar options with fallback.
-		$arbtt_bgc               = get_option( 'arbtt_bgc', $defaults['bgc'] ) ?: $defaults['bgc'];
-		$arbtt_bgc_hover         = get_option( 'arbtt_bgc_hover', $defaults['bgc_hover'] ) ?: $defaults['bgc_hover'];
+		$arbtt_bgc                         = get_option( 'arbtt_bgc', $defaults['bgc'] ) ?: $defaults['bgc'];
+		$arbtt_bgc_hover                   = get_option( 'arbtt_bgc_hover', $defaults['bgc_hover'] ) ?: $defaults['bgc_hover'];
 		$arbtt_enable_scroll_progress      = get_option( 'arbtt_enable_scroll_progress', '0' );
 		$arbtt_enable_scroll_progress_size = get_option( 'arbtt_enable_scroll_progress_size', $defaults['enable_scroll_progress_size'] ) ?: $defaults['enable_scroll_progress_size'];
-		$arbtt_fz                = get_option( 'arbtt_fz', $defaults['fz'] ) ?: $defaults['fz'];
-		$arbtt_clr               = get_option( 'arbtt_clr', $defaults['clr'] ) ?: $defaults['clr'];
-		$arbtt_clr_hover         = get_option( 'arbtt_clr_hover', $defaults['clr_hover'] ) ?: $defaults['clr_hover'];
-		$arbtt_btnps             = get_option( 'arbtt_btnps', $defaults['btnps'] ) ?: $defaults['btnps'];
-		$arbtt_btn_offset_bottom = get_option( 'arbtt_btn_offset_bottom', $defaults['btn_offset_bottom'] ) ?: $defaults['btn_offset_bottom'];
-		$arbtt_btn_offset_right  = get_option( 'arbtt_btn_offset_right', $defaults['btn_offset_right'] ) ?: $defaults['btn_offset_right'];
-		$arbtt_btn_offset_left   = get_option( 'arbtt_btn_offset_left', $defaults['btn_offset_left'] ) ?: $defaults['btn_offset_left'];
-		$arbtt_btnoc             = get_option( 'arbtt_btnoc', $defaults['btnoc'] ) ?: $defaults['btnoc'];
-		$arbtt_bdrd              = get_option( 'arbtt_bdrd', $defaults['bdrd'] ) ?: $defaults['bdrd'];
-		$arbtt_bdr_color         = get_option( 'arbtt_bdr_color', $defaults['bdr_color'] ) ?: $defaults['bdr_color'];
-		$arbtt_bdr_color_hover   = get_option( 'arbtt_bdr_color_hover', $defaults['bdr_color_hover'] ) ?: $defaults['bdr_color_hover'];
-		$arbtt_bdr               = get_option( 'arbtt_bdr', $defaults['bdr'] ) ?: $defaults['bdr'];
-		$arbtt_btntx             = get_option( 'arbtt_btntx', $defaults['btntx'] ) ?: $defaults['btntx'];
-		$arbtt_fi                = get_option( 'arbtt_fi', $defaults['fi'] ) ?: $defaults['fi'];
-		$arbtt_btnst             = get_option( 'arbtt_btnst', $defaults['btnst'] ) ?: $defaults['btnst'];
-		$arbtt_btn_img           = get_option( 'arbtt_btn_img', $defaults['btnimg'] ) ?: $defaults['btnimg'];
-		$arbtt_pwidth            = get_option( 'arbtt_pwidth', $defaults['pwidth'] ) ?: $defaults['pwidth'];
-		$arbtt_twidth            = get_option( 'arbtt_twidth', $defaults['twidth'] ) ?: $defaults['twidth'];
-		$arbtt_hide_on_phone     = get_option( 'arbtt_hide_on_phone', $defaults['hophone'] );
-		$arbtt_hide_on_tablet    = get_option( 'arbtt_hide_on_tablet', $defaults['hotablet'] );
-		$arbtt_hide_on_desktop   = get_option( 'arbtt_hide_on_desktop', '0' );
-		$arbtt_dwidth            = get_option( 'arbtt_dwidth', '1025' );
-		$arbtt_progress_color    = get_option( 'arbtt_progress_color', $defaults['progress_color'] ) ?: $defaults['progress_color'];
-		$external_img_url        = get_option( 'arbtt_btn_ext_img_url', '' ) ?: ARBTTOP_ASSETS . '/images/Back-to-Top.png';
-		$arbtt_btn_img_position  = get_option( 'arbtt_btn_img_position', $defaults['arbtt_btn_img_position'] ) ?: $defaults['arbtt_btn_img_position'];
-		$arbtt_tooltip_text      = get_option( 'arbtt_tooltip_text', '' );
-		$arbtt_zindex            = get_option( 'arbtt_zindex', '9999' );
-		$arbtt_btn_shape         = get_option( 'arbtt_btn_shape', 'custom' );
+		$arbtt_fz                          = get_option( 'arbtt_fz', $defaults['fz'] ) ?: $defaults['fz'];
+		$arbtt_clr                         = get_option( 'arbtt_clr', $defaults['clr'] ) ?: $defaults['clr'];
+		$arbtt_clr_hover                   = get_option( 'arbtt_clr_hover', $defaults['clr_hover'] ) ?: $defaults['clr_hover'];
+		$arbtt_btnps                       = get_option( 'arbtt_btnps', $defaults['btnps'] ) ?: $defaults['btnps'];
+		$arbtt_btn_offset_bottom           = get_option( 'arbtt_btn_offset_bottom', $defaults['btn_offset_bottom'] ) ?: $defaults['btn_offset_bottom'];
+		$arbtt_btn_offset_right            = get_option( 'arbtt_btn_offset_right', $defaults['btn_offset_right'] ) ?: $defaults['btn_offset_right'];
+		$arbtt_btn_offset_left             = get_option( 'arbtt_btn_offset_left', $defaults['btn_offset_left'] ) ?: $defaults['btn_offset_left'];
+		$arbtt_btnoc                       = get_option( 'arbtt_btnoc', $defaults['btnoc'] ) ?: $defaults['btnoc'];
+		$arbtt_bdrd                        = get_option( 'arbtt_bdrd', $defaults['bdrd'] ) ?: $defaults['bdrd'];
+		$arbtt_bdr_color                   = get_option( 'arbtt_bdr_color', $defaults['bdr_color'] ) ?: $defaults['bdr_color'];
+		$arbtt_bdr_color_hover             = get_option( 'arbtt_bdr_color_hover', $defaults['bdr_color_hover'] ) ?: $defaults['bdr_color_hover'];
+		$arbtt_bdr                         = get_option( 'arbtt_bdr', $defaults['bdr'] ) ?: $defaults['bdr'];
+		$arbtt_btntx                       = get_option( 'arbtt_btntx', $defaults['btntx'] ) ?: $defaults['btntx'];
+		$arbtt_fi                          = get_option( 'arbtt_fi', $defaults['fi'] ) ?: $defaults['fi'];
+		$arbtt_btnst                       = get_option( 'arbtt_btnst', $defaults['btnst'] ) ?: $defaults['btnst'];
+		$arbtt_btn_img                     = get_option( 'arbtt_btn_img', $defaults['btnimg'] ) ?: $defaults['btnimg'];
+		$arbtt_pwidth                      = get_option( 'arbtt_pwidth', $defaults['pwidth'] ) ?: $defaults['pwidth'];
+		$arbtt_twidth                      = get_option( 'arbtt_twidth', $defaults['twidth'] ) ?: $defaults['twidth'];
+		$arbtt_hide_on_phone               = get_option( 'arbtt_hide_on_phone', $defaults['hophone'] );
+		$arbtt_hide_on_tablet              = get_option( 'arbtt_hide_on_tablet', $defaults['hotablet'] );
+		$arbtt_hide_on_desktop             = get_option( 'arbtt_hide_on_desktop', '0' );
+		$arbtt_dwidth                      = get_option( 'arbtt_dwidth', '1025' );
+		$arbtt_progress_color              = get_option( 'arbtt_progress_color', $defaults['progress_color'] ) ?: $defaults['progress_color'];
+		$external_img_url                  = get_option( 'arbtt_btn_ext_img_url', '' ) ?: ARBTTOP_ASSETS . '/images/Back-to-Top.png';
+		$arbtt_btn_img_position            = get_option( 'arbtt_btn_img_position', $defaults['arbtt_btn_img_position'] ) ?: $defaults['arbtt_btn_img_position'];
+		$arbtt_tooltip_text                = get_option( 'arbtt_tooltip_text', '' );
+		$arbtt_zindex                      = get_option( 'arbtt_zindex', '9999' );
+		$arbtt_btn_shape                   = get_option( 'arbtt_btn_shape', 'custom' );
 
 		// Handle button dimensions.
 		$arbtt_btndm = get_option( 'arbtt_btndm', array() );
@@ -1462,7 +1462,7 @@ final class AR_Back_To_Top {
 
 		$this->rendered = true;
 
-		require ARBTTOP_PATH . '/inc/dynamic-style.css.php';
+		require ARBTTOP_PATH . '/inc/dynamic-style-css.php';
 
 		?>
 		<div class="arbtt-container" id="arbtt-container">
@@ -1472,11 +1472,14 @@ final class AR_Back_To_Top {
 					<?php
 					$icons   = AR_SVG_Icons::get_icons();
 					$icon_id = isset( $icons[ $arbtt_fi ] ) ? $arbtt_fi : AR_SVG_Icons::fa_class_to_id( $arbtt_fi );
-					echo AR_SVG_Icons::get_icon( $icon_id, array( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG is hardcoded safe markup.
+					echo wp_kses_post( AR_SVG_Icons::get_icon(
+						$icon_id,
+						array(
 						'class'       => 'arbtt-svg-icon',
 						'aria-hidden' => 'true',
 						'width'       => esc_attr( $arbtt_fz ),
 						'height'      => esc_attr( $arbtt_fz ),
+						)
 					) );
 					?>
 
@@ -1571,79 +1574,82 @@ final class AR_Back_To_Top {
 	public static function get_default_options() {
 		return array(
 			// General.
-			'arbtt_enable'                     => '0',
-			'arbtt_is_async'                   => '',
-			'arbtt_show_in_admin'              => '0',
-			'arbtt_enable_scroll_to_bottom'    => '0',
-			'arbtt_enable_analytics'           => '0',
-			'arbtt_enable_keyboard'            => '0',
-			'arbtt_enable_touch'               => '0',
+			'arbtt_enable'                      => '0',
+			'arbtt_is_async'                    => '',
+			'arbtt_show_in_admin'               => '0',
+			'arbtt_enable_scroll_to_bottom'     => '0',
+			'arbtt_enable_analytics'            => '0',
+			'arbtt_enable_keyboard'             => '0',
+			'arbtt_enable_touch'                => '0',
 			// Appearance.
-			'arbtt_btnst'                      => 'txt',
-			'arbtt_fi'                         => 'angle-up',
-			'arbtt_btntx'                      => 'Top',
-			'arbtt_btn_img'                    => 'arbtt6.png',
-			'arbtt_btn_img_position'           => 'right',
-			'arbtt_btn_ext_img_url'            => '',
-			'arbtt_custom_icon_url'            => '',
-			'arbtt_fz'                         => '20',
-			'arbtt_tooltip_text'               => '',
-			'arbtt_button_animation'           => 'none',
+			'arbtt_btnst'                       => 'txt',
+			'arbtt_fi'                          => 'angle-up',
+			'arbtt_btntx'                       => 'Top',
+			'arbtt_btn_img'                     => 'arbtt6.png',
+			'arbtt_btn_img_position'            => 'right',
+			'arbtt_btn_ext_img_url'             => '',
+			'arbtt_custom_icon_url'             => '',
+			'arbtt_fz'                          => '20',
+			'arbtt_tooltip_text'                => '',
+			'arbtt_button_animation'            => 'none',
 			// Colors & Style.
-			'arbtt_bgc'                        => '#000',
-			'arbtt_bgc_hover'                  => '#fff',
-			'arbtt_clr'                        => '#fff',
-			'arbtt_clr_hover'                  => '#000000',
-			'arbtt_btn_shape'                  => 'custom',
-			'arbtt_bdrd'                       => '5',
-			'arbtt_bdr'                        => '2',
-			'arbtt_bdr_color'                  => '#fff',
-			'arbtt_bdr_color_hover'            => '#fff',
-			'arbtt_btnoc'                      => '0.5',
+			'arbtt_bgc'                         => '#000',
+			'arbtt_bgc_hover'                   => '#fff',
+			'arbtt_clr'                         => '#fff',
+			'arbtt_clr_hover'                   => '#000000',
+			'arbtt_btn_shape'                   => 'custom',
+			'arbtt_bdrd'                        => '5',
+			'arbtt_bdr'                         => '2',
+			'arbtt_bdr_color'                   => '#fff',
+			'arbtt_bdr_color_hover'             => '#fff',
+			'arbtt_btnoc'                       => '0.5',
 			// Position & Size.
-			'arbtt_btndm'                      => array( 'w' => 40, 'h' => 40 ),
-			'arbtt_btn_padding'                => '10',
-			'arbtt_btnps'                      => 'right',
-			'arbtt_btn_offset_bottom'          => '100',
-			'arbtt_btn_offset_right'           => '100',
-			'arbtt_btn_offset_left'            => '100',
-			'arbtt_zindex'                     => '9999',
+			'arbtt_btndm'                       => array(
+				'w' => 40,
+				'h' => 40,
+			),
+			'arbtt_btn_padding'                 => '10',
+			'arbtt_btnps'                       => 'right',
+			'arbtt_btn_offset_bottom'           => '100',
+			'arbtt_btn_offset_right'            => '100',
+			'arbtt_btn_offset_left'             => '100',
+			'arbtt_zindex'                      => '9999',
 			// Scroll Behavior.
-			'arbtt_btnapr'                     => '100',
-			'arbtt_fadein'                     => '950',
-			'arbtt_transition_time'            => '950',
-			'arbtt_scroll_easing'              => 'ease-in-out',
-			'arbtt_auto_hide'                  => '0',
-			'arbtt_auto_hide_after'            => '3',
-			'arbtt_enable_scroll_progress'     => '0',
+			'arbtt_btnapr'                      => '100',
+			'arbtt_fadein'                      => '950',
+			'arbtt_transition_time'             => '950',
+			'arbtt_scroll_easing'               => 'ease-in-out',
+			'arbtt_auto_hide'                   => '0',
+			'arbtt_auto_hide_after'             => '3',
+			'arbtt_enable_scroll_progress'      => '0',
 			'arbtt_enable_scroll_progress_size' => '4',
-			'arbtt_progress_color'             => '#ff0',
-			'arbtt_enable_reading_progress'    => '0',
-			'arbtt_reading_progress_color'     => '#4caf50',
-			'arbtt_reading_progress_height'    => '4',
+			'arbtt_progress_color'              => '#ff0',
+			'arbtt_enable_reading_progress'     => '0',
+			'arbtt_reading_progress_color'      => '#4caf50',
+			'arbtt_reading_progress_height'     => '4',
 			// Visibility.
-			'arbtt_display_mode'               => 'all',
-			'arbtt_display_pages'              => array(),
-			'arbtt_hide_on_desktop'            => '0',
-			'arbtt_dwidth'                     => '1025',
-			'arbtt_hide_on_tablet'             => '0',
-			'arbtt_twidth'                     => '1024',
-			'arbtt_hide_on_phone'              => '0',
-			'arbtt_pwidth'                     => '767',
-			'arbtt_mobile_offset_bottom'       => '',
-			'arbtt_mobile_offset_side'         => '',
-			'arbtt_smart_visibility'           => '0',
-			'arbtt_hide_on_woo'                => '0',
+			'arbtt_display_mode'                => 'all',
+			'arbtt_display_pages'               => array(),
+			'arbtt_hide_on_desktop'             => '0',
+			'arbtt_dwidth'                      => '1025',
+			'arbtt_hide_on_tablet'              => '0',
+			'arbtt_twidth'                      => '1024',
+			'arbtt_hide_on_phone'               => '0',
+			'arbtt_pwidth'                      => '767',
+			'arbtt_mobile_offset_bottom'        => '',
+			'arbtt_mobile_offset_side'          => '',
+			'arbtt_smart_visibility'            => '0',
+			'arbtt_hide_on_woo'                 => '0',
 			// Advanced.
-			'arbtt_custom_css'                 => '',
+			'arbtt_custom_css'                  => '',
 			// Status bar.
-			'arbtt_word_count'                 => '0',
-			'arbtt_char_counts'                => '0',
-			'arbtt_read_time'                  => '0',
-			'arbtt_view_count'                 => '0',
-			'arbtt_meta_position'              => 'bottom',
-			'arbtt_btnwidth'                   => '40',
-			'arbtt_btnheight'                  => '40',
+			'arbtt_word_count'                  => '0',
+			'arbtt_char_counts'                 => '0',
+			'arbtt_read_time'                   => '0',
+			'arbtt_view_count'                  => '0',
+			'arbtt_meta_position'               => 'bottom',
+			'arbtt_btnwidth'                    => '40',
+			'arbtt_btnheight'                   => '40',
 		);
 	}
 

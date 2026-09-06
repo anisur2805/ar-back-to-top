@@ -53,6 +53,15 @@ final class AR_Status {
 	}
 
 	/**
+	 * Kick off the status page (called from plugin bootstrap).
+	 *
+	 * @return void
+	 */
+	public static function init(): void {
+		self::get_instance();
+	}
+
+	/**
 	 * Register submenu page.
 	 *
 	 * @return void
@@ -68,6 +77,12 @@ final class AR_Status {
 		);
 	}
 
+	/**
+	 * Convert a shorthand byte value to bytes.
+	 *
+	 * @param string $value Shorthand byte notation (e.g. '128M', '1G').
+	 * @return int
+	 */
 	public function ar_convert_to_bytes( $value ) {
 		$value = trim( $value );
 		$last  = strtolower( substr( $value, -1 ) );
@@ -76,10 +91,10 @@ final class AR_Status {
 		switch ( $last ) {
 			case 'g':
 				$num *= 1024;
-				// no break
+				// no break.
 			case 'm':
 				$num *= 1024;
-				// no break
+				// no break.
 			case 'k':
 				$num *= 1024;
 		}
@@ -118,21 +133,21 @@ final class AR_Status {
 		$php_required = '7.4';
 		$wc_required  = '8.0';
 
-		$wpVersion = version_compare( $wp_version_val, $wp_required, '<' )
+		$wp_version_html = version_compare( $wp_version_val, $wp_required, '<' )
 			? '<td class="text-left red">' . esc_html( $wp_version_val ) . " <span style='color:#444;font-size: 12px;'>Please upgrade WordPress</span></td>"
 			: '<td class="text-left green">' . esc_html( $wp_version_val ) . '</td>';
 
-		$phpVerseion = version_compare( $php_version, $php_required, '<' )
+		$php_version_html = version_compare( $php_version, $php_required, '<' )
 			? '<td class="text-left red">' . esc_html( $php_version ) . " <span style='color:#444;font-size: 12px;'>Please upgrade PHP</span></td>"
 			: '<td class="text-left green">' . esc_html( $php_version ) . '</td>';
 
 		if ( defined( 'WC_VERSION' ) ) {
 			$wc_version_val = WC_VERSION;
-			$wcVerseion     = version_compare( $wc_version_val, $wc_required, '<' )
+			$wc_version_html = version_compare( $wc_version_val, $wc_required, '<' )
 				? '<td class="text-left red">' . esc_html( $wc_version_val ) . " <span style='color:#444;font-size: 12px;'>Please upgrade WooCommerce</span></td>"
 				: '<td class="text-left green">' . esc_html( $wc_version_val ) . '</td>';
 		} else {
-			$wcVerseion = "<td class=\"text-left red\">Not Installed <span style='color:#444;font-size: 12px;'>Please install WooCommerce v" . esc_html( $wc_required ) . '+</span></td>';
+			$wc_version_html = "<td class=\"text-left red\">Not Installed <span style='color:#444;font-size: 12px;'>Please install WooCommerce v" . esc_html( $wc_required ) . '+</span></td>';
 		}
 
 		$max_input_vars_val   = (int) ini_get( 'max_input_vars' );
@@ -157,9 +172,9 @@ final class AR_Status {
 				<thead><tr><th>Configuration</th><th>Status</th></tr></thead>
 				<tbody>
 					<?php // --- FIX: Escape output containing HTML --- ?>
-					<tr><td>WordPress Version</td><?php echo wp_kses_post( $wpVersion ); ?></tr>
-					<tr><td>PHP Version</td><?php echo wp_kses_post( $phpVerseion ); ?></tr>
-					<tr><td>WooCommerce Version</td><?php echo wp_kses_post( $wcVerseion ); ?></tr>
+					<tr><td>WordPress Version</td><?php echo wp_kses_post( $wp_version_html ); ?></tr>
+					<tr><td>PHP Version</td><?php echo wp_kses_post( $php_version_html ); ?></tr>
+					<tr><td>WooCommerce Version</td><?php echo wp_kses_post( $wc_version_html ); ?></tr>
 					<tr><td>max_input_vars</td><?php echo wp_kses_post( $max_input_vars_limit ); ?></tr>
 					<?php // --- End of FIX --- ?>
 					<tr><td>Available Memory</td><td class="text-left green"><?php echo esc_html( $wp_max_mem ); ?></td></tr>

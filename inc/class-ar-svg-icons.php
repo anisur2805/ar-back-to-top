@@ -7,6 +7,9 @@
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Inline SVG icon registry.
+ */
 class AR_SVG_Icons {
 
 	/**

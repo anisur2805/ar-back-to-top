@@ -7,12 +7,27 @@
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Enqueue and manage plugin assets.
+ */
 class AR_Assets {
+
+	/**
+	 * Register asset hooks.
+	 *
+	 * @return void
+	 */
 	public function __construct() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'frontend_enqueue' ) );
 	}
 
+	/**
+	 * Enqueue admin assets.
+	 *
+	 * @param string $hook The current admin page hook.
+	 * @return void
+	 */
 	public function admin_enqueue( $hook ) {
 		if ( 'toplevel_page_arbtt' === $hook || 'back-to-top_page_arbtt-settings' === $hook ) {
 			wp_enqueue_style( 'arbtt_admin', ARBTTOP_ASSETS . '/css/admin-style.css', array(), ARBTTOP_VERSION, 'all' );
