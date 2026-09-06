@@ -1462,7 +1462,11 @@ final class AR_Back_To_Top {
 
 		$this->rendered = true;
 
-		require ARBTTOP_PATH . '/inc/dynamic-style-css.php';
+		$dynamic_css_path = ARBTTOP_PATH . '/inc/dynamic-style-css.php';
+
+		if ( file_exists( $dynamic_css_path ) ) {
+			require $dynamic_css_path;
+		}
 
 		?>
 		<div class="arbtt-container" id="arbtt-container">
