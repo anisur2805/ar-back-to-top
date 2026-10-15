@@ -93,6 +93,45 @@
 		} );
 	}
 
+	/* ----- Reading Progress Bar ----- */
+	var readingBar = document.getElementById( 'arbtt-reading-progress' );
+
+	if ( readingBar ) {
+		// Position below admin bar if visible.
+		var adminBar = document.getElementById( 'wpadminbar' );
+		if ( adminBar && adminBar.offsetHeight > 0 ) {
+			readingBar.style.top = adminBar.offsetHeight + 'px';
+		}
+
+		var readingTicking = false;
+
+		function updateReadingProgress() {
+			var scrollTop    = window.scrollY;
+			var docHeight    = document.documentElement.scrollHeight;
+			var winHeight    = window.innerHeight;
+			var scrollPercent = ( scrollTop / ( docHeight - winHeight ) ) * 100;
+
+			scrollPercent = Math.max( 0, Math.min( 100, scrollPercent ) );
+			readingBar.style.width = scrollPercent + '%';
+		}
+
+		updateReadingProgress();
+
+		window.addEventListener( 'scroll', function() {
+			if ( ! readingTicking ) {
+				window.requestAnimationFrame( function() {
+					updateReadingProgress();
+					readingTicking = false;
+				} );
+				readingTicking = true;
+			}
+		}, { passive: true } );
+
+		window.addEventListener( 'resize', function() {
+			window.requestAnimationFrame( updateReadingProgress );
+		}, { passive: true } );
+	}
+
 	if ( ! btn ) {
 		return;
 	}
@@ -190,7 +229,7 @@
 	 * Track button click via AJAX.
 	 */
 	function trackClick() {
-		if ( ! enableAnalytics ) {
+		if ( enableAnalytics ) {
 			var data = new FormData();
 			data.append( 'action', 'arbtt_track_click' );
 			data.append( 'nonce', arbtt_obj.track_nonce );
@@ -298,42 +337,4 @@
 		}, { passive: true } );
 	}
 
-	/* ----- Reading Progress Bar ----- */
-	var readingBar = document.getElementById( 'arbtt-reading-progress' );
-
-	if ( readingBar ) {
-		// Position below admin bar if visible.
-		var adminBar = document.getElementById( 'wpadminbar' );
-		if ( adminBar && adminBar.offsetHeight > 0 ) {
-			readingBar.style.top = adminBar.offsetHeight + 'px';
-		}
-
-		var readingTicking = false;
-
-		function updateReadingProgress() {
-			var scrollTop    = window.scrollY;
-			var docHeight    = document.documentElement.scrollHeight;
-			var winHeight    = window.innerHeight;
-			var scrollPercent = ( scrollTop / ( docHeight - winHeight ) ) * 100;
-
-			scrollPercent = Math.max( 0, Math.min( 100, scrollPercent ) );
-			readingBar.style.width = scrollPercent + '%';
-		}
-
-		updateReadingProgress();
-
-		window.addEventListener( 'scroll', function() {
-			if ( ! readingTicking ) {
-				window.requestAnimationFrame( function() {
-					updateReadingProgress();
-					readingTicking = false;
-				} );
-				readingTicking = true;
-			}
-		}, { passive: true } );
-
-		window.addEventListener( 'resize', function() {
-			window.requestAnimationFrame( updateReadingProgress );
-		}, { passive: true } );
-	}
 } )();

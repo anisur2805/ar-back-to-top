@@ -181,7 +181,13 @@ class AR_SVG_Sanitizer {
 		$svg_content = preg_replace( '/<!\[CDATA\[.*?\]\]>/s', '', $svg_content );
 		$svg_content = preg_replace( '/<!--.*?-->/s', '', $svg_content );
 
-		$prev_value = libxml_disable_entity_loader( true );
+		// libxml_disable_entity_loader() exists on PHP 8.x but is deprecated there;
+		// external entity loading is disabled by default on libxml >= 2.9, so only
+		// call it on PHP 7.x to avoid E_DEPRECATED noise under WP_DEBUG.
+		$prev_value = null;
+		if ( PHP_VERSION_ID < 80000 && function_exists( 'libxml_disable_entity_loader' ) ) {
+			$prev_value = libxml_disable_entity_loader( true );
+		}
 		libxml_use_internal_errors( true );
 
 		$dom = new DOMDocument();
@@ -191,8 +197,8 @@ class AR_SVG_Sanitizer {
 
 		$loaded = $dom->loadXML( $svg_content, LIBXML_NONET | LIBXML_NOENT );
 
-		if ( function_exists( 'libxml_disable_entity_loader' ) ) {
-			libxml_disable_entity_loader( $prev_value );
+		if ( PHP_VERSION_ID < 80000 ) {
+			libxml_disable_entity_loader( $prev_value ); // phpcs:ignore Generic.PHP.DeprecatedFunctions.Deprecated -- PHP 7.x only, guarded by PHP_VERSION_ID.
 		}
 		libxml_clear_errors();
 

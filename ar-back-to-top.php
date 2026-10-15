@@ -142,6 +142,7 @@ final class AR_Back_To_Top {
 		add_action( 'admin_init', array( $this, 'maybe_upgrade' ) );
 		add_action( 'admin_notices', array( $this, 'show_update_notice' ) );
 
+		register_uninstall_hook( __FILE__, array( __CLASS__, 'plugin_uninstall' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'plugin_deactivation' ) );
 
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'add_action_links' ) );
@@ -1390,7 +1391,7 @@ final class AR_Back_To_Top {
 		if ( '1' !== $arbtt_enable ) {
 			// Still render the reading progress bar if it's enabled independently.
 			$arbtt_enable_reading_progress = get_option( 'arbtt_enable_reading_progress', '0' );
-			if ( '1' === $arbtt_enable_reading_progress && ! $this->progress_rendered ) {
+			if ( '1' === $arbtt_enable_reading_progress && ! $this->progress_rendered && ( $this->is_admin_render || AR_Assets::should_display() ) ) {
 				$this->progress_rendered       = true;
 				$arbtt_reading_progress_color  = get_option( 'arbtt_reading_progress_color', '#4caf50' );
 				$arbtt_reading_progress_height = get_option( 'arbtt_reading_progress_height', '4' );
@@ -1403,7 +1404,7 @@ final class AR_Back_To_Top {
 
 		// Reading progress bar — renders independently of the back-to-top button.
 		$arbtt_enable_reading_progress = get_option( 'arbtt_enable_reading_progress', '0' );
-		if ( '1' === $arbtt_enable_reading_progress && ! $this->progress_rendered ) {
+		if ( '1' === $arbtt_enable_reading_progress && ! $this->progress_rendered && ( $this->is_admin_render || AR_Assets::should_display() ) ) {
 			$this->progress_rendered       = true;
 			$arbtt_reading_progress_color  = get_option( 'arbtt_reading_progress_color', '#4caf50' );
 			$arbtt_reading_progress_height = get_option( 'arbtt_reading_progress_height', '4' );
@@ -1476,15 +1477,18 @@ final class AR_Back_To_Top {
 					<?php
 					$icons   = AR_SVG_Icons::get_icons();
 					$icon_id = isset( $icons[ $arbtt_fi ] ) ? $arbtt_fi : AR_SVG_Icons::fa_class_to_id( $arbtt_fi );
-					echo wp_kses_post( AR_SVG_Icons::get_icon(
+					// Icon markup comes from the hardcoded AR_SVG_Icons registry, the
+					// attributes are esc_attr() escaped in get_icon(). wp_kses_post()
+					// has no svg allowlist and would strip the entire icon.
+					echo AR_SVG_Icons::get_icon( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG from hardcoded registry.
 						$icon_id,
 						array(
-						'class'       => 'arbtt-svg-icon',
-						'aria-hidden' => 'true',
-						'width'       => esc_attr( $arbtt_fz ),
-						'height'      => esc_attr( $arbtt_fz ),
+							'class'       => 'arbtt-svg-icon',
+							'aria-hidden' => 'true',
+							'width'       => esc_attr( $arbtt_fz ),
+							'height'      => esc_attr( $arbtt_fz ),
 						)
-					) );
+					);
 					?>
 
 				<?php elseif ( 'txt' === $arbtt_btnst ) : ?>
@@ -1910,9 +1914,11 @@ final class AR_Back_To_Top {
 			delete_option( $option_key );
 		}
 
-		// Delete options not tracked in defaults.
+		// Delete options not tracked in defaults (incl. legacy FA-migration flags).
 		delete_option( 'arbtt_plugin_version' );
 		delete_option( 'arbtt_click_count' );
+		delete_option( 'arbtt_fa6_migrated' );
+		delete_option( 'arbtt_fa_loading' );
 		delete_transient( 'arbtt_show_update_notice' );
 	}
 

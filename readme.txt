@@ -96,6 +96,12 @@ Perfect for blogs, business sites, portfolios, and WooCommerce stores. The butto
 
 = 3.1.5 =
 
+**Bug Fixes**
+* Fix SVG icon being stripped from the button on the frontend — the icon markup is now echoed directly from the hardcoded, attribute-escaped icon registry
+* Fix click tracking running only when the analytics option was disabled (inverted condition)
+* Fix the reading progress bar not animating when the button is disabled or hidden on the page
+* Complete uninstall cleanup — legacy FA-migration options `arbtt_fa6_migrated`, `arbtt_fa_loading`, and `arbtt_transition_time` are now removed too
+
 **Security & Standards**
 * Capability-check WordPress, PHP, and MySQL version disclosure on the status page
 * Replace direct file operations with WP_Filesystem in the SVG sanitizer
@@ -109,6 +115,7 @@ Perfect for blogs, business sites, portfolios, and WooCommerce stores. The butto
 **Code Quality**
 * Add missing `register_deactivation_hook()`
 * Add docblocks to all classes and public methods
+* Skip deprecated `libxml_disable_entity_loader()` on PHP 8.x — external entities are blocked by default since libxml 2.9
 * Fix snake_case variable naming across status page
 * Auto-fix array alignment via PHPCS
 * Rename `dynamic-style.css.php` to `dynamic-style-css.php` for WP naming compliance
@@ -121,14 +128,6 @@ Perfect for blogs, business sites, portfolios, and WooCommerce stores. The butto
 * Fix incorrect `arbtt_transition_time` option reference in asset localization; now correctly reads `arbtt_fadein`
 * Ensure reading progress bar still renders when the main plugin is disabled but the progress feature is independently enabled
 * Fix text button style ignoring the configured font size — `arbtt_fz` is now applied to `.arbtt` via dynamic CSS
-
-= 3.1.3 =
-
-**Bug Fixes**
-* Restore backward compatibility for sites upgrading from v3.0.x: guard frontend asset options against missing localized data so older settings no longer cause silent JS failures
-* Fix duplicate `@keyframes arbtt-bounce` in dynamic CSS output, which could cause animation conflicts
-* Fix incorrect `arbtt_transition_time` option reference in asset localization; now correctly reads `arbtt_fadein`
-* Ensure reading progress bar still renders when the main plugin is disabled but the progress feature is independently enabled
 
 = 3.1.3 =
 

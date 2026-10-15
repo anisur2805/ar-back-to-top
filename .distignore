@@ -1,0 +1,40 @@
+# wp-release rsync excludes (in addition to the tool's built-in safety excludes).
+# Keep WordPress.org trunk release-only — no dev, build, or test artifacts.
+
+# Dev directories
+node_modules
+coverage
+builds
+src
+tests
+
+# Tooling configs / lockfiles
+.phpcs.xml.dist
+phpcs.xml.dist
+phpunit.xml.dist
+composer.json
+composer.lock
+package.json
+package-lock.json
+pnpm-lock.yaml
+pnpm-workspace.yaml
+yarn.lock
+babel.config.js
+jest.config.js
+
+# Release-tool config (also excluded by the tool itself)
+.svnrelease
+.wprelease
+.DS_Store
+._*
+
+# Repo docs — readme.txt is the only shipped markdown
+README.md
+CHANGELOG.md
+CONTRIBUTING.md
+GROWTH-ISSUES.md
+GROWTH-ISSUES-2.md
+LICENSE
+
+# Dead asset — never enqueued by the plugin; candidate for deletion
+assets/js/arbtt-fet.js

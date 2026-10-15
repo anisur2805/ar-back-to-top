@@ -113,6 +113,17 @@ jQuery(document).ready(function ($) {
             $right.hide();
         }
     }
+    // Button Shape → Border Radius dependency.
+    // Declared before the initial handleButtonStyle() call below: its "both"
+    // branch runs handleProgressBarToggle() → toggleBorderRadiusRow(), and the
+    // consts must be initialized by then (TDZ ReferenceError otherwise).
+    const $btnShape = $('#arbtt_btn_shape');
+    const $bdrdRow  = $('#arbtt_bdrd').closest('tr');
+
+    function toggleBorderRadiusRow() {
+        $bdrdRow.toggle($btnShape.val() === 'custom' && !$btnShape.prop('disabled'));
+    }
+
     handleButtonStyle($("#arbtt_btnst").val());
     handleButtonPosition($("#arbtt_btnps").val());
     $("#arbtt_bgc, #arbtt_clr, .ar-btt-color").minicolors();
@@ -221,13 +232,6 @@ jQuery(document).ready(function ($) {
                 handleProgressBarToggle();
                 break;
         }
-    }
-    // Button Shape → Border Radius dependency (must be before handleProgressBarToggle)
-    const $btnShape = $('#arbtt_btn_shape');
-    const $bdrdRow  = $('#arbtt_bdrd').closest('tr');
-
-    function toggleBorderRadiusRow() {
-        $bdrdRow.toggle($btnShape.val() === 'custom' && !$btnShape.prop('disabled'));
     }
 
     function handleProgressBarToggle() {
