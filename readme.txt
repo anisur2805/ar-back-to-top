@@ -4,7 +4,7 @@ Tags: back to top, scroll to top button, scroll progress, smooth scroll, floatin
 Requires at least: 4.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.1.5
+Stable tag: 3.1.6
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,11 @@ Perfect for blogs, business sites, portfolios, and WooCommerce stores. The butto
 7. Find **AR Back To Top** in the list and click **Activate**.
 
 == Changelog ==
+
+= 3.1.6 =
+
+**New**
+* Review ask — a dismissible notice on the plugin settings page inviting a WordPress.org review; per-user dismissal ("No thanks") sticks and is removed on uninstall
 
 = 3.1.5 =
 

@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/anisur2805/ar-back-to-top
  * Description: AR Back To Top is a standard WordPress plugin for smooth back to top. AR Back To Top plugin will help those who don't want to write code. To use this plugin, simply download or add it from the WordPress plugin directory.
  * Tags: back to top, scroll to top button, scroll progress, smooth scroll, floating button
- * Version: 3.1.5
+ * Version: 3.1.6
  * Author: Anisur Rahman
  * Author URI: https://github.com/anisur2805
  * Requires at least: 4.8
@@ -103,7 +103,7 @@ final class AR_Back_To_Top {
 	 * @return void
 	 */
 	public function define_constants() {
-		define( 'ARBTTOP_VERSION', '3.1.5' );
+		define( 'ARBTTOP_VERSION', '3.1.6' );
 		define( 'ARBTTOP_FILE', __FILE__ );
 		define( 'ARBTTOP_PATH', __DIR__ );
 		define( 'ARBTTOP_URL', plugins_url( '', __FILE__ ) );
@@ -141,6 +141,7 @@ final class AR_Back_To_Top {
 		add_action( 'admin_init', array( $this, 'handle_reset_defaults' ) );
 		add_action( 'admin_init', array( $this, 'maybe_upgrade' ) );
 		add_action( 'admin_notices', array( $this, 'show_update_notice' ) );
+		add_action( 'admin_notices', array( $this, 'show_review_notice' ) );
 
 		register_uninstall_hook( __FILE__, array( __CLASS__, 'plugin_uninstall' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'plugin_deactivation' ) );
@@ -1744,6 +1745,54 @@ final class AR_Back_To_Top {
 	}
 
 	/**
+	 * Display a dismissible review ask on the plugin settings page.
+	 *
+	 * Shown only to users who can manage the plugin and only until they
+	 * dismiss it (per-user). Users who already left a review or are not
+	 * interested can dismiss it permanently.
+	 *
+	 * @return void
+	 */
+	public function show_review_notice() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		// Only on the plugin's own settings page.
+		$screen = get_current_screen();
+		if ( ! $screen || 'toplevel_page_arbtt' !== $screen->id ) {
+			return;
+		}
+
+		$user_id = get_current_user_id();
+		if ( get_user_meta( $user_id, 'arbtt_review_notice_dismissed', true ) ) {
+			return;
+		}
+
+		// Handle the dismiss link before any output.
+		if ( isset( $_GET['arbtt_review_dismiss'] ) && check_admin_referer( 'arbtt_review_dismiss' ) ) {
+			update_user_meta( $user_id, 'arbtt_review_notice_dismissed', 1 );
+			return;
+		}
+
+		$review_url  = 'https://wordpress.org/support/plugin/ar-back-to-top/reviews/?filter=5#new-post';
+		$dismiss_url = wp_nonce_url(
+			add_query_arg( 'arbtt_review_dismiss', '1' ),
+			'arbtt_review_dismiss'
+		);
+
+		printf(
+			'<div class="notice notice-info is-dismissible arbtt-review-notice"><p><strong>%s</strong> %s <a href="%s" target="_blank" rel="noopener noreferrer">%s</a> &middot; <a href="%s">%s</a></p></div>',
+			esc_html__( 'Enjoying AR Back To Top?', 'ar-back-to-top' ),
+			esc_html__( 'Your feedback helps other users discover the plugin.', 'ar-back-to-top' ),
+			esc_url( $review_url ),
+			esc_html__( 'Leave a review', 'ar-back-to-top' ),
+			esc_url( $dismiss_url ),
+			esc_html__( 'No thanks', 'ar-back-to-top' )
+		);
+	}
+
+	/**
 	 * Render back to top button in admin area.
 	 *
 	 * @return void
@@ -1920,6 +1969,7 @@ final class AR_Back_To_Top {
 		delete_option( 'arbtt_fa6_migrated' );
 		delete_option( 'arbtt_fa_loading' );
 		delete_transient( 'arbtt_show_update_notice' );
+		delete_metadata( 'user', 0, 'arbtt_review_notice_dismissed', '', true );
 	}
 
 	/**
