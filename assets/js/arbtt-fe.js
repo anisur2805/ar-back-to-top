@@ -6,17 +6,21 @@
 ( function() {
 	'use strict';
 
-	var visibleAfter   = parseInt( ( arbtt_obj && arbtt_obj.btn_visible_after ) || 100, 10 );
-	var fadeDuration   = parseInt( ( arbtt_obj && arbtt_obj.fade_in ) || 950, 10 );
-	var autoHide       = ( arbtt_obj && arbtt_obj.auto_hide ) || false;
-	var autoHideAfter  = ( parseInt( ( arbtt_obj && arbtt_obj.auto_hide_after ) || 3, 10 ) ) * 1000;
-	var scrollEasing   = ( arbtt_obj && arbtt_obj.scroll_easing ) || 'ease-in-out';
-	var btnAnimation   = ( arbtt_obj && arbtt_obj.button_animation ) || 'none';
-	var smartVisibility = ( arbtt_obj && ( arbtt_obj.smart_visibility === '1' || arbtt_obj.smart_visibility === true ) ) || false;
-	var enableAnalytics = ( arbtt_obj && ( arbtt_obj.enable_analytics === '1' || arbtt_obj.enable_analytics === true ) ) || false;
-	var enableKeyboard  = ( arbtt_obj && ( arbtt_obj.enable_keyboard === '1' || arbtt_obj.enable_keyboard === true ) ) || false;
-	var enableTouch     = ( arbtt_obj && ( arbtt_obj.enable_touch === '1' || arbtt_obj.enable_touch === true ) ) || false;
-	var btn             = document.querySelector( '.arbtt' );
+	/* Safe read of the localized config: the script must never throw if
+	 * wp_localize_script() did not run (defer edge cases, caching plugins). */
+	var obj   = ( typeof arbtt_obj !== 'undefined' ) ? arbtt_obj : {};
+	var btn   = document.querySelector( '.arbtt' );
+
+	var visibleAfter    = parseInt( obj.btn_visible_after, 10 ) || 100;
+	var fadeDuration    = parseInt( obj.fade_in, 10 ) || 950;
+	var autoHide        = obj.auto_hide || false;
+	var autoHideAfter   = ( parseInt( obj.auto_hide_after, 10 ) || 3 ) * 1000;
+	var scrollEasing    = obj.scroll_easing || 'ease-in-out';
+	var btnAnimation    = obj.button_animation || 'none';
+	var smartVisibility = ( obj.smart_visibility === '1' || obj.smart_visibility === true ) || false;
+	var enableAnalytics = ( obj.enable_analytics === '1' || obj.enable_analytics === true ) || false;
+	var enableKeyboard  = ( obj.enable_keyboard === '1' || obj.enable_keyboard === true ) || false;
+	var enableTouch     = ( obj.enable_touch === '1' || obj.enable_touch === true ) || false;
 
 	/**
 	 * Easing functions.
@@ -68,7 +72,7 @@
 		bottomBtn.addEventListener( 'click', function( e ) {
 			e.preventDefault();
 
-			var duration = parseInt( arbtt_obj.scroll_duration, 10 ) || 500;
+			var duration = parseInt( obj.scroll_duration, 10 ) || 500;
 			var easing   = easingFunctions[ scrollEasing ] || easingFunctions[ 'ease-in-out' ];
 			var startY   = window.scrollY;
 			var docHeight = document.documentElement.scrollHeight;
@@ -232,9 +236,9 @@
 		if ( enableAnalytics ) {
 			var data = new FormData();
 			data.append( 'action', 'arbtt_track_click' );
-			data.append( 'nonce', arbtt_obj.track_nonce );
+			data.append( 'nonce', obj.track_nonce );
 
-			fetch( arbtt_obj.ajax_url, {
+			fetch( obj.ajax_url, {
 				method: 'POST',
 				body: data
 			} ).catch( function() {} );
