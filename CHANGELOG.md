@@ -2,6 +2,17 @@
 
 All notable changes to AR Back To Top are documented here.
 
+## 3.1.7
+
+**Hardening**
+- Frontend script no longer dies when the localized settings object is missing (defer/caching-plugin edge cases); every setting now has an inline fallback
+- Upgrade migration runs on `plugins_loaded` so frontend requests never render pre-migration
+- Fresh activations seed default options (additive only — never overwrites stored settings)
+- `ARBTTOP_VERSION` derives from the plugin header via `get_file_data()`, preventing version drift
+
+**Developer**
+- Added `bin/release-check.sh` release gate (version parity, callback resolution, JS/localization key parity, PHPCS baseline, Jest)
+
 ## 3.1.4
 
 **Bug Fixes**

@@ -4,7 +4,7 @@ Tags: back to top, scroll to top button, scroll progress, smooth scroll, floatin
 Requires at least: 4.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.1.6
+Stable tag: 3.1.7
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,17 @@ Perfect for blogs, business sites, portfolios, and WooCommerce stores. The butto
 7. Find **AR Back To Top** in the list and click **Activate**.
 
 == Changelog ==
+
+= 3.1.7 =
+
+**Hardening**
+* Frontend script no longer dies when the localized settings object is missing (defer/caching-plugin edge cases); every setting now has an inline fallback
+* Upgrade migration now runs on frontend requests too (`plugins_loaded`), not only in admin — no page can render before options are backfilled
+* Fresh activations seed all default options immediately (restore of 2.x behavior; never overwrites existing settings)
+* Plugin version now derives from the plugin header, preventing the version drift that caused the 3.1.1 asset-cache mismatch
+
+**Developer**
+* Added `bin/release-check.sh` release gate: version parity, callback resolution, JS/localization key parity, PHPCS baseline, Jest
 
 = 3.1.6 =
 
