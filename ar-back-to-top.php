@@ -103,7 +103,9 @@ final class AR_Back_To_Top {
 	 * @return void
 	 */
 	public function define_constants() {
-		define( 'ARBTTOP_VERSION', '3.1.6' );
+		// Derive the version from the plugin header so it can never drift from the release.
+		$plugin_data = get_file_data( __FILE__, array( 'Version' => 'Version' ) );
+		define( 'ARBTTOP_VERSION', ( '' !== $plugin_data['Version'] ) ? $plugin_data['Version'] : '0' );
 		define( 'ARBTTOP_FILE', __FILE__ );
 		define( 'ARBTTOP_PATH', __DIR__ );
 		define( 'ARBTTOP_URL', plugins_url( '', __FILE__ ) );
@@ -139,12 +141,13 @@ final class AR_Back_To_Top {
 		add_action( 'wp_footer', array( $this, 'render_back_to_top' ) );
 		add_action( 'admin_footer', array( $this, 'render_back_to_top_admin' ) );
 		add_action( 'admin_init', array( $this, 'handle_reset_defaults' ) );
-		add_action( 'admin_init', array( $this, 'maybe_upgrade' ) );
+		add_action( 'plugins_loaded', array( $this, 'maybe_upgrade' ) );
 		add_action( 'admin_notices', array( $this, 'show_update_notice' ) );
 		add_action( 'admin_notices', array( $this, 'show_review_notice' ) );
 
 		register_uninstall_hook( __FILE__, array( __CLASS__, 'plugin_uninstall' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'plugin_deactivation' ) );
+		register_activation_hook( __FILE__, array( __CLASS__, 'plugin_activation' ) );
 
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'add_action_links' ) );
 		add_filter( 'upload_mimes', array( $this, 'allow_svg_upload' ) );
@@ -1926,6 +1929,30 @@ final class AR_Back_To_Top {
 	 */
 	public function plugin_deactivation() {
 		// Placeholder for future cleanup logic.
+	}
+
+	/**
+	 * Seed default options on activation.
+	 *
+	 * Only writes options that do not exist yet, so re-activation after an
+	 * upgrade never overwrites stored settings.
+	 *
+	 * @return void
+	 */
+	public static function plugin_activation() {
+		if ( ! current_user_can( 'activate_plugins' ) ) {
+			return;
+		}
+
+		$defaults = self::get_default_options();
+
+		foreach ( $defaults as $key => $value ) {
+			if ( false === get_option( $key, false ) ) {
+				add_option( $key, $value );
+			}
+		}
+
+		update_option( 'arbtt_plugin_version', ARBTTOP_VERSION );
 	}
 
 	public function sanitize_custom_css( string $css ): string {
