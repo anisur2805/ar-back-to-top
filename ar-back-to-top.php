@@ -112,6 +112,11 @@ final class AR_Back_To_Top {
 		define( 'ARBTTOP_ASSETS', ARBTTOP_URL . '/assets' );
 	}
 
+	/**
+	 * Load required class files
+	 *
+	 * @return void
+	 */
 	public function load_class_files() {
 		$class_files = array(
 			'inc/class-ar-settings-menu.php',
@@ -625,6 +630,11 @@ final class AR_Back_To_Top {
 		<?php
 	}
 
+	/**
+	 * Render button offset right field
+	 *
+	 * @return void
+	 */
 	public function render_btn_offset_right_field() {
 		?>
 		<input type="number" name="arbtt_btn_offset_right" class="aras arbtt_btn_offset_right" id="arbtt_btn_offset_right" placeholder="100" value="<?php echo esc_attr( get_option( 'arbtt_btn_offset_right' ) ); ?>"/>
