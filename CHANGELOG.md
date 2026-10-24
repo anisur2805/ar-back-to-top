@@ -2,6 +2,11 @@
 
 All notable changes to AR Back To Top are documented here.
 
+## 3.1.8
+
+**New**
+- Fresh plugin banner and icon — new aurora-gradient brand design on the WordPress.org plugin page
+
 ## 3.1.7
 
 **Hardening**

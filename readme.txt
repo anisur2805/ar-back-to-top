@@ -4,7 +4,7 @@ Tags: back to top, scroll to top button, scroll progress, smooth scroll, floatin
 Requires at least: 4.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.1.7
+Stable tag: 3.1.8
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,11 @@ Perfect for blogs, business sites, portfolios, and WooCommerce stores. The butto
 7. Find **AR Back To Top** in the list and click **Activate**.
 
 == Changelog ==
+
+= 3.1.8 =
+
+**New**
+* Fresh plugin banner and icon — new aurora-gradient brand design on the WordPress.org plugin page
 
 = 3.1.7 =
 
